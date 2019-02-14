@@ -32,12 +32,8 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     RecyclerView mRvGroups;
     GroupAdapter mAdapter;
 
-
-
     @InjectPresenter
     GroupPresenter groupPresenter;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +43,7 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
         mTxtNoItem = (TextView)findViewById(R.id.txt_groups_no_item);
         mCpvWait = (CircularProgressView)findViewById(R.id.cpv_groups);
         mRvGroups = (RecyclerView)findViewById(R.id.recycler_groups);
+
         groupPresenter.loadGroups();
         mAdapter = new GroupAdapter();
 
@@ -54,12 +51,8 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
         mRvGroups.setAdapter(mAdapter);
 
         //Назначаем параметры для RecyclerView
-       // mRvGroups.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
-       // mRvGroups.setHasFixedSize(true);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        mRvGroups.setLayoutManager(layoutManager);
-
+        mRvGroups.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
+        mRvGroups.setHasFixedSize(true);
 
 
         searchGroup.addTextChangedListener(new TextWatcher() {

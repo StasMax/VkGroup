@@ -14,6 +14,7 @@ import android.os.Handler;
 
 @InjectViewState
 public class LoginPresenter extends MvpPresenter<LoginView> {
+
     public void login(final Boolean isSuccess) {
         getViewState().startLoading();
         Handler handler = new Handler();
