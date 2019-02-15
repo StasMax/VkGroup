@@ -8,10 +8,9 @@ import com.example.android.vkgroup.Presenters.GroupPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
-import rx.android.schedulers.AndroidSchedulers;
+
 
 
 public class GroupProvider {
@@ -53,7 +52,7 @@ Handler handler = new Handler();
 
     public void loadGroups(){
 
-                         mAppDatabase.modelDao().getAll()
+                         mAppDatabase.getModelDao().getAll()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Consumer<List<GroupModel>>() {
                             @Override

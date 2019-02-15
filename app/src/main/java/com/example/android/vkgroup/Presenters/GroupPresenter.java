@@ -2,6 +2,7 @@ package com.example.android.vkgroup.Presenters;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.example.android.vkgroup.Models.AppDatabase;
 import com.example.android.vkgroup.Models.GroupModel;
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.providers.GroupDbProvider;
@@ -12,8 +13,12 @@ import java.util.List;
 @InjectViewState
 public class GroupPresenter extends MvpPresenter<GroupView> {
 
+    AppDatabase db;
+
     public void loadGroups() {
         getViewState().startLoading();
+
+
 
         GroupDbProvider groupDbProvider = new GroupDbProvider(this);
         groupDbProvider.loadGroupToDb();

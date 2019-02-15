@@ -7,23 +7,26 @@ import com.example.android.vkgroup.Models.AppDatabase;
 import com.vk.sdk.VKSdk;
 
 public class MyApplication extends Application {
-    public static MyApplication instance;
 
-    private AppDatabase database;
+   /* public static MyApplication instance;
+    private AppDatabase database;*/
 
     @Override
     public void onCreate() {
         super.onCreate();
         VKSdk.initialize(getApplicationContext());
-        instance = this;
-        database = Room.databaseBuilder(this, AppDatabase.class, "database")
-                .build();
+     /*   instance = this;
+        database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "populus-database")
+                .build();*/
     }
-    public static MyApplication getInstance() {
+
+   /* public static MyApplication getInstance() {
         return instance;
     }
 
     public AppDatabase getDatabase() {
         return database;
-    }
+    }*/
+
 }
+

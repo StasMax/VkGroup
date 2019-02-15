@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.example.android.vkgroup.Models.AppDatabase;
 import com.example.android.vkgroup.Models.GroupModel;
 import com.example.android.vkgroup.Presenters.GroupPresenter;
 import com.example.android.vkgroup.R;
@@ -31,6 +32,7 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     CircularProgressView mCpvWait;
     RecyclerView mRvGroups;
     GroupAdapter mAdapter;
+    AppDatabase db;
 
     @InjectPresenter
     GroupPresenter groupPresenter;
@@ -45,6 +47,7 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
         mRvGroups = (RecyclerView)findViewById(R.id.recycler_groups);
 
         groupPresenter.loadGroups();
+        db.dbBegin(this);
         mAdapter = new GroupAdapter();
 
         // Назначаем адаптер для RecyclerView
