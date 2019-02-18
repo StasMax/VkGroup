@@ -10,17 +10,21 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.example.android.vkgroup.Presenters.LoginPresenter;
+import com.example.android.vkgroup.models.AppDatabase;
+import com.example.android.vkgroup.presenters.LoginPresenter;
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.views.LoginView;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 
+import static com.example.android.vkgroup.models.AppDatabase.getDatabase;
+
 public class StartActivity extends MvpAppCompatActivity implements LoginView {
 TextView mTextHello;
 Button mButEnter;
 CircularProgressView mCpvWait;
+    AppDatabase db;
 
 
 
@@ -29,9 +33,10 @@ CircularProgressView mCpvWait;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-
+        getDatabase(this);
         mTextHello = (TextView)findViewById(R.id.privetstvie);
         mButEnter = (Button)findViewById(R.id.enter);
         mCpvWait = (CircularProgressView)findViewById(R.id.cpv_login);

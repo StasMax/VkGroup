@@ -1,9 +1,9 @@
-package com.example.android.vkgroup.Presenters;
+package com.example.android.vkgroup.presenters;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.example.android.vkgroup.Models.AppDatabase;
-import com.example.android.vkgroup.Models.GroupModel;
+import com.example.android.vkgroup.models.AppDatabase;
+import com.example.android.vkgroup.models.GroupModel;
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.providers.GroupDbProvider;
 import com.example.android.vkgroup.providers.GroupProvider;

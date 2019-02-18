@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.vkgroup.Models.AppDatabase;
-import com.example.android.vkgroup.Models.GroupModel;
+import com.example.android.vkgroup.models.AppDatabase;
+import com.example.android.vkgroup.models.GroupModel;
 import com.example.android.vkgroup.R;
 import com.squareup.picasso.Picasso;
 
@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.reactivex.functions.Consumer;
 
 public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

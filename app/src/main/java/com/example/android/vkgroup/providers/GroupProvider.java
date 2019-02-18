@@ -2,15 +2,16 @@ package com.example.android.vkgroup.providers;
 
 
 import android.os.Handler;
-import com.example.android.vkgroup.Models.AppDatabase;
-import com.example.android.vkgroup.Models.GroupModel;
-import com.example.android.vkgroup.Presenters.GroupPresenter;
+import com.example.android.vkgroup.models.AppDatabase;
+import com.example.android.vkgroup.models.GroupModel;
+import com.example.android.vkgroup.presenters.GroupPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 
+import static com.example.android.vkgroup.models.AppDatabase.loadLstDb;
 
 
 public class GroupProvider {
@@ -52,16 +53,16 @@ Handler handler = new Handler();
 
     public void loadGroups(){
 
-                         mAppDatabase.getModelDao().getAll()
+                     /*    mAppDatabase.getModelDao().getAll()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Consumer<List<GroupModel>>() {
                             @Override
                             public void accept(List<GroupModel> loadGroupList) throws Exception {
                                 gPesenter.groupsLoaded(loadGroupList);
                             }
-                        });
+                        });*/
 
-
+        gPesenter.groupsLoaded(loadLstDb());
 
 
     }

@@ -1,4 +1,4 @@
-package com.example.android.vkgroup.Presenters;
+package com.example.android.vkgroup.presenters;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;

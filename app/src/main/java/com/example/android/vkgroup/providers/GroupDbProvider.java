@@ -1,8 +1,8 @@
 package com.example.android.vkgroup.providers;
 
-import com.example.android.vkgroup.Models.AppDatabase;
-import com.example.android.vkgroup.Models.GroupModel;
-import com.example.android.vkgroup.Presenters.GroupPresenter;
+import com.example.android.vkgroup.models.AppDatabase;
+import com.example.android.vkgroup.models.GroupModel;
+import com.example.android.vkgroup.presenters.GroupPresenter;
 import com.example.android.vkgroup.R;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -20,12 +20,15 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import io.reactivex.Completable;
+import io.reactivex.functions.Action;
+
+import static com.example.android.vkgroup.models.AppDatabase.listDb;
 
 public class GroupDbProvider {
 
     private GroupPresenter dbPresenter;
     List<GroupModel> listGroups = new ArrayList<>();
-    AppDatabase mAppDatabase;
+
     private String vkName;
     private String vkSubscription;
     private String vkAvatar;
@@ -36,7 +39,7 @@ public class GroupDbProvider {
 
 public void loadGroupToDb(){
 
-    VKRequest request = VKApi.groups().get(VKParameters.from(VKApiConst.COUNT, 75, VKApiConst.FIELDS, "members_count", VKApiConst.EXTENDED, 1 ));
+    VKRequest request = VKApi.groups().get(VKParameters.from(VKApiConst.FIELDS, "members_count", VKApiConst.EXTENDED, 1 ));
 
         request.executeWithListener(new VKRequest.VKRequestListener() {
 
@@ -49,12 +52,14 @@ public void loadGroupToDb(){
 
             for (JsonElement je : jsonArray
             ) {
-                vkName = je.getAsJsonObject().get("name").toString();
+                if (je.getAsJsonObject().get("name") != null) {
+                vkName = je.getAsJsonObject().get("name").toString();}
+
                 if (je.getAsJsonObject().get("members_count") != null) {
                     vkSubscription = je.getAsJsonObject().get("members_count").toString();
                 }
-
-                vkAvatar = je.getAsJsonObject().get("photo_100").getAsString();
+                if (je.getAsJsonObject().get("photo_100") != null) {
+                vkAvatar = je.getAsJsonObject().get("photo_100").getAsString();}
 
                 listGroups.add(new GroupModel(vkName, vkSubscription, vkAvatar, false));
 
@@ -64,16 +69,26 @@ public void loadGroupToDb(){
                  Log.e(TAG, String.valueOf(list));*/
             //  gPesenter.groupsLoaded(listGroups);
 
-            Callable<Void> clb = new Callable<Void>() {
+            listDb(listGroups);
+
+        /*    Callable<Void> clb = new Callable<Void>() {
                 @Override
                 public Void call() throws Exception {
-                    mAppDatabase.listDb(listGroups);
+                    listDb(listGroups);
                     return null;
                 }
             };
 
-            Completable.fromCallable(clb).subscribe();
+            Completable.fromCallable(clb).subscribe();*/
 
+
+
+          /*  Completable.fromAction(new Action() {
+                @Override
+                public void run() throws Exception {
+                    listDb(listGroups);
+                }
+            }).subscribe();*/
 
 
         }

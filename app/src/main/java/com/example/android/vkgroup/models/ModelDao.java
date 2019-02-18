@@ -1,4 +1,4 @@
-package com.example.android.vkgroup.Models;
+package com.example.android.vkgroup.models;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -15,6 +15,9 @@ public interface ModelDao {
     @Query("SELECT * FROM dbGroups")
     Flowable<List<GroupModel>> getAll();
 
+    @Query("SELECT * FROM dbGroups")
+    List<GroupModel> getAll1();
+
   /*  @Query("SELECT * FROM dbGroups WHERE id = :id")
     GroupModel getById(long id);
 
@@ -23,6 +26,9 @@ public interface ModelDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertList(List<GroupModel> groupModelList);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAll(GroupModel...groupModels);
 
   /*  @Update
     void update(List<GroupModel> groupModelList);
