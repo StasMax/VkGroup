@@ -7,6 +7,7 @@ import android.content.Context;
 import android.arch.persistence.room.*;
 import com.example.android.vkgroup.activities.GroupActivity;
 import com.example.android.vkgroup.helpers.MyApplication;
+import com.example.android.vkgroup.providers.GroupDbProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,18 +17,17 @@ import java.util.List;
 
 @Database(entities = {GroupModel.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
+
 static List<GroupModel>mGroupModelList = new ArrayList<>();
+
     public abstract ModelDao getModelDao();
-   // private AppDatabase db;
 
-  /*  public void dbBegin(Context context){
-        if (db == null){
 
-            db = Room.databaseBuilder(context,
-                    AppDatabase.class, "populus-database").build();
-        }
-    }*/
   private static volatile AppDatabase INSTANCE;
+
+    public static AppDatabase getINSTANCE() {
+        return INSTANCE;
+    }
 
     public static AppDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
@@ -35,7 +35,7 @@ static List<GroupModel>mGroupModelList = new ArrayList<>();
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, "app_database")
-                            .allowMainThreadQueries()
+                           // .allowMainThreadQueries()
                             .build();
                 }
             }

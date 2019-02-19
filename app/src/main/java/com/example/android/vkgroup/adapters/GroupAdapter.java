@@ -25,7 +25,7 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     TextView mTxtGroupName;
     TextView mTxtSubscribers;
     View mIsFavoriteImg;
-    AppDatabase db;
+
 
     public void setupGroups(List<GroupModel>groupModelList){
       /*  mSourseList.clear();

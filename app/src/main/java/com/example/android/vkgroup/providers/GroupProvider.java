@@ -11,6 +11,7 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 
+import static com.example.android.vkgroup.models.AppDatabase.getINSTANCE;
 import static com.example.android.vkgroup.models.AppDatabase.loadLstDb;
 
 
@@ -18,7 +19,7 @@ public class GroupProvider {
    private GroupPresenter gPesenter;
    public static final String TAG = "JSON";
     List<GroupModel>testListGroups = new ArrayList<>();
-    AppDatabase mAppDatabase;
+
     private String vkName;
    private String vkSubscription;
    private String vkAvatar;
@@ -53,16 +54,17 @@ Handler handler = new Handler();
 
     public void loadGroups(){
 
-                     /*    mAppDatabase.getModelDao().getAll()
+                         getINSTANCE().getModelDao().getAll()
                         .observeOn(AndroidSchedulers.mainThread())
+
                         .subscribe(new Consumer<List<GroupModel>>() {
                             @Override
                             public void accept(List<GroupModel> loadGroupList) throws Exception {
                                 gPesenter.groupsLoaded(loadGroupList);
                             }
-                        });*/
+                        });
 
-        gPesenter.groupsLoaded(loadLstDb());
+      //  gPesenter.groupsLoaded(loadLstDb());
 
 
     }
