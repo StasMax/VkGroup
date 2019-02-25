@@ -42,13 +42,16 @@
 
     </LinearLayout>
 
-        <View
-            android:layout_width="@dimen/isFavorite"
-            android:layout_height="@dimen/isFavorite"
-            android:layout_marginEnd="16dp"
-            android:layout_gravity="center_vertical"
-            android:background="@color/colorPrimary"
-            android:id="@+id/favorite_img"/>
+
+        <CheckBox
+        android:id="@+id/isFavorite_checkBox"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+
+            android:layout_marginEnd="10dp"
+        android:layout_gravity="center_vertical"
+        android:button="@drawable/check_box"
+        />
 
     </LinearLayout>
 

@@ -21,11 +21,11 @@ public class LoginPresenter extends MvpPresenter<LoginView> {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-getViewState().endLoading();
+                getViewState().endLoading();
 
             }
         }, 500);
-        if (isSuccess)getViewState().openGroups();
+        if (isSuccess) getViewState().openGroups();
         else getViewState().showError(R.string.error_login);
     }
 
@@ -42,7 +42,7 @@ getViewState().endLoading();
             public void onError(VKError error) {
                 getViewState().showError(R.string.error_login);
             }
-        }));
+        })) ;
     }
 
 

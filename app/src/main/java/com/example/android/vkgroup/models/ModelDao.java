@@ -6,8 +6,11 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
+
 import java.util.List;
+
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 
 @Dao
@@ -18,21 +21,26 @@ public interface ModelDao {
     @Query("SELECT * FROM dbGroups")
     List<GroupModel> getAll1();
 
-  /*  @Query("SELECT * FROM dbGroups WHERE id = :id")
-    GroupModel getById(long id);
+    @Query("SELECT * FROM dbGroups WHERE isFavorite LIKE:isFavorite")
+    Flowable<List<GroupModel>> getByFavorite(Boolean isFavorite);
+
+    @Query("SELECT * FROM dbGroups WHERE isFavorite LIKE :isFavorite")
+    Single<List<GroupModel>> getByFavorite1(Boolean isFavorite);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertFavorite(GroupModel groupModel);*/
+    void insertFavorite(GroupModel groupModel);
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertList(List<GroupModel> groupModelList);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(GroupModel...groupModels);
-
-  /*  @Update
-    void update(List<GroupModel> groupModelList);
+    void insertAll(GroupModel... groupModels);
 
     @Delete
-    void deleteFavorite(List<GroupModel> groupModelList);*/
+    void deleteAll(List<GroupModel> groupModelList);
+
+    @Update
+    void update(GroupModel groupModel);
+
+    @Update
+    void updateFavorite(List<GroupModel> groupModelListFavorite);
+
 }

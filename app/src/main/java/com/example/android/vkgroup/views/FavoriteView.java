@@ -8,12 +8,9 @@ import com.example.android.vkgroup.models.GroupModel;
 import java.util.List;
 
 @StateStrategyType(value = AddToEndSingleStrategy.class)
+public interface FavoriteView extends MvpView {
 
-public interface GroupView extends MvpView {
-    void startLoading();
-    void endLoading();
-    void showError(int textResource);
     void setupEmptyList();
-    void setupGroupsList(List<GroupModel>groupsList);
 
+    void setupGroupsList(List<GroupModel> groupsList);
 }

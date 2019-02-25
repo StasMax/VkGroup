@@ -1,5 +1,6 @@
 package com.example.android.vkgroup.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -20,13 +22,21 @@ import com.example.android.vkgroup.views.GroupView;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import java.util.List;
+import java.util.concurrent.Callable;
+
+import io.reactivex.Completable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
+import static com.example.android.vkgroup.models.AppDatabase.getINSTANCE;
+import static com.example.android.vkgroup.models.AppDatabase.listDb;
 
 public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     EditText searchGroup;
     TextView mTxtNoItem;
     CircularProgressView mCpvWait;
     RecyclerView mRvGroups;
-    GroupAdapter mAdapter;
+    GroupAdapter mAdapter = new GroupAdapter();
 
 
     @InjectPresenter
@@ -37,15 +47,12 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
-        searchGroup = (EditText)findViewById(R.id.txt_search);
-        mTxtNoItem = (TextView)findViewById(R.id.txt_groups_no_item);
-        mCpvWait = (CircularProgressView)findViewById(R.id.cpv_groups);
-        mRvGroups = (RecyclerView)findViewById(R.id.recycler_groups);
-
+        searchGroup = (EditText) findViewById(R.id.txt_search);
+        mTxtNoItem = (TextView) findViewById(R.id.txt_groups_no_item);
+        mCpvWait = (CircularProgressView) findViewById(R.id.cpv_groups);
+        mRvGroups = (RecyclerView) findViewById(R.id.recycler_groups);
 
         groupPresenter.loadGroups();
-
-        mAdapter = new GroupAdapter();
 
         // Назначаем адаптер для RecyclerView
         mRvGroups.setAdapter(mAdapter);
@@ -63,7 +70,7 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-            mAdapter.filter(s.toString());
+                mAdapter.filter(s.toString());
             }
 
             @Override
@@ -72,7 +79,6 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
             }
         });
     }
-
 
 
     @Override
@@ -89,7 +95,7 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
 
     @Override
     public void showError(int textResource) {
-mTxtNoItem.setText(getString(textResource));
+        mTxtNoItem.setText(getString(textResource));
     }
 
     @Override
@@ -106,5 +112,10 @@ mTxtNoItem.setText(getString(textResource));
 
         //Передаем нужный параметр из презентера
         mAdapter.setupGroups(groupsList);
+    }
+
+
+    public void onClickDone(View view) {
+        startActivity(new Intent(GroupActivity.this, FavoriteActivity.class));
     }
 }

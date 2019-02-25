@@ -3,6 +3,8 @@ package com.example.android.vkgroup.models;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity(tableName = "dbGroups")
 public class GroupModel {
 
@@ -58,5 +60,18 @@ public class GroupModel {
 
     public void setFavorite(Boolean favorite) {
         isFavorite = favorite;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GroupModel that = (GroupModel) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

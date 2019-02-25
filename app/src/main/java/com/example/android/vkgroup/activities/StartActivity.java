@@ -1,6 +1,9 @@
 package com.example.android.vkgroup.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -44,7 +47,9 @@ CircularProgressView mCpvWait;
             @Override
             public void onClick(View v) {
               //  loginPresenter.login(true);
+                if (isOnline(StartActivity.this)){
                 VKSdk.login(StartActivity.this, VKScope.GROUPS);
+                }else openGroups();
             }
         });
     }
@@ -79,4 +84,17 @@ mCpvWait.setVisibility(View.VISIBLE);
         startActivity(intent);
 
     }
+
+    public static boolean isOnline(Context context)
+    {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting())
+        {
+            return true;
+        }
+        return false;
+    }
+
 }

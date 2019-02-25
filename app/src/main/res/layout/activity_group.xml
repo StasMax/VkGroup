@@ -11,7 +11,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="@string/group_search_hint"/>
-    <FrameLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -40,5 +40,17 @@
             app:cpv_animAutostart="true"
             app:cpv_indeterminate="true"/>
 
-    </FrameLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:src="@drawable/fb_star"
+        android:background="@color/colorPrimary"
+        android:backgroundTint="@color/colorPrimary"
+        android:onClick="onClickDone" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
 </LinearLayout>

@@ -5,25 +5,30 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.arch.persistence.room.*;
+
 import com.example.android.vkgroup.activities.GroupActivity;
 import com.example.android.vkgroup.helpers.MyApplication;
 import com.example.android.vkgroup.providers.GroupDbProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+
+import io.reactivex.Completable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
-
-
-@Database(entities = {GroupModel.class}, version = 1)
+@Database(entities = {GroupModel.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
-static List<GroupModel>mGroupModelList = new ArrayList<>();
+    static List<GroupModel> mGroupModelList = new ArrayList<>();
+
 
     public abstract ModelDao getModelDao();
 
 
-  private static volatile AppDatabase INSTANCE;
+    private static volatile AppDatabase INSTANCE;
 
     public static AppDatabase getINSTANCE() {
         return INSTANCE;
@@ -35,7 +40,6 @@ static List<GroupModel>mGroupModelList = new ArrayList<>();
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, "app_database")
-                           // .allowMainThreadQueries()
                             .build();
                 }
             }
@@ -44,21 +48,52 @@ static List<GroupModel>mGroupModelList = new ArrayList<>();
     }
 
 
-  //  AppDatabase db = MyApplication.getInstance().getDatabase();
-   // ModelDao modelDao = INSTANCE.getModelDao();
-
-    public static void listDb (List<GroupModel>groupModelList){
-      //  modelDao.insertList(groupModelList);
-      //  INSTANCE.getModelDao().insertList(groupModelList);
-        for (GroupModel groupModel:groupModelList
-             ) {INSTANCE.getModelDao().insertAll(groupModel);
+    public static void listDb(List<GroupModel> groupModelList) {
+        for (GroupModel groupModel : groupModelList
+        ) {
+            INSTANCE.getModelDao().insertAll(groupModel);
 
         }
     }
 
-    public static List<GroupModel> loadLstDb(){
+    public static List<GroupModel> loadLstDb() {
         mGroupModelList.addAll(INSTANCE.getModelDao().getAll1());
         return mGroupModelList;
+    }
+
+    public static void deleteAllDb(List<GroupModel> groupModelList) {
+        INSTANCE.getModelDao().deleteAll(groupModelList);
+    }
+
+
+    public static void updateGmList(List<GroupModel> groupModelList) {
+        INSTANCE.getModelDao().updateFavorite(groupModelList);
+    }
+
+    public static void setFavorite(final GroupModel groupModel) {
+        Callable<Void> clb = new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                INSTANCE.getModelDao().insertFavorite(groupModel);
+                return null;
+            }
+        };
+        Disposable mCompletable = Completable.fromCallable(clb)
+                .subscribeOn(Schedulers.newThread())
+                .subscribe();
+    }
+
+    public static void setOutFavorite(final GroupModel groupModel) {
+        Callable<Void> clb = new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                INSTANCE.getModelDao().insertFavorite(groupModel);
+                return null;
+            }
+        };
+        Disposable mCompletable = Completable.fromCallable(clb)
+                .subscribeOn(Schedulers.newThread())
+                .subscribe();
     }
 
 }
