@@ -1,4 +1,4 @@
-package com.example.android.vkgroup.models;
+package com.example.android.vkgroup.model;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -29,7 +29,6 @@ public interface ModelDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertFavorite(GroupModel groupModel);
-
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(GroupModel... groupModels);

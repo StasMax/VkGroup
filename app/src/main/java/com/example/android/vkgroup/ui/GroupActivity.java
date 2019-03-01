@@ -1,4 +1,4 @@
-package com.example.android.vkgroup.activities;
+package com.example.android.vkgroup.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,28 +8,20 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.example.android.vkgroup.models.GroupModel;
-import com.example.android.vkgroup.presenters.GroupPresenter;
+import com.example.android.vkgroup.adapter.TextWatcherAdapter;
+import com.example.android.vkgroup.model.GroupModel;
+import com.example.android.vkgroup.presenter.GroupPresenter;
 import com.example.android.vkgroup.R;
-import com.example.android.vkgroup.adapters.GroupAdapter;
-import com.example.android.vkgroup.views.GroupView;
+import com.example.android.vkgroup.adapter.GroupAdapter;
+import com.example.android.vkgroup.view.GroupView;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import java.util.List;
-import java.util.concurrent.Callable;
-
-import io.reactivex.Completable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-
-import static com.example.android.vkgroup.models.AppDatabase.getINSTANCE;
-import static com.example.android.vkgroup.models.AppDatabase.listDb;
 
 public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     EditText searchGroup;
@@ -37,7 +29,6 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     CircularProgressView mCpvWait;
     RecyclerView mRvGroups;
     GroupAdapter mAdapter = new GroupAdapter();
-
 
     @InjectPresenter
     GroupPresenter groupPresenter;
@@ -47,39 +38,24 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
-        searchGroup = (EditText) findViewById(R.id.txt_search);
-        mTxtNoItem = (TextView) findViewById(R.id.txt_groups_no_item);
-        mCpvWait = (CircularProgressView) findViewById(R.id.cpv_groups);
-        mRvGroups = (RecyclerView) findViewById(R.id.recycler_groups);
+        searchGroup = findViewById(R.id.txt_search);
+        mTxtNoItem = findViewById(R.id.txt_groups_no_item);
+        mCpvWait = findViewById(R.id.cpv_groups);
+        mRvGroups = findViewById(R.id.recycler_groups);
 
         groupPresenter.loadGroups();
 
-        // Назначаем адаптер для RecyclerView
         mRvGroups.setAdapter(mAdapter);
-
-        //Назначаем параметры для RecyclerView
         mRvGroups.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
         mRvGroups.setHasFixedSize(true);
 
-
-        searchGroup.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
+        searchGroup.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mAdapter.filter(s.toString());
             }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
         });
     }
-
 
     @Override
     public void startLoading() {
@@ -102,18 +78,14 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     public void setupEmptyList() {
         mRvGroups.setVisibility(View.GONE);
         mTxtNoItem.setVisibility(View.VISIBLE);
-
     }
 
     @Override
     public void setupGroupsList(List<GroupModel> groupsList) {
         mRvGroups.setVisibility(View.VISIBLE);
         mTxtNoItem.setVisibility(View.GONE);
-
-        //Передаем нужный параметр из презентера
         mAdapter.setupGroups(groupsList);
     }
-
 
     public void onClickDone(View view) {
         startActivity(new Intent(GroupActivity.this, FavoriteActivity.class));

@@ -1,11 +1,10 @@
-package com.example.android.vkgroup.presenters;
+package com.example.android.vkgroup.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.example.android.vkgroup.R;
-import com.example.android.vkgroup.models.GroupModel;
-import com.example.android.vkgroup.providers.GroupProvider;
-import com.example.android.vkgroup.views.FavoriteView;
+import com.example.android.vkgroup.model.GroupModel;
+import com.example.android.vkgroup.provider.GroupProvider;
+import com.example.android.vkgroup.view.FavoriteView;
 
 import java.util.List;
 
@@ -17,13 +16,10 @@ public class FavoritePresenter extends MvpPresenter<FavoriteView> {
         groupProvider.loadFavoriteGroups();
     }
 
-    public void groupsFavoriteLoaded(List<GroupModel> groupModelFavoriteList){
-
-        if (groupModelFavoriteList.size() == 0){
+    public void groupsFavoriteLoaded(List<GroupModel> groupModelFavoriteList) {
+        if (groupModelFavoriteList.size() == 0) {
             getViewState().setupEmptyList();
-
-        }
-        else
+        } else
             getViewState().setupGroupsList(groupModelFavoriteList);
     }
 }

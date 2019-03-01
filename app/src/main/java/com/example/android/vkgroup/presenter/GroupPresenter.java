@@ -1,21 +1,16 @@
-package com.example.android.vkgroup.presenters;
-
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.CheckBox;
+package com.example.android.vkgroup.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.example.android.vkgroup.adapters.GroupAdapter;
-import com.example.android.vkgroup.models.GroupModel;
+import com.example.android.vkgroup.model.GroupModel;
 import com.example.android.vkgroup.R;
-import com.example.android.vkgroup.providers.GroupDbProvider;
-import com.example.android.vkgroup.providers.GroupProvider;
-import com.example.android.vkgroup.views.GroupView;
+import com.example.android.vkgroup.provider.GroupDbProvider;
+import com.example.android.vkgroup.provider.GroupProvider;
+import com.example.android.vkgroup.view.GroupView;
 
 import java.util.List;
 
-import static com.example.android.vkgroup.activities.StartActivity.isOnline;
+import static com.example.android.vkgroup.helper.Helper.isOnline;
 import static com.vk.sdk.VKUIHelper.getApplicationContext;
 
 @InjectViewState
@@ -24,14 +19,12 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
     public void loadGroups() {
         getViewState().startLoading();
 
-
         if (isOnline(getApplicationContext())) {
             GroupDbProvider groupDbProvider = new GroupDbProvider(this);
             groupDbProvider.loadGroupToDb();
         }
 
         GroupProvider groupProvider = new GroupProvider(this);
-        //groupProvider.testLoadGroups(true);
         groupProvider.loadGroups();
     }
 
@@ -44,9 +37,13 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
             getViewState().setupGroupsList(groupModelList);
     }
 
-
     public void showError(int textResource) {
         getViewState().showError(textResource);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+    }
 }

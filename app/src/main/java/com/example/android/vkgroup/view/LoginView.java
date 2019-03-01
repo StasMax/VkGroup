@@ -1,4 +1,4 @@
-package com.example.android.vkgroup.views;
+package com.example.android.vkgroup.view;
 
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;

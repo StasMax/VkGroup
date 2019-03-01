@@ -1,34 +1,25 @@
-package com.example.android.vkgroup.presenters;
+package com.example.android.vkgroup.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.android.vkgroup.R;
-import com.example.android.vkgroup.views.LoginView;
+import com.example.android.vkgroup.ui.StartActivity;
+import com.example.android.vkgroup.view.LoginView;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
+import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 
+import static com.example.android.vkgroup.helper.Helper.isOnline;
+
 @InjectViewState
 public class LoginPresenter extends MvpPresenter<LoginView> {
-
-    public void login(final Boolean isSuccess) {
-        getViewState().startLoading();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getViewState().endLoading();
-
-            }
-        }, 500);
-        if (isSuccess) getViewState().openGroups();
-        else getViewState().showError(R.string.error_login);
-    }
-
 
     public void loginVk(int requestCode, int resultCode, Intent data) {
         if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
@@ -45,5 +36,10 @@ public class LoginPresenter extends MvpPresenter<LoginView> {
         })) ;
     }
 
-
+    public void clickEnter(Context context) {
+        if (isOnline(context)) {
+            VKSdk.login((Activity) context, VKScope.GROUPS);
+        } else
+            getViewState().openGroups();
+    }
 }

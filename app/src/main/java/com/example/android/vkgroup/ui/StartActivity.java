@@ -1,4 +1,4 @@
-package com.example.android.vkgroup.activities;
+package com.example.android.vkgroup.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,23 +13,21 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.example.android.vkgroup.models.AppDatabase;
-import com.example.android.vkgroup.presenters.LoginPresenter;
+import com.example.android.vkgroup.model.AppDatabase;
+import com.example.android.vkgroup.presenter.LoginPresenter;
 import com.example.android.vkgroup.R;
-import com.example.android.vkgroup.views.LoginView;
+import com.example.android.vkgroup.view.LoginView;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 
-import static com.example.android.vkgroup.models.AppDatabase.getDatabase;
+import static com.example.android.vkgroup.helper.Helper.isOnline;
+import static com.example.android.vkgroup.model.AppDatabase.getDatabase;
 
 public class StartActivity extends MvpAppCompatActivity implements LoginView {
-TextView mTextHello;
-Button mButEnter;
-CircularProgressView mCpvWait;
-    AppDatabase db;
-
-
+    TextView mTextHello;
+    Button mButEnter;
+    CircularProgressView mCpvWait;
 
     @InjectPresenter
     LoginPresenter loginPresenter;
@@ -40,31 +38,26 @@ CircularProgressView mCpvWait;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         getDatabase(this);
-        mTextHello = (TextView)findViewById(R.id.privetstvie);
-        mButEnter = (Button)findViewById(R.id.enter);
-        mCpvWait = (CircularProgressView)findViewById(R.id.cpv_login);
+        mTextHello = findViewById(R.id.privetstvie);
+        mButEnter = findViewById(R.id.enter);
+        mCpvWait = findViewById(R.id.cpv_login);
         mButEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  loginPresenter.login(true);
-                if (isOnline(StartActivity.this)){
-                VKSdk.login(StartActivity.this, VKScope.GROUPS);
-                }else openGroups();
+                loginPresenter.clickEnter(StartActivity.this);
             }
         });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        // super.onActivityResult(requestCode, resultCode, data);
         loginPresenter.loginVk(requestCode, resultCode, data);
     }
 
     @Override
     public void startLoading() {
-mButEnter.setVisibility(View.GONE);
-mCpvWait.setVisibility(View.VISIBLE);
-
+        mButEnter.setVisibility(View.GONE);
+        mCpvWait.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -80,21 +73,6 @@ mCpvWait.setVisibility(View.VISIBLE);
 
     @Override
     public void openGroups() {
-        Intent intent = new Intent(getApplicationContext(), GroupActivity.class);
-        startActivity(intent);
-
+        startActivity(new Intent(getApplicationContext(), GroupActivity.class));
     }
-
-    public static boolean isOnline(Context context)
-    {
-        ConnectivityManager cm =
-                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting())
-        {
-            return true;
-        }
-        return false;
-    }
-
 }

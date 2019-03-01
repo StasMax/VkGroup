@@ -1,4 +1,4 @@
-package com.example.android.vkgroup.models;
+package com.example.android.vkgroup.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;

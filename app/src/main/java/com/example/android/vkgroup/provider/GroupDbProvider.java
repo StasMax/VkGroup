@@ -1,10 +1,10 @@
-package com.example.android.vkgroup.providers;
+package com.example.android.vkgroup.provider;
 
 
 import android.util.Log;
 
-import com.example.android.vkgroup.models.GroupModel;
-import com.example.android.vkgroup.presenters.GroupPresenter;
+import com.example.android.vkgroup.model.GroupModel;
+import com.example.android.vkgroup.presenter.GroupPresenter;
 import com.example.android.vkgroup.R;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -27,25 +27,23 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.example.android.vkgroup.models.AppDatabase.deleteAllDb;
-import static com.example.android.vkgroup.models.AppDatabase.getINSTANCE;
-import static com.example.android.vkgroup.models.AppDatabase.listDb;
-import static com.example.android.vkgroup.models.AppDatabase.loadLstDb;
+import static com.example.android.vkgroup.model.AppDatabase.deleteAllDb;
+import static com.example.android.vkgroup.model.AppDatabase.getINSTANCE;
+import static com.example.android.vkgroup.model.AppDatabase.listDb;
+import static com.example.android.vkgroup.model.AppDatabase.loadLstDb;
 
 public class GroupDbProvider {
 
     private GroupPresenter dbPresenter;
-    List<GroupModel> listGroups = new ArrayList<>();
-    List<GroupModel> queryDbList;
-    List<GroupModel> queryDbListFavorite = new ArrayList<>();
-    public static final String TAG = "JSON";
+    private List<GroupModel> listGroups = new ArrayList<>();
+    private List<GroupModel> queryDbList;
+    private List<GroupModel> queryDbListFavorite = new ArrayList<>();
     private String vkName;
     private String vkSubscription;
     private String vkAvatar;
 
-
     public GroupDbProvider(GroupPresenter dbPresenter) {
-        dbPresenter = dbPresenter;
+        this.dbPresenter = dbPresenter;
     }
 
     public void loadGroupToDb() {
@@ -85,14 +83,12 @@ public class GroupDbProvider {
 
         VKRequest request = VKApi.groups().get(VKParameters.from(VKApiConst.FIELDS, "members_count", VKApiConst.EXTENDED, 1));
         request.executeWithListener(new VKRequest.VKRequestListener() {
-
             @Override
             public void onComplete(VKResponse response) {
                 super.onComplete(response);
                 JsonParser jsonParser = new JsonParser();
                 JsonObject parsedJson = jsonParser.parse(response.json.toString()).getAsJsonObject();
                 JsonArray jsonArray = parsedJson.get("response").getAsJsonObject().getAsJsonArray("items");
-
                 for (JsonElement je : jsonArray
                 ) {
 
@@ -108,30 +104,20 @@ public class GroupDbProvider {
                     }
 
                     listGroups.add(new GroupModel(vkName, vkSubscription, vkAvatar, false));
-                    //  Log.e(TAG, String.valueOf(vkName+" || "+vkSubscription+ " || "+vkAvatar));
-                    Log.e(TAG, String.valueOf(queryDbListFavorite));
-
 
                     for (int i = 0; i < listGroups.size(); i++) {
                         for (int j = 0; j < queryDbListFavorite.size(); j++) {
-
-                            Log.e(TAG, queryDbListFavorite.get(j).getFavorite().toString());
-
                             if (queryDbListFavorite.get(j).equals(listGroups.get(i))) {
                                 listGroups.get(i).setFavorite(queryDbListFavorite.get(j).getFavorite());
-
                             }
                         }
                     }
-
                 }
-
 
                 Callable<Void> clb = new Callable<Void>() {
                     @Override
                     public Void call() throws Exception {
                         listDb(listGroups);
-                        //  updateGmList(queryDbListFavorite);
                         return null;
                     }
                 };
@@ -147,7 +133,5 @@ public class GroupDbProvider {
                 dbPresenter.showError(R.string.show_error_loading);
             }
         });
-
     }
-
 }

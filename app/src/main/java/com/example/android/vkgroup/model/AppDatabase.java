@@ -1,14 +1,9 @@
-package com.example.android.vkgroup.models;
+package com.example.android.vkgroup.model;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
-import android.arch.persistence.room.*;
-
-import com.example.android.vkgroup.activities.GroupActivity;
-import com.example.android.vkgroup.helpers.MyApplication;
-import com.example.android.vkgroup.providers.GroupDbProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +19,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     static List<GroupModel> mGroupModelList = new ArrayList<>();
 
-
     public abstract ModelDao getModelDao();
-
 
     private static volatile AppDatabase INSTANCE;
 
@@ -47,12 +40,9 @@ public abstract class AppDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-
     public static void listDb(List<GroupModel> groupModelList) {
-        for (GroupModel groupModel : groupModelList
-        ) {
+        for (GroupModel groupModel : groupModelList) {
             INSTANCE.getModelDao().insertAll(groupModel);
-
         }
     }
 
