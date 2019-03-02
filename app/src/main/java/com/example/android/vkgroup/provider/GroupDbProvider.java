@@ -3,7 +3,9 @@ package com.example.android.vkgroup.provider;
 
 import android.util.Log;
 
+import com.example.android.vkgroup.model.AppDatabase;
 import com.example.android.vkgroup.model.GroupModel;
+import com.example.android.vkgroup.model.ModelRepository;
 import com.example.android.vkgroup.presenter.GroupPresenter;
 import com.example.android.vkgroup.R;
 import com.google.gson.JsonArray;
@@ -21,20 +23,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import javax.inject.Inject;
+
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.example.android.vkgroup.model.AppDatabase.deleteAllDb;
-import static com.example.android.vkgroup.model.AppDatabase.getINSTANCE;
-import static com.example.android.vkgroup.model.AppDatabase.listDb;
-import static com.example.android.vkgroup.model.AppDatabase.loadLstDb;
-
 public class GroupDbProvider {
-
-    private GroupPresenter dbPresenter;
+    @Inject
+    public GroupPresenter dbPresenter;
+    @Inject
+    public AppDatabase providesRoomDatabase;
+    @Inject
+    public ModelRepository modelRepository;
     private List<GroupModel> listGroups = new ArrayList<>();
     private List<GroupModel> queryDbList;
     private List<GroupModel> queryDbListFavorite = new ArrayList<>();
@@ -42,6 +45,7 @@ public class GroupDbProvider {
     private String vkSubscription;
     private String vkAvatar;
 
+    @Inject
     public GroupDbProvider(GroupPresenter dbPresenter) {
         this.dbPresenter = dbPresenter;
     }
@@ -50,7 +54,7 @@ public class GroupDbProvider {
 
         listGroups.clear();
 
-        getINSTANCE().getModelDao().getByFavorite1(true)
+        providesRoomDatabase.getModelDao().getByFavorite1(true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<List<GroupModel>>() {
@@ -65,18 +69,16 @@ public class GroupDbProvider {
                     }
                 });
 
-
         Callable<Void> cdb = new Callable<Void>() {
             @Override
             public Void call() throws Exception {
-                queryDbList = loadLstDb();
+                queryDbList = modelRepository.loadLstDb();
                 if (queryDbList != null) {
-                    deleteAllDb(queryDbList);
+                    modelRepository.deleteAllDb(queryDbList);
                 }
                 return null;
             }
         };
-
         Disposable completable = Completable.fromCallable(cdb)
                 .subscribeOn(Schedulers.newThread())
                 .subscribe();
@@ -89,8 +91,7 @@ public class GroupDbProvider {
                 JsonParser jsonParser = new JsonParser();
                 JsonObject parsedJson = jsonParser.parse(response.json.toString()).getAsJsonObject();
                 JsonArray jsonArray = parsedJson.get("response").getAsJsonObject().getAsJsonArray("items");
-                for (JsonElement je : jsonArray
-                ) {
+                for (JsonElement je : jsonArray) {
 
                     if (je.getAsJsonObject().get("name") != null) {
                         vkName = je.getAsJsonObject().get("name").getAsString();
@@ -117,12 +118,11 @@ public class GroupDbProvider {
                 Callable<Void> clb = new Callable<Void>() {
                     @Override
                     public Void call() throws Exception {
-                        listDb(listGroups);
+                        modelRepository.listDb(listGroups);
                         return null;
                     }
                 };
-
-                Disposable mCompletable = Completable.fromCallable(clb)
+                Disposable completable = Completable.fromCallable(clb)
                         .subscribeOn(Schedulers.newThread())
                         .subscribe();
             }

@@ -14,6 +14,6 @@ public interface GroupView extends MvpView {
     void endLoading();
     void showError(int textResource);
     void setupEmptyList();
-    void setupGroupsList(List<GroupModel>groupsList);
+    void setupGroupsList();
 
 }

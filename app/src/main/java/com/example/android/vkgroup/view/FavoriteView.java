@@ -12,5 +12,5 @@ public interface FavoriteView extends MvpView {
 
     void setupEmptyList();
 
-    void setupGroupsList(List<GroupModel> groupsList);
+    void setupGroupsList();
 }

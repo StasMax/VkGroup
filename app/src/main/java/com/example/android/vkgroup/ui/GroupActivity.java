@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.android.vkgroup.adapter.TextWatcherAdapter;
+import com.example.android.vkgroup.app.App;
 import com.example.android.vkgroup.model.GroupModel;
 import com.example.android.vkgroup.presenter.GroupPresenter;
 import com.example.android.vkgroup.R;
@@ -23,12 +24,15 @@ import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     EditText searchGroup;
     TextView mTxtNoItem;
     CircularProgressView mCpvWait;
     RecyclerView mRvGroups;
-    GroupAdapter mAdapter = new GroupAdapter();
+    @Inject
+    GroupAdapter groupAdapter;
 
     @InjectPresenter
     GroupPresenter groupPresenter;
@@ -38,6 +42,7 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
+        App.getComponent().inject(this);
         searchGroup = findViewById(R.id.txt_search);
         mTxtNoItem = findViewById(R.id.txt_groups_no_item);
         mCpvWait = findViewById(R.id.cpv_groups);
@@ -45,14 +50,14 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
 
         groupPresenter.loadGroups();
 
-        mRvGroups.setAdapter(mAdapter);
+        mRvGroups.setAdapter(groupAdapter);
         mRvGroups.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
         mRvGroups.setHasFixedSize(true);
 
         searchGroup.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mAdapter.filter(s.toString());
+                groupAdapter.filter(s.toString());
             }
         });
     }
@@ -81,10 +86,9 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     }
 
     @Override
-    public void setupGroupsList(List<GroupModel> groupsList) {
+    public void setupGroupsList() {
         mRvGroups.setVisibility(View.VISIBLE);
         mTxtNoItem.setVisibility(View.GONE);
-        mAdapter.setupGroups(groupsList);
     }
 
     public void onClickDone(View view) {

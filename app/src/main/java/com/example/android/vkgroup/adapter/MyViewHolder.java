@@ -8,14 +8,16 @@ import android.widget.TextView;
 
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.model.GroupModel;
+import com.example.android.vkgroup.model.ModelRepository;
 import com.squareup.picasso.Picasso;
+
+import javax.inject.Inject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.android.vkgroup.model.AppDatabase.setFavorite;
-import static com.example.android.vkgroup.model.AppDatabase.setOutFavorite;
-
 public class MyViewHolder extends RecyclerView.ViewHolder {
+    @Inject
+    public ModelRepository modelRepository;
     private CheckBox mCheckBox;
     private CircleImageView mCivAvatar;
     private TextView mTxtGroupName;
@@ -41,10 +43,10 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 if (mCheckBox.isChecked()) {
                     groupModel.setFavorite(true);
-                    setFavorite(groupModel);
+                    modelRepository.setFavorite(groupModel);
                 } else {
                     groupModel.setFavorite(false);
-                    setOutFavorite(groupModel);
+                    modelRepository.setOutFavorite(groupModel);
                 }
             }
         });

@@ -11,16 +11,21 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.adapter.GroupAdapter;
+import com.example.android.vkgroup.app.App;
 import com.example.android.vkgroup.model.GroupModel;
 import com.example.android.vkgroup.presenter.FavoritePresenter;
 import com.example.android.vkgroup.view.FavoriteView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class FavoriteActivity extends MvpAppCompatActivity implements FavoriteView {
-    GroupAdapter mGroupAdapter = new GroupAdapter();
+
     TextView textViewNoFi;
     RecyclerView recyclerView;
+    @Inject
+    GroupAdapter groupAdapter;
 
     @InjectPresenter
     FavoritePresenter favoritePresenter;
@@ -30,16 +35,16 @@ public class FavoriteActivity extends MvpAppCompatActivity implements FavoriteVi
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
-        textViewNoFi = (TextView) findViewById(R.id.txt_groups_no_item_favorite);
+        App.getComponent().inject(this);
+        textViewNoFi = findViewById(R.id.txt_groups_no_item_favorite);
 
         favoritePresenter.loadGroups();
 
-        recyclerView = (RecyclerView) findViewById(R.id.favorite_recycler_view);
-        recyclerView.setAdapter(mGroupAdapter);
+        recyclerView = findViewById(R.id.favorite_recycler_view);
+        recyclerView.setAdapter(groupAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
         recyclerView.setHasFixedSize(true);
     }
-
 
     @Override
     public void setupEmptyList() {
@@ -47,8 +52,7 @@ public class FavoriteActivity extends MvpAppCompatActivity implements FavoriteVi
     }
 
     @Override
-    public void setupGroupsList(List<GroupModel> groupsList) {
+    public void setupGroupsList() {
         textViewNoFi.setVisibility(View.GONE);
-        mGroupAdapter.setupFavoriteGroups(groupsList);
     }
 }

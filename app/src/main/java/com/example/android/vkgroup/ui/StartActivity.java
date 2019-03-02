@@ -1,9 +1,6 @@
 package com.example.android.vkgroup.ui;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -13,16 +10,11 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.example.android.vkgroup.model.AppDatabase;
+import com.example.android.vkgroup.app.App;
 import com.example.android.vkgroup.presenter.LoginPresenter;
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.view.LoginView;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
-import com.vk.sdk.VKScope;
-import com.vk.sdk.VKSdk;
-
-import static com.example.android.vkgroup.helper.Helper.isOnline;
-import static com.example.android.vkgroup.model.AppDatabase.getDatabase;
 
 public class StartActivity extends MvpAppCompatActivity implements LoginView {
     TextView mTextHello;
@@ -37,10 +29,10 @@ public class StartActivity extends MvpAppCompatActivity implements LoginView {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        getDatabase(this);
+        App.getComponent().inject(this);
         mTextHello = findViewById(R.id.privetstvie);
-        mButEnter = findViewById(R.id.enter);
         mCpvWait = findViewById(R.id.cpv_login);
+        mButEnter = findViewById(R.id.enter);
         mButEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
