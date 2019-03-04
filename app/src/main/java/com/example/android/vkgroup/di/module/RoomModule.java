@@ -1,8 +1,10 @@
 package com.example.android.vkgroup.di.module;
 
+import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
+import com.example.android.vkgroup.app.App;
 import com.example.android.vkgroup.di.scope.ApplicationScope;
 import com.example.android.vkgroup.model.AppDatabase;
 import com.example.android.vkgroup.model.ModelDao;
@@ -18,19 +20,18 @@ public class RoomModule {
    private AppDatabase database;
 
     @ApplicationScope
-   public RoomModule(Context context) {
-        database = Room.databaseBuilder(context, AppDatabase.class, "app_database").build();
+   public RoomModule(Application mApplication) {
+        database = Room.databaseBuilder(mApplication.getApplicationContext(), AppDatabase.class, "app_database").build();
+    }
+    @ApplicationScope
+    @Provides
+    AppDatabase providesRoomDatabase(){
+       return database;
     }
 
     @ApplicationScope
     @Provides
-    AppDatabase providesRoomDatabase() {
-        return database;
-    }
-
-    @ApplicationScope
-    @Provides
-    ModelDao providesProductDao(AppDatabase database) {
+    ModelDao providesModelDao(AppDatabase database) {
         return database.getModelDao();
     }
 
@@ -39,5 +40,4 @@ public class RoomModule {
     ModelRepository modelRepository(ModelDao modelDao) {
         return new ModelDataSource(modelDao);
     }
-
-}
+  }

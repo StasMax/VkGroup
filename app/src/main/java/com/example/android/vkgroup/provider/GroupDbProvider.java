@@ -1,13 +1,12 @@
 package com.example.android.vkgroup.provider;
 
 
-import android.util.Log;
-
+import com.example.android.vkgroup.R;
+import com.example.android.vkgroup.app.App;
 import com.example.android.vkgroup.model.AppDatabase;
 import com.example.android.vkgroup.model.GroupModel;
 import com.example.android.vkgroup.model.ModelRepository;
 import com.example.android.vkgroup.presenter.GroupPresenter;
-import com.example.android.vkgroup.R;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -32,8 +31,7 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class GroupDbProvider {
-    @Inject
-    public GroupPresenter dbPresenter;
+
     @Inject
     public AppDatabase providesRoomDatabase;
     @Inject
@@ -45,16 +43,13 @@ public class GroupDbProvider {
     private String vkSubscription;
     private String vkAvatar;
 
-    @Inject
-    public GroupDbProvider(GroupPresenter dbPresenter) {
-        this.dbPresenter = dbPresenter;
-    }
+      public GroupDbProvider() {
+      App.getComponent().inject(this);}
 
     public void loadGroupToDb() {
-
         listGroups.clear();
 
-        providesRoomDatabase.getModelDao().getByFavorite1(true)
+        providesRoomDatabase.getModelDao().getByFavoriteSingle(true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<List<GroupModel>>() {
@@ -130,7 +125,7 @@ public class GroupDbProvider {
             @Override
             public void onError(VKError error) {
                 super.onError(error);
-                dbPresenter.showError(R.string.show_error_loading);
+                //dbPresenter.showError(R.string.show_error_loading);
             }
         });
     }

@@ -11,12 +11,13 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class ModelDataSource implements ModelRepository {
+
     private List<GroupModel> mGroupModelList = new ArrayList<>();
     private ModelDao modelDao;
 
     @Inject
     public ModelDataSource(ModelDao modelDao) {
-        this.modelDao = modelDao;
+               this.modelDao = modelDao;
     }
 
     public void listDb(List<GroupModel> groupModelList) {
@@ -26,7 +27,7 @@ public class ModelDataSource implements ModelRepository {
     }
 
     public List<GroupModel> loadLstDb() {
-        mGroupModelList.addAll(modelDao.getAll1());
+        mGroupModelList.addAll(modelDao.getAllList());
         return mGroupModelList;
     }
 
@@ -43,7 +44,7 @@ public class ModelDataSource implements ModelRepository {
         Callable<Void> clb = new Callable<Void>() {
             @Override
             public Void call() throws Exception {
-                modelDao.insertFavorite(groupModel);
+                modelDao.update(groupModel);
                 return null;
             }
         };
@@ -56,7 +57,7 @@ public class ModelDataSource implements ModelRepository {
         Callable<Void> clb = new Callable<Void>() {
             @Override
             public Void call() throws Exception {
-                modelDao.insertFavorite(groupModel);
+                modelDao.update(groupModel);
                 return null;
             }
         };

@@ -5,24 +5,19 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.example.android.vkgroup.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.adapter.TextWatcherAdapter;
 import com.example.android.vkgroup.app.App;
-import com.example.android.vkgroup.model.GroupModel;
 import com.example.android.vkgroup.presenter.GroupPresenter;
 import com.example.android.vkgroup.R;
-import com.example.android.vkgroup.adapter.GroupAdapter;
 import com.example.android.vkgroup.view.GroupView;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -31,8 +26,8 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     TextView mTxtNoItem;
     CircularProgressView mCpvWait;
     RecyclerView mRvGroups;
-    @Inject
-    GroupAdapter groupAdapter;
+       @Inject
+    GroupAdapterRv groupAdapterRv;
 
     @InjectPresenter
     GroupPresenter groupPresenter;
@@ -48,16 +43,16 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
         mCpvWait = findViewById(R.id.cpv_groups);
         mRvGroups = findViewById(R.id.recycler_groups);
 
-        groupPresenter.loadGroups();
+        groupPresenter.loadGroupsVk();
 
-        mRvGroups.setAdapter(groupAdapter);
+        mRvGroups.setAdapter(groupAdapterRv);
         mRvGroups.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
         mRvGroups.setHasFixedSize(true);
 
         searchGroup.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                groupAdapter.filter(s.toString());
+                groupAdapterRv.filter(s.toString());
             }
         });
     }
@@ -94,4 +89,12 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     public void onClickDone(View view) {
         startActivity(new Intent(GroupActivity.this, FavoriteActivity.class));
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        groupPresenter.loadGroupsFromDb();
+    }
+
+
 }

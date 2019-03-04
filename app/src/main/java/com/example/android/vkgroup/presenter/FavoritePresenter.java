@@ -2,9 +2,11 @@ package com.example.android.vkgroup.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.example.android.vkgroup.adapter.GroupAdapter;
+import com.example.android.vkgroup.adapter.GroupAdapterRv;
+import com.example.android.vkgroup.app.App;
 import com.example.android.vkgroup.model.AppDatabase;
 import com.example.android.vkgroup.model.GroupModel;
+import com.example.android.vkgroup.model.ModelDao;
 import com.example.android.vkgroup.view.FavoriteView;
 
 import java.util.List;
@@ -21,11 +23,17 @@ public class FavoritePresenter extends MvpPresenter<FavoriteView> {
     @Inject
     public AppDatabase providesRoomDatabase;
     @Inject
-    public GroupAdapter groupAdapter;
+    public ModelDao mModelDao;
+    @Inject
+    public GroupAdapterRv groupAdapter;
     private Disposable disposable;
 
+    public FavoritePresenter(){
+        App.getComponent().inject(this);
+    }
+
     public void loadGroups() {
-        disposable = providesRoomDatabase.getModelDao().getByFavorite(true)
+        disposable = mModelDao.getByFavorite(true)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<GroupModel>>() {
@@ -49,4 +57,4 @@ public class FavoritePresenter extends MvpPresenter<FavoriteView> {
         super.onDestroy();
         disposable.dispose();
     }
-}
+  }

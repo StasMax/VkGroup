@@ -10,13 +10,10 @@ import android.widget.TextView;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.android.vkgroup.R;
-import com.example.android.vkgroup.adapter.GroupAdapter;
+import com.example.android.vkgroup.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.app.App;
-import com.example.android.vkgroup.model.GroupModel;
 import com.example.android.vkgroup.presenter.FavoritePresenter;
 import com.example.android.vkgroup.view.FavoriteView;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -25,7 +22,7 @@ public class FavoriteActivity extends MvpAppCompatActivity implements FavoriteVi
     TextView textViewNoFi;
     RecyclerView recyclerView;
     @Inject
-    GroupAdapter groupAdapter;
+    GroupAdapterRv groupAdapter;
 
     @InjectPresenter
     FavoritePresenter favoritePresenter;
