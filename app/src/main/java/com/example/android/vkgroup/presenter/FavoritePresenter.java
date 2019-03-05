@@ -4,9 +4,10 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.android.vkgroup.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.app.App;
-import com.example.android.vkgroup.model.AppDatabase;
+
 import com.example.android.vkgroup.model.GroupModel;
 import com.example.android.vkgroup.model.ModelDao;
+import com.example.android.vkgroup.model.ModelRepository;
 import com.example.android.vkgroup.view.FavoriteView;
 
 import java.util.List;
@@ -15,20 +16,19 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
 public class FavoritePresenter extends MvpPresenter<FavoriteView> {
     @Inject
-    public AppDatabase providesRoomDatabase;
+    ModelDao mModelDao;
     @Inject
-    public ModelDao mModelDao;
+    GroupAdapterRv groupAdapterRv;
     @Inject
-    public GroupAdapterRv groupAdapter;
+    ModelRepository modelRepository;
     private Disposable disposable;
 
-    public FavoritePresenter(){
+    public FavoritePresenter() {
         App.getComponent().inject(this);
     }
 
@@ -36,12 +36,7 @@ public class FavoritePresenter extends MvpPresenter<FavoriteView> {
         disposable = mModelDao.getByFavorite(true)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<GroupModel>>() {
-                    @Override
-                    public void accept(List<GroupModel> loadGroupList) throws Exception {
-                        groupsFavoriteLoaded(loadGroupList);
-                    }
-                });
+                .subscribe(loadGroupList -> groupsFavoriteLoaded(loadGroupList));
     }
 
     public void groupsFavoriteLoaded(List<GroupModel> groupModelFavoriteList) {
@@ -49,12 +44,13 @@ public class FavoritePresenter extends MvpPresenter<FavoriteView> {
             getViewState().setupEmptyList();
         } else
             getViewState().setupGroupsList();
-        groupAdapter.setupFavoriteGroups(groupModelFavoriteList);
+        groupAdapterRv.setupFavoriteGroups(groupModelFavoriteList);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         disposable.dispose();
+        groupAdapterRv.getDispCheckBox().dispose();
     }
-  }
+}

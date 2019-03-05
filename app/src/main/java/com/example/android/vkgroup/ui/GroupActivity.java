@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.android.vkgroup.adapter.GroupAdapterRv;
-import com.example.android.vkgroup.adapter.TextWatcherAdapter;
 import com.example.android.vkgroup.app.App;
 import com.example.android.vkgroup.presenter.GroupPresenter;
 import com.example.android.vkgroup.R;
@@ -21,12 +20,20 @@ import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
+
 public class GroupActivity extends MvpAppCompatActivity implements GroupView {
+    @BindView(R.id.txt_search)
     EditText searchGroup;
+    @BindView(R.id.txt_groups_no_item)
     TextView mTxtNoItem;
+    @BindView(R.id.cpv_groups)
     CircularProgressView mCpvWait;
+    @BindView(R.id.recycler_groups)
     RecyclerView mRvGroups;
-       @Inject
+    @Inject
     GroupAdapterRv groupAdapterRv;
 
     @InjectPresenter
@@ -37,24 +44,19 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
+        ButterKnife.bind(this);
         App.getComponent().inject(this);
-        searchGroup = findViewById(R.id.txt_search);
-        mTxtNoItem = findViewById(R.id.txt_groups_no_item);
-        mCpvWait = findViewById(R.id.cpv_groups);
-        mRvGroups = findViewById(R.id.recycler_groups);
 
         groupPresenter.loadGroupsVk();
 
         mRvGroups.setAdapter(groupAdapterRv);
         mRvGroups.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
         mRvGroups.setHasFixedSize(true);
+    }
 
-        searchGroup.addTextChangedListener(new TextWatcherAdapter() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                groupAdapterRv.filter(s.toString());
-            }
-        });
+    @OnTextChanged(R.id.txt_search)
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        groupAdapterRv.filter(s.toString());
     }
 
     @Override

@@ -12,7 +12,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ModelDataSource implements ModelRepository {
 
-    private List<GroupModel> mGroupModelList = new ArrayList<>();
+    private List<GroupModel> groupModelList = new ArrayList<>();
+    private List<GroupModel> groupModelFavoriteList = new ArrayList<>();
     private ModelDao modelDao;
 
     @Inject
@@ -27,8 +28,13 @@ public class ModelDataSource implements ModelRepository {
     }
 
     public List<GroupModel> loadLstDb() {
-        mGroupModelList.addAll(modelDao.getAllList());
-        return mGroupModelList;
+        groupModelList.addAll(modelDao.getAllList());
+        return groupModelList;
+    }
+
+    @Override
+    public List<GroupModel> loadFavoriteList() {
+       return modelDao.getByFavoriteList(true);
     }
 
     public void deleteAllDb(List<GroupModel> groupModelList) {

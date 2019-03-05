@@ -12,6 +12,7 @@ import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.app.App;
 import com.example.android.vkgroup.model.GroupModel;
 import com.example.android.vkgroup.model.ModelRepository;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -20,12 +21,19 @@ import java.util.List;
 import javax.inject.Inject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.disposables.Disposable;
 
 public class GroupAdapterRv extends RecyclerView.Adapter<GroupAdapterRv.ViewHolder> {
-    private List<GroupModel> mGroupModelList = new ArrayList<>();
-    private List<GroupModel> mSourseList = new ArrayList<>();
+
+    public List<GroupModel> mGroupModelList = new ArrayList<>();
+    public List<GroupModel> mSourseList = new ArrayList<>();
     @Inject
     public ModelRepository modelRepository;
+    private Disposable dispCheckBox;
+
+    public Disposable getDispCheckBox() {
+        return dispCheckBox;
+    }
 
     public GroupAdapterRv() {
         App.getComponent().inject(this);
@@ -37,9 +45,9 @@ public class GroupAdapterRv extends RecyclerView.Adapter<GroupAdapterRv.ViewHold
         filter("");
     }
 
-    public void setupFavoriteGroups(List<GroupModel> groupModelList) {
+    public void setupFavoriteGroups(List<GroupModel> groupModelListFavorite) {
         mGroupModelList.clear();
-        mGroupModelList.addAll(groupModelList);
+        mGroupModelList.addAll(groupModelListFavorite);
         notifyDataSetChanged();
     }
 
@@ -80,7 +88,6 @@ public class GroupAdapterRv extends RecyclerView.Adapter<GroupAdapterRv.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         private CheckBox mCheckBox;
         private CircleImageView mCivAvatar;
         private TextView mTxtGroupName;
@@ -97,23 +104,18 @@ public class GroupAdapterRv extends RecyclerView.Adapter<GroupAdapterRv.ViewHold
         public void bind(final GroupModel groupModel) {
             mTxtGroupName.setText(groupModel.getName());
             mTxtSubscribers.setText(groupModel.getSubscribers());
-
             if (groupModel.getFavorite()) mCheckBox.setChecked(true);
             else mCheckBox.setChecked(false);
 
-            mCheckBox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mCheckBox.isChecked()) {
-                        groupModel.setFavorite(true);
-                        modelRepository.setFavorite(groupModel);
-                    } else {
-                        groupModel.setFavorite(false);
-                        modelRepository.setOutFavorite(groupModel);
-                    }
+            dispCheckBox = RxView.clicks(mCheckBox).subscribe(o -> {
+                if (mCheckBox.isChecked()) {
+                    groupModel.setFavorite(true);
+                    modelRepository.setFavorite(groupModel);
+                } else {
+                    groupModel.setFavorite(false);
+                    modelRepository.setOutFavorite(groupModel);
                 }
             });
-
             if (groupModel.getAvatar() != null) {
                 Picasso.with(itemView.getContext()).load(groupModel.getAvatar()).into(mCivAvatar);
             }

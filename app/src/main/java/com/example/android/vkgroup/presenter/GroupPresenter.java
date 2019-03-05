@@ -51,12 +51,7 @@ public GroupPresenter(){
         disposable = providesRoomDatabase.getModelDao().getAll()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<GroupModel>>() {
-                    @Override
-                    public void accept(List<GroupModel> loadGroupList) throws Exception {
-                        groupsLoaded(loadGroupList);
-                    }
-                });
+                .subscribe(loadGroupList -> groupsLoaded(loadGroupList));
     }
 
     public void groupsLoaded(List<GroupModel> groupModelList) {
@@ -77,6 +72,7 @@ public GroupPresenter(){
     public void onDestroy() {
         super.onDestroy();
         disposable.dispose();
+        groupAdapterRv.getDispCheckBox().dispose();
 
     }
 

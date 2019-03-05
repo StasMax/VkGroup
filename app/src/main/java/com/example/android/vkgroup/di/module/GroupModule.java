@@ -10,25 +10,22 @@ import dagger.Provides;
 
 @Module
 public class GroupModule {
-
-
+    @ApplicationScope
     @Provides
-    GroupPresenter dbPresenter(){
+    GroupPresenter dbPresenter() {
         return new GroupPresenter();
     }
 
-
-  /*  @Provides
-    GroupDbProvider groupDbProvider(GroupPresenter dbPresenter){
-        return new GroupDbProvider(dbPresenter);
-    }*/
-  @Provides
-  GroupDbProvider groupDbProvider(){
-      return new GroupDbProvider();}
+    @ApplicationScope
+    @Provides
+    GroupDbProvider groupDbProvider() {
+        return new GroupDbProvider();
+    }
 
     @ApplicationScope
     @Provides
-    GroupAdapterRv groupAdapterRv(){
+    GroupAdapterRv groupAdapterRv() {
         return new GroupAdapterRv();
     }
+
 }

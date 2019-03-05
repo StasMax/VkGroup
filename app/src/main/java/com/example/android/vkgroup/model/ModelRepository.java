@@ -8,6 +8,8 @@ public interface ModelRepository {
 
     List<GroupModel> loadLstDb();
 
+    List<GroupModel> loadFavoriteList();
+
     void deleteAllDb(List<GroupModel> groupModelList);
 
     void updateGmList(List<GroupModel> groupModelList);

@@ -16,9 +16,15 @@ import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.view.LoginView;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class StartActivity extends MvpAppCompatActivity implements LoginView {
+    @BindView(R.id.privetstvie)
     TextView mTextHello;
+    @BindView(R.id.enter)
     Button mButEnter;
+    @BindView(R.id.cpv_login)
     CircularProgressView mCpvWait;
 
     @InjectPresenter
@@ -29,10 +35,9 @@ public class StartActivity extends MvpAppCompatActivity implements LoginView {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        ButterKnife.bind(this);
         App.getComponent().inject(this);
-        mTextHello = findViewById(R.id.privetstvie);
-        mCpvWait = findViewById(R.id.cpv_login);
-        mButEnter = findViewById(R.id.enter);
+
         mButEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
