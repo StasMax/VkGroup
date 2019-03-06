@@ -1,12 +1,10 @@
 package com.example.android.vkgroup.provider;
 
 
-import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.app.App;
-import com.example.android.vkgroup.model.AppDatabase;
 import com.example.android.vkgroup.model.GroupModel;
+import com.example.android.vkgroup.model.ModelDao;
 import com.example.android.vkgroup.model.ModelRepository;
-import com.example.android.vkgroup.presenter.GroupPresenter;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -26,16 +24,15 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class GroupDbProvider {
 
     @Inject
-    public AppDatabase providesRoomDatabase;
+    ModelRepository modelRepository;
     @Inject
-    public ModelRepository modelRepository;
+    ModelDao modelDao;
     private List<GroupModel> listGroups = new ArrayList<>();
     private List<GroupModel> queryDbList;
     private List<GroupModel> queryDbListFavorite = new ArrayList<>();
@@ -43,13 +40,13 @@ public class GroupDbProvider {
     private String vkSubscription;
     private String vkAvatar;
 
-      public GroupDbProvider() {
-      App.getComponent().inject(this);}
+    public GroupDbProvider() {
+        App.getComponent().inject(this);
+    }
 
     public void loadGroupToDb() {
         listGroups.clear();
-
-        providesRoomDatabase.getModelDao().getByFavoriteSingle(true)
+        modelDao.getByFavoriteSingle(true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<List<GroupModel>>() {
@@ -64,17 +61,14 @@ public class GroupDbProvider {
                     }
                 });
 
-        Callable<Void> cdb = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                queryDbList = modelRepository.loadLstDb();
-                if (queryDbList != null) {
-                    modelRepository.deleteAllDb(queryDbList);
-                }
-                return null;
+        Callable<Void> cdb = () -> {
+            queryDbList = modelRepository.loadLstDb();
+            if (queryDbList != null) {
+                modelRepository.deleteAllDb(queryDbList);
             }
+            return null;
         };
-        Disposable completable = Completable.fromCallable(cdb)
+        Completable.fromCallable(cdb)
                 .subscribeOn(Schedulers.newThread())
                 .subscribe();
 
@@ -87,18 +81,15 @@ public class GroupDbProvider {
                 JsonObject parsedJson = jsonParser.parse(response.json.toString()).getAsJsonObject();
                 JsonArray jsonArray = parsedJson.get("response").getAsJsonObject().getAsJsonArray("items");
                 for (JsonElement je : jsonArray) {
-
                     if (je.getAsJsonObject().get("name") != null) {
                         vkName = je.getAsJsonObject().get("name").getAsString();
                     }
-
                     if (je.getAsJsonObject().get("members_count") != null) {
                         vkSubscription = je.getAsJsonObject().get("members_count").getAsString();
                     }
                     if (je.getAsJsonObject().get("photo_100") != null) {
                         vkAvatar = je.getAsJsonObject().get("photo_100").getAsString();
                     }
-
                     listGroups.add(new GroupModel(vkName, vkSubscription, vkAvatar, false));
 
                     for (int i = 0; i < listGroups.size(); i++) {
@@ -109,15 +100,11 @@ public class GroupDbProvider {
                         }
                     }
                 }
-
-                Callable<Void> clb = new Callable<Void>() {
-                    @Override
-                    public Void call() throws Exception {
-                        modelRepository.listDb(listGroups);
-                        return null;
-                    }
+                Callable<Void> clb = () -> {
+                    modelRepository.listDb(listGroups);
+                    return null;
                 };
-                Disposable completable = Completable.fromCallable(clb)
+                Completable.fromCallable(clb)
                         .subscribeOn(Schedulers.newThread())
                         .subscribe();
             }
@@ -125,7 +112,6 @@ public class GroupDbProvider {
             @Override
             public void onError(VKError error) {
                 super.onError(error);
-                //dbPresenter.showError(R.string.show_error_loading);
             }
         });
     }

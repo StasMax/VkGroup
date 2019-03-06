@@ -25,7 +25,6 @@ import static com.example.android.vkgroup.helper.Helper.isOnline;
 
 @InjectViewState
 public class GroupPresenter extends MvpPresenter<GroupView> {
-
     @Inject
     public GroupDbProvider groupDbProvider;
     @Inject
@@ -34,11 +33,17 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
     public Context appContext;
     @Inject
     public AppDatabase providesRoomDatabase;
-       private Disposable disposable;
+    private Disposable disposable;
 
-public GroupPresenter(){
-    App.getComponent().inject(this);
-}
+    public GroupPresenter() {
+        App.getComponent().inject(this);
+    }
+
+    @Override
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
+        loadGroupsVk();
+    }
 
     public void loadGroupsVk() {
         getViewState().startLoading();
@@ -47,7 +52,8 @@ public GroupPresenter(){
             groupDbProvider.loadGroupToDb();
         }
     }
-    public void loadGroupsFromDb(){
+
+    public void loadGroupsFromDb() {
         disposable = providesRoomDatabase.getModelDao().getAll()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -55,7 +61,7 @@ public GroupPresenter(){
     }
 
     public void groupsLoaded(List<GroupModel> groupModelList) {
-            getViewState().endLoading();
+        getViewState().endLoading();
         if (groupModelList.size() == 0) {
             getViewState().setupEmptyList();
             getViewState().showError(R.string.no_grous_item);
@@ -64,16 +70,10 @@ public GroupPresenter(){
         groupAdapterRv.setupGroups(groupModelList);
     }
 
-    public void showError(int textResource) {
-        getViewState().showError(textResource);
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         disposable.dispose();
         groupAdapterRv.getDispCheckBox().dispose();
-
     }
-
 }

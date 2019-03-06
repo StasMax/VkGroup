@@ -38,12 +38,7 @@ public class StartActivity extends MvpAppCompatActivity implements LoginView {
         ButterKnife.bind(this);
         App.getComponent().inject(this);
 
-        mButEnter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginPresenter.clickEnter(StartActivity.this);
-            }
-        });
+        mButEnter.setOnClickListener(v -> loginPresenter.clickEnter(StartActivity.this));
     }
 
     @Override

@@ -32,6 +32,12 @@ public class FavoritePresenter extends MvpPresenter<FavoriteView> {
         App.getComponent().inject(this);
     }
 
+    @Override
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
+        loadGroups();
+    }
+
     public void loadGroups() {
         disposable = mModelDao.getByFavorite(true)
                 .subscribeOn(Schedulers.newThread())

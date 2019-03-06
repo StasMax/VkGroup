@@ -32,7 +32,7 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     @BindView(R.id.cpv_groups)
     CircularProgressView mCpvWait;
     @BindView(R.id.recycler_groups)
-    RecyclerView mRvGroups;
+    RecyclerView rvGroups;
     @Inject
     GroupAdapterRv groupAdapterRv;
 
@@ -47,11 +47,9 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
         ButterKnife.bind(this);
         App.getComponent().inject(this);
 
-        groupPresenter.loadGroupsVk();
-
-        mRvGroups.setAdapter(groupAdapterRv);
-        mRvGroups.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
-        mRvGroups.setHasFixedSize(true);
+        rvGroups.setAdapter(groupAdapterRv);
+        rvGroups.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
+        rvGroups.setHasFixedSize(true);
     }
 
     @OnTextChanged(R.id.txt_search)
@@ -62,7 +60,7 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     @Override
     public void startLoading() {
         mTxtNoItem.setVisibility(View.GONE);
-        mRvGroups.setVisibility(View.GONE);
+        rvGroups.setVisibility(View.GONE);
         mCpvWait.setVisibility(View.VISIBLE);
     }
 
@@ -78,13 +76,13 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
 
     @Override
     public void setupEmptyList() {
-        mRvGroups.setVisibility(View.GONE);
+        rvGroups.setVisibility(View.GONE);
         mTxtNoItem.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void setupGroupsList() {
-        mRvGroups.setVisibility(View.VISIBLE);
+        rvGroups.setVisibility(View.VISIBLE);
         mTxtNoItem.setVisibility(View.GONE);
     }
 

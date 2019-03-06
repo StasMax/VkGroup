@@ -23,7 +23,6 @@ public class LoginPresenter extends MvpPresenter<LoginView> {
 
     public void loginVk(int requestCode, int resultCode, Intent data) {
         if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
-
             @Override
             public void onResult(VKAccessToken res) {
                 getViewState().openGroups();
