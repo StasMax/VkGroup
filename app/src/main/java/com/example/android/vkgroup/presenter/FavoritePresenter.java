@@ -40,9 +40,9 @@ public class FavoritePresenter extends MvpPresenter<FavoriteView> {
 
     public void loadGroups() {
         disposable = mModelDao.getByFavorite(true)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(loadGroupList -> groupsFavoriteLoaded(loadGroupList));
+                .subscribe(this::groupsFavoriteLoaded);
     }
 
     public void groupsFavoriteLoaded(List<GroupModel> groupModelFavoriteList) {
