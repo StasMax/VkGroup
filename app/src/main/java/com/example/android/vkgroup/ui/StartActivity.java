@@ -18,6 +18,7 @@ import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class StartActivity extends MvpAppCompatActivity implements LoginView {
     @BindView(R.id.privetstvie)
@@ -26,7 +27,6 @@ public class StartActivity extends MvpAppCompatActivity implements LoginView {
     Button mButEnter;
     @BindView(R.id.cpv_login)
     CircularProgressView mCpvWait;
-
     @InjectPresenter
     LoginPresenter loginPresenter;
 
@@ -37,8 +37,11 @@ public class StartActivity extends MvpAppCompatActivity implements LoginView {
         setContentView(R.layout.activity_start);
         ButterKnife.bind(this);
         App.getComponent().inject(this);
+    }
 
-        mButEnter.setOnClickListener(v -> loginPresenter.clickEnter(StartActivity.this));
+    @OnClick(R.id.enter)
+    void onSaveClick() {
+        loginPresenter.clickEnter(StartActivity.this);
     }
 
     @Override

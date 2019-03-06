@@ -35,7 +35,6 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     RecyclerView rvGroups;
     @Inject
     GroupAdapterRv groupAdapterRv;
-
     @InjectPresenter
     GroupPresenter groupPresenter;
 

@@ -9,10 +9,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.vk.sdk.api.VKApi;
-import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;
-import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 
@@ -33,6 +30,8 @@ public class GroupDbProvider {
     ModelRepository modelRepository;
     @Inject
     ModelDao modelDao;
+    @Inject
+    VKRequest request;
     private List<GroupModel> listGroups = new ArrayList<>();
     private List<GroupModel> queryDbList;
     private List<GroupModel> queryDbListFavorite = new ArrayList<>();
@@ -72,7 +71,6 @@ public class GroupDbProvider {
                 .subscribeOn(Schedulers.newThread())
                 .subscribe();
 
-        VKRequest request = VKApi.groups().get(VKParameters.from(VKApiConst.FIELDS, "members_count", VKApiConst.EXTENDED, 1));
         request.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {

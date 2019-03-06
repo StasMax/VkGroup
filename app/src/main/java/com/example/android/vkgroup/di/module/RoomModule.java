@@ -20,8 +20,8 @@ public class RoomModule {
    private AppDatabase database;
 
     @ApplicationScope
-   public RoomModule(Application mApplication) {
-        database = Room.databaseBuilder(mApplication.getApplicationContext(), AppDatabase.class, "app_database").build();
+   public RoomModule(Application application) {
+        database = Room.databaseBuilder(application.getApplicationContext(), AppDatabase.class, "app_database").build();
     }
     @ApplicationScope
     @Provides

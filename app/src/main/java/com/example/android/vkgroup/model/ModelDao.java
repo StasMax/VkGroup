@@ -27,12 +27,6 @@ public interface ModelDao {
     @Query("SELECT * FROM dbGroups WHERE isFavorite LIKE :isFavorite")
     Single<List<GroupModel>> getByFavoriteSingle(Boolean isFavorite);
 
-    @Query("SELECT * FROM dbGroups WHERE isFavorite LIKE :isFavorite")
-    List<GroupModel> getByFavoriteList(Boolean isFavorite);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertFavorite(GroupModel groupModel);
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(GroupModel... groupModels);
 
@@ -41,8 +35,4 @@ public interface ModelDao {
 
     @Update
     void update(GroupModel groupModel);
-
-    @Update
-    void updateFavorite(List<GroupModel> groupModelListFavorite);
-
 }

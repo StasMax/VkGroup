@@ -25,10 +25,10 @@ import io.reactivex.disposables.Disposable;
 
 public class GroupAdapterRv extends RecyclerView.Adapter<GroupAdapterRv.ViewHolder> {
 
-    public List<GroupModel> mGroupModelList = new ArrayList<>();
-    public List<GroupModel> mSourseList = new ArrayList<>();
+    private List<GroupModel> mGroupModelList = new ArrayList<>();
+    private List<GroupModel> mSourceList = new ArrayList<>();
     @Inject
-    public ModelRepository modelRepository;
+    ModelRepository modelRepository;
     private Disposable dispCheckBox;
 
     public Disposable getDispCheckBox() {
@@ -40,8 +40,8 @@ public class GroupAdapterRv extends RecyclerView.Adapter<GroupAdapterRv.ViewHold
     }
 
     public void setupGroups(List<GroupModel> groupModelList) {
-        mSourseList.clear();
-        mSourseList.addAll(groupModelList);
+        mSourceList.clear();
+        mSourceList.addAll(groupModelList);
         filter("");
     }
 
@@ -53,7 +53,7 @@ public class GroupAdapterRv extends RecyclerView.Adapter<GroupAdapterRv.ViewHold
 
     public void filter(String query) {
         mGroupModelList.clear();
-        for (GroupModel gModel : mSourseList) {
+        for (GroupModel gModel : mSourceList) {
             if (gModel.getName().contains(query) || gModel.getName().toLowerCase().contains(query.toLowerCase())) {
                 mGroupModelList.add(gModel);
             }

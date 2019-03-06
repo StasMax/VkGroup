@@ -1,17 +1,11 @@
 package com.example.android.vkgroup.di.component;
 
-import android.app.Application;
-import android.content.Context;
-
 import com.example.android.vkgroup.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.di.module.AppModule;
 import com.example.android.vkgroup.di.module.ContextModule;
 import com.example.android.vkgroup.di.module.GroupModule;
 import com.example.android.vkgroup.di.module.RoomModule;
 import com.example.android.vkgroup.di.scope.ApplicationScope;
-import com.example.android.vkgroup.model.AppDatabase;
-import com.example.android.vkgroup.model.ModelDao;
-import com.example.android.vkgroup.model.ModelRepository;
 import com.example.android.vkgroup.presenter.FavoritePresenter;
 import com.example.android.vkgroup.presenter.GroupPresenter;
 import com.example.android.vkgroup.provider.GroupDbProvider;
@@ -38,20 +32,4 @@ public interface AppComponent {
     void inject(GroupDbProvider groupDbProvider);
 
     void inject(GroupAdapterRv groupAdapter);
-
-    ModelDao modelDao();
-
-    AppDatabase appDatabase();
-
-    ModelRepository modelRepository();
-
-    Context appContext();
-
-    Application application();
-
-    GroupDbProvider groupDbProvider();
-
-    GroupPresenter groupPresenter();
-
-    GroupAdapterRv groupAdapterRv();
 }
