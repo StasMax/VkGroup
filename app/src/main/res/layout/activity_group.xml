@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.GroupActivity">
-<EditText
-    android:id="@+id/txt_search"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="@string/group_search_hint"/>
+    tools:context=".presentation.mvp.ui.GroupActivity">
+
+    <EditText
+        android:id="@+id/txt_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/group_search_hint" />
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -24,11 +26,11 @@
 
 
         <TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/txt_groups_no_item"
-    android:layout_gravity="center"
-    android:visibility="gone"/>
+            android:id="@+id/txt_groups_no_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
 
         <com.github.rahatarmanahmed.cpv.CircularProgressView
             android:id="@+id/cpv_groups"
@@ -36,20 +38,20 @@
             android:layout_height="@dimen/load_size"
             android:layout_gravity="center"
             android:visibility="gone"
-            app:cpv_color="@color/colorPrimary"
             app:cpv_animAutostart="true"
-            app:cpv_indeterminate="true"/>
+            app:cpv_color="@color/colorPrimary"
+            app:cpv_indeterminate="true" />
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        android:src="@drawable/fb_star"
-        android:background="@color/colorPrimary"
-        android:backgroundTint="@color/colorPrimary"
-        android:onClick="onClickDone" />
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:background="@color/colorPrimary"
+            android:backgroundTint="@color/colorPrimary"
+            android:onClick="onClickDone"
+            android:src="@drawable/fb_star" />
 
     </android.support.design.widget.CoordinatorLayout>
 

@@ -2,12 +2,12 @@
     <string name="app_name">VkGroup</string>
     <string name="suc">Вы успешно авторизировались</string>
     <string name="not_suc">Ошибка авторизации</string>
-    <string name="privetstvie">Вас приветствует приложение Группы ВК.\n Нажмите кнопку войти, чтобы увидеть свой список групп</string>
+    <string name="hello_vk">Вас приветствует приложение Группы ВК.\n Нажмите кнопку войти, чтобы увидеть свой список групп</string>
     <string name="button_enter">Войти</string>
     <string name="error_login">Ошибка ввода логина</string>
     <string name="group_search_hint">Поиск по группам</string>
-    <string name="no_grous_item">Вы не вступили ни в одну группу</string>
+    <string name="no_groups_item">Вы не вступили ни в одну группу</string>
     <string name="show_error_loading">Ошибка загрузки</string>
-    <string name="no_grous_item_favorite">У Вас нет ни одной закладки</string>
+    <string name="no_groups_item_favorite">У Вас нет ни одной закладки</string>
     <integer name="com_vk_sdk_AppId">6847738</integer>
 </resources>
