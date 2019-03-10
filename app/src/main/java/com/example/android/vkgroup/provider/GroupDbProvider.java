@@ -2,9 +2,9 @@ package com.example.android.vkgroup.provider;
 
 
 import com.example.android.vkgroup.presentation.app.App;
-import com.example.android.vkgroup.model.GroupModel;
-import com.example.android.vkgroup.model.ModelDao;
-import com.example.android.vkgroup.model.ModelRepository;
+import com.example.android.vkgroup.data.model.GroupModel;
+import com.example.android.vkgroup.data.model.ModelDao;
+import com.example.android.vkgroup.data.model.ModelRepository;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

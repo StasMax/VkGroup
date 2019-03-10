@@ -1,4 +1,4 @@
-package com.example.android.vkgroup.model;
+package com.example.android.vkgroup.data.model;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;

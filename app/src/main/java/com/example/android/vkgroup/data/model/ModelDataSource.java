@@ -1,4 +1,4 @@
-package com.example.android.vkgroup.model;
+package com.example.android.vkgroup.data.model;
 
 import java.util.ArrayList;
 import java.util.List;

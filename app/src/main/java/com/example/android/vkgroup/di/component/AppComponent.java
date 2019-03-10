@@ -1,5 +1,6 @@
 package com.example.android.vkgroup.di.component;
 
+import com.example.android.vkgroup.data.repository.DataVkRepository;
 import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.di.module.AppModule;
 import com.example.android.vkgroup.di.module.ContextModule;
@@ -32,4 +33,6 @@ public interface AppComponent {
     void inject(GroupDbProvider groupDbProvider);
 
     void inject(GroupAdapterRv groupAdapter);
+
+    void inject(DataVkRepository dataVkRepository);
 }
