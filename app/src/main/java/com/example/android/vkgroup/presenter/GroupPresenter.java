@@ -57,7 +57,7 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
         disposable = providesRoomDatabase.getModelDao().getAll()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::groupsLoaded);
+                .subscribe(loadGroupList -> groupsLoaded(loadGroupList));
     }
 
     public void groupsLoaded(List<GroupModel> groupModelList) {
