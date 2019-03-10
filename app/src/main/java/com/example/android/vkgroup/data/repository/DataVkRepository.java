@@ -52,21 +52,14 @@ public class DataVkRepository implements VkRepository {
                     }
                     listGroups.add(new GroupModel(vkName, vkSubscription, vkAvatar, false));
 
-                    for (int i = 0; i < listGroups.size(); i++) {
+                 /*   for (int i = 0; i < listGroups.size(); i++) {
                         for (int j = 0; j < queryDbListFavorite.size(); j++) {
                             if (queryDbListFavorite.get(j).equals(listGroups.get(i))) {
                                 listGroups.get(i).setFavorite(queryDbListFavorite.get(j).getFavorite());
                             }
                         }
-                    }
+                    }*/
                 }
-                Callable<Void> clb = () -> {
-                    modelRepository.listDb(listGroups);
-                    return null;
-                };
-                Completable.fromCallable(clb)
-                        .subscribeOn(Schedulers.newThread())
-                        .subscribe();
             }
 
             @Override

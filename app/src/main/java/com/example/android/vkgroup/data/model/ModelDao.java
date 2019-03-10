@@ -19,16 +19,13 @@ public interface ModelDao {
     Flowable<List<GroupModel>> getAll();
 
     @Query("SELECT * FROM dbGroups")
-    List<GroupModel> getAllList();
+    Single<List<GroupModel>> getAllList();
 
     @Query("SELECT * FROM dbGroups WHERE isFavorite LIKE:isFavorite")
     Flowable<List<GroupModel>> getByFavorite(Boolean isFavorite);
 
-   // @Query("SELECT * FROM dbGroups WHERE isFavorite LIKE :isFavorite")
-   // Single<List<GroupModel>> getByFavoriteSingle(Boolean isFavorite);
-
     @Query("SELECT * FROM dbGroups WHERE isFavorite LIKE :isFavorite")
-    List<GroupModel> getByFavoriteSingle(Boolean isFavorite);
+    Single<List<GroupModel>> getByFavoriteSingle(Boolean isFavorite);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(GroupModel... groupModels);
@@ -38,4 +35,7 @@ public interface ModelDao {
 
     @Update
     void update(GroupModel groupModel);
+
+    @Update
+    void updateList(List<GroupModel> groupModelList);
 }

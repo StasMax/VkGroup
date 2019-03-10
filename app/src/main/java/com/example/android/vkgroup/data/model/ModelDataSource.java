@@ -22,16 +22,17 @@ public class ModelDataSource implements ModelRepository {
     }
 
     @Override
-    public void listDb(List<GroupModel> groupModelList) {
+    public void insertListInDb(List<GroupModel> groupModelList) {
         for (GroupModel groupModel : groupModelList) {
             modelDao.insertAll(groupModel);
         }
     }
+
     @Override
-    public List<GroupModel> loadLstDb() {
-        groupModelList.addAll(modelDao.getAllList());
-        return groupModelList;
+    public Single<List<GroupModel>> loadListDb() {
+        return modelDao.getAllList();
     }
+
     @Override
     public void deleteAllDb(List<GroupModel> groupModelList) {
         modelDao.deleteAll(groupModelList);
@@ -40,6 +41,11 @@ public class ModelDataSource implements ModelRepository {
     @Override
     public void update(GroupModel groupModel) {
         modelDao.update(groupModel);
+    }
+
+    @Override
+    public void updateList(List<GroupModel> groupModelList) {
+        modelDao.updateList(groupModelList);
     }
 
     @Override
