@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.example.android.vkgroup.presentation.app.App;
 import com.example.android.vkgroup.presentation.mvp.presenter.LoginPresenter;
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.presentation.mvp.view.LoginView;
@@ -36,6 +35,7 @@ public class StartActivity extends MvpAppCompatActivity implements LoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         ButterKnife.bind(this);
+
        // App.getComponent().inject(this);
     }
 
@@ -68,6 +68,6 @@ public class StartActivity extends MvpAppCompatActivity implements LoginView {
 
     @Override
     public void openGroups() {
-        startActivity(new Intent(StartActivity.this, GroupActivity.class));
+        startActivity(new Intent(getApplicationContext(), GroupActivity.class));
     }
 }

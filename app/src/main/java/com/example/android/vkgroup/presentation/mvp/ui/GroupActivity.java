@@ -40,7 +40,7 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
+    //    setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
         ButterKnife.bind(this);
