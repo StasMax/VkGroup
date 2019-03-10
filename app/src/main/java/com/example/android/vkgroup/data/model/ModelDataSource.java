@@ -7,6 +7,7 @@ import java.util.concurrent.Callable;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 
 public class ModelDataSource implements ModelRepository {
@@ -28,6 +29,11 @@ public class ModelDataSource implements ModelRepository {
     public List<GroupModel> loadLstDb() {
         groupModelList.addAll(modelDao.getAllList());
         return groupModelList;
+    }
+
+    @Override
+    public Flowable<List<GroupModel>> getAll() {
+        return modelDao.getAll();
     }
 
    public void deleteAllDb(List<GroupModel> groupModelList) {

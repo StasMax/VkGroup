@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.example.android.vkgroup.domain.interactor.GroupInteractor;
 import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.presentation.app.App;
 import com.example.android.vkgroup.data.model.AppDatabase;
@@ -32,6 +33,8 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
     public Context appContext;
     @Inject
     public AppDatabase providesRoomDatabase;
+    @Inject
+    GroupInteractor groupIteractor;
     private Disposable disposable;
 
     public GroupPresenter() {
