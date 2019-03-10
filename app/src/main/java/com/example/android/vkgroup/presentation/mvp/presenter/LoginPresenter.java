@@ -3,8 +3,6 @@ package com.example.android.vkgroup.presentation.mvp.presenter;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.android.vkgroup.R;
-import com.example.android.vkgroup.presentation.mvp.ui.GroupActivity;
-import com.example.android.vkgroup.presentation.mvp.ui.StartActivity;
 import com.example.android.vkgroup.presentation.mvp.view.LoginView;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
@@ -16,23 +14,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import javax.inject.Inject;
-
-import static android.support.v4.content.ContextCompat.startActivity;
 import static com.example.android.vkgroup.presentation.helper.Helper.isOnline;
 
 @InjectViewState
 public class LoginPresenter extends MvpPresenter<LoginView> {
 
-    LoginView mLoginView = new StartActivity();
-
     public void loginVk(int requestCode, int resultCode, Intent data) {
         if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
             @Override
             public void onResult(VKAccessToken res) {
-               // mLoginView.openGroups();
-              getViewState().openGroups();
-                            }
+                getViewState().openGroups();
+            }
 
             @Override
             public void onError(VKError error) {
