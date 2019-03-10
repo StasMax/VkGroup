@@ -1,4 +1,4 @@
-package com.example.android.vkgroup.ui;
+package com.example.android.vkgroup.presentation.mvp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +11,11 @@ import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.example.android.vkgroup.adapter.GroupAdapterRv;
-import com.example.android.vkgroup.app.App;
-import com.example.android.vkgroup.presenter.GroupPresenter;
+import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
+import com.example.android.vkgroup.presentation.app.App;
+import com.example.android.vkgroup.presentation.mvp.presenter.GroupPresenter;
 import com.example.android.vkgroup.R;
-import com.example.android.vkgroup.view.GroupView;
+import com.example.android.vkgroup.presentation.mvp.view.GroupView;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import javax.inject.Inject;

@@ -1,4 +1,4 @@
-package com.example.android.vkgroup.helper;
+package com.example.android.vkgroup.presentation.helper;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

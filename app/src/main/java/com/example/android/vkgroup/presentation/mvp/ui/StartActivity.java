@@ -1,4 +1,4 @@
-package com.example.android.vkgroup.ui;
+package com.example.android.vkgroup.presentation.mvp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,10 +10,10 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.example.android.vkgroup.app.App;
-import com.example.android.vkgroup.presenter.LoginPresenter;
+import com.example.android.vkgroup.presentation.app.App;
+import com.example.android.vkgroup.presentation.mvp.presenter.LoginPresenter;
 import com.example.android.vkgroup.R;
-import com.example.android.vkgroup.view.LoginView;
+import com.example.android.vkgroup.presentation.mvp.view.LoginView;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import butterknife.BindView;

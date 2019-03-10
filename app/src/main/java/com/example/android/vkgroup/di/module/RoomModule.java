@@ -2,9 +2,7 @@ package com.example.android.vkgroup.di.module;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
-import android.content.Context;
 
-import com.example.android.vkgroup.app.App;
 import com.example.android.vkgroup.di.scope.ApplicationScope;
 import com.example.android.vkgroup.model.AppDatabase;
 import com.example.android.vkgroup.model.ModelDao;

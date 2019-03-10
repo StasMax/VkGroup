@@ -1,7 +1,6 @@
-package com.example.android.vkgroup.ui;
+package com.example.android.vkgroup.presentation.mvp.ui;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +10,10 @@ import android.widget.TextView;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.android.vkgroup.R;
-import com.example.android.vkgroup.adapter.GroupAdapterRv;
-import com.example.android.vkgroup.app.App;
-import com.example.android.vkgroup.presenter.FavoritePresenter;
-import com.example.android.vkgroup.view.FavoriteView;
+import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
+import com.example.android.vkgroup.presentation.app.App;
+import com.example.android.vkgroup.presentation.mvp.presenter.FavoritePresenter;
+import com.example.android.vkgroup.presentation.mvp.view.FavoriteView;
 
 import javax.inject.Inject;
 

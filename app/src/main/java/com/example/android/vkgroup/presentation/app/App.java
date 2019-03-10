@@ -1,8 +1,6 @@
-package com.example.android.vkgroup.app;
+package com.example.android.vkgroup.presentation.app;
 
 import android.app.Application;
-import android.arch.persistence.room.Room;
-import android.content.Context;
 
 import com.example.android.vkgroup.di.component.AppComponent;
 import com.example.android.vkgroup.di.component.DaggerAppComponent;
@@ -10,7 +8,6 @@ import com.example.android.vkgroup.di.module.AppModule;
 import com.example.android.vkgroup.di.module.ContextModule;
 import com.example.android.vkgroup.di.module.GroupModule;
 import com.example.android.vkgroup.di.module.RoomModule;
-import com.example.android.vkgroup.model.AppDatabase;
 import com.vk.sdk.VKSdk;
 
 public class App extends Application {

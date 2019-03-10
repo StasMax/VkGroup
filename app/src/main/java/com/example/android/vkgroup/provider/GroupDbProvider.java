@@ -1,7 +1,7 @@
 package com.example.android.vkgroup.provider;
 
 
-import com.example.android.vkgroup.app.App;
+import com.example.android.vkgroup.presentation.app.App;
 import com.example.android.vkgroup.model.GroupModel;
 import com.example.android.vkgroup.model.ModelDao;
 import com.example.android.vkgroup.model.ModelRepository;

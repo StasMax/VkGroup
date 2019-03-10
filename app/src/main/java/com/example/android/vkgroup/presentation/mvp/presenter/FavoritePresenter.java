@@ -1,14 +1,14 @@
-package com.example.android.vkgroup.presenter;
+package com.example.android.vkgroup.presentation.mvp.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.example.android.vkgroup.adapter.GroupAdapterRv;
-import com.example.android.vkgroup.app.App;
+import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
+import com.example.android.vkgroup.presentation.app.App;
 
 import com.example.android.vkgroup.model.GroupModel;
 import com.example.android.vkgroup.model.ModelDao;
 import com.example.android.vkgroup.model.ModelRepository;
-import com.example.android.vkgroup.view.FavoriteView;
+import com.example.android.vkgroup.presentation.mvp.view.FavoriteView;
 
 import java.util.List;
 

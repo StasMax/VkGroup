@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
-        android:name=".app.App"
+        android:name=".presentation.app.App"
         android:allowBackup="true"
         android:icon="@mipmap/vk_icon"
 
@@ -15,16 +15,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/SplashTheme">
-        <activity android:name=".ui.FavoriteActivity"
+        <activity android:name=".presentation.mvp.ui.FavoriteActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".ui.GroupActivity"
+        <activity android:name=".presentation.mvp.ui.GroupActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.vk.sdk.VKServiceActivity"
             android:label="ServiceActivity"
             android:theme="@style/VK.Transparent"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.StartActivity"
+        <activity android:name=".presentation.mvp.ui.StartActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

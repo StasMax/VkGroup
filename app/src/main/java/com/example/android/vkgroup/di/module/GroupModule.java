@@ -1,8 +1,8 @@
 package com.example.android.vkgroup.di.module;
 
-import com.example.android.vkgroup.adapter.GroupAdapterRv;
+import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.di.scope.ApplicationScope;
-import com.example.android.vkgroup.presenter.GroupPresenter;
+import com.example.android.vkgroup.presentation.mvp.presenter.GroupPresenter;
 import com.example.android.vkgroup.provider.GroupDbProvider;
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;

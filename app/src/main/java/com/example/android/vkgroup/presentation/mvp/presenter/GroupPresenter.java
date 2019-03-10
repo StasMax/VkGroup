@@ -1,16 +1,16 @@
-package com.example.android.vkgroup.presenter;
+package com.example.android.vkgroup.presentation.mvp.presenter;
 
 import android.content.Context;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.example.android.vkgroup.adapter.GroupAdapterRv;
-import com.example.android.vkgroup.app.App;
+import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
+import com.example.android.vkgroup.presentation.app.App;
 import com.example.android.vkgroup.model.AppDatabase;
 import com.example.android.vkgroup.model.GroupModel;
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.provider.GroupDbProvider;
-import com.example.android.vkgroup.view.GroupView;
+import com.example.android.vkgroup.presentation.mvp.view.GroupView;
 
 import java.util.List;
 
@@ -18,10 +18,9 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.example.android.vkgroup.helper.Helper.isOnline;
+import static com.example.android.vkgroup.presentation.helper.Helper.isOnline;
 
 @InjectViewState
 public class GroupPresenter extends MvpPresenter<GroupView> {

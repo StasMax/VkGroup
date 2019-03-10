@@ -1,17 +1,17 @@
 package com.example.android.vkgroup.di.component;
 
-import com.example.android.vkgroup.adapter.GroupAdapterRv;
+import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.di.module.AppModule;
 import com.example.android.vkgroup.di.module.ContextModule;
 import com.example.android.vkgroup.di.module.GroupModule;
 import com.example.android.vkgroup.di.module.RoomModule;
 import com.example.android.vkgroup.di.scope.ApplicationScope;
-import com.example.android.vkgroup.presenter.FavoritePresenter;
-import com.example.android.vkgroup.presenter.GroupPresenter;
+import com.example.android.vkgroup.presentation.mvp.presenter.FavoritePresenter;
+import com.example.android.vkgroup.presentation.mvp.presenter.GroupPresenter;
 import com.example.android.vkgroup.provider.GroupDbProvider;
-import com.example.android.vkgroup.ui.FavoriteActivity;
-import com.example.android.vkgroup.ui.GroupActivity;
-import com.example.android.vkgroup.ui.StartActivity;
+import com.example.android.vkgroup.presentation.mvp.ui.FavoriteActivity;
+import com.example.android.vkgroup.presentation.mvp.ui.GroupActivity;
+import com.example.android.vkgroup.presentation.mvp.ui.StartActivity;
 
 import dagger.Component;
 

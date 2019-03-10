@@ -1,4 +1,4 @@
-package com.example.android.vkgroup.adapter;
+package com.example.android.vkgroup.presentation.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.android.vkgroup.R;
-import com.example.android.vkgroup.app.App;
+import com.example.android.vkgroup.presentation.app.App;
 import com.example.android.vkgroup.model.GroupModel;
 import com.example.android.vkgroup.model.ModelRepository;
 import com.jakewharton.rxbinding2.view.RxView;
