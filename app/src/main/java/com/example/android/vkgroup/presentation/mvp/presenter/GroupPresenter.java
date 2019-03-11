@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.example.android.vkgroup.data.model.ModelRepository;
+import com.example.android.vkgroup.data.repository.DataSingleVkRepository;
 import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.presentation.app.App;
 import com.example.android.vkgroup.data.model.AppDatabase;
@@ -18,6 +20,8 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.example.android.vkgroup.presentation.helper.Helper.isOnline;
@@ -32,7 +36,10 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
     public Context appContext;
     @Inject
     public AppDatabase providesRoomDatabase;
+    @Inject
+    ModelRepository mModelRepository;
     private Disposable disposable;
+    DataSingleVkRepository mDataSingleVkRepository = new DataSingleVkRepository();
 
     public GroupPresenter() {
         App.getComponent().inject(this);
@@ -41,7 +48,20 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        loadGroupsVk();
+       // loadGroupsVk();
+        mDataSingleVkRepository.getListGroupsSingle()
+                .doOnSubscribe(disposable -> getViewState().startLoading())
+                .subscribe(new DisposableSingleObserver<List<GroupModel>>() {
+            @Override
+            public void onSuccess(List<GroupModel> groupModels) {
+                mModelRepository.listDb(groupModels);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
     }
 
     public void loadGroupsVk() {

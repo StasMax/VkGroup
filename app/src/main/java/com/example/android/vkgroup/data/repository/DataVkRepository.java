@@ -17,7 +17,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 
-public class DataVkRepository implements VkRepository {
+public class DataVkRepository {
     @Inject
     VKRequest request;
     private List<GroupModel> listGroups;
