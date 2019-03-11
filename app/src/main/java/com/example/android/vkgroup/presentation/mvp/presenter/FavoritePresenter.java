@@ -54,7 +54,11 @@ public class FavoritePresenter extends MvpPresenter<FavoriteView> {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        disposable.dispose();
+        if (!(disposable.isDisposed())) {
+            disposable.dispose();
+        }
+        if (!(groupAdapterRv.getDispCheckBox().isDisposed())){
         groupAdapterRv.getDispCheckBox().dispose();
+        }
     }
 }

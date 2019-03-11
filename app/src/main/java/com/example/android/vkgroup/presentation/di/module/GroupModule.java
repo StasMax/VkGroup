@@ -1,6 +1,7 @@
 package com.example.android.vkgroup.presentation.di.module;
 
 import com.example.android.vkgroup.data.model.ModelRepository;
+import com.example.android.vkgroup.data.repository.DataSingleVkRepository;
 import com.example.android.vkgroup.data.repository.DataVkRepository;
 import com.example.android.vkgroup.data.repository.VkRepository;
 import com.example.android.vkgroup.domain.interactor.GroupDomainInteractor;
@@ -37,18 +38,18 @@ public class GroupModule {
 
     @ApplicationScope
     @Provides
-    VkRepository vkRepository(){return new DataVkRepository();
+    VkRepository vkRepository(){return new DataSingleVkRepository();
     }
-
-    @ApplicationScope
-    @Provides
-    GroupInteractor groupInteractor(){return new GroupDomainInteractor();}
 
    /* @ApplicationScope
     @Provides
-    GroupInteractor groupInteractor(VkRepository vkRepository, ModelRepository modelRepository){return new GroupDomainInteractor(vkRepository, modelRepository);
-    }*/
+    GroupInteractor groupInteractor(){return new GroupDomainInteractor();}*/
 
+    @ApplicationScope
     @Provides
-    CompositeDisposable compositeDisposable(){return new CompositeDisposable();}
+    GroupInteractor groupInteractor(VkRepository vkRepository, ModelRepository modelRepository){return new GroupDomainInteractor(vkRepository, modelRepository);
+    }
+
+  /*  @Provides
+    CompositeDisposable compositeDisposable(){return new CompositeDisposable();}*/
 }

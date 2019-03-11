@@ -1,9 +1,12 @@
 package com.example.android.vkgroup.presentation.mvp.presenter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.example.android.vkgroup.data.repository.DataSingleVkRepository;
+import com.example.android.vkgroup.data.repository.DataVkRepository;
 import com.example.android.vkgroup.domain.interactor.GroupInteractor;
 import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.presentation.app.App;
@@ -36,6 +39,7 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
     private List<GroupModel> queryDbListFavorite;
     private List<GroupModel> listVk;
     private Disposable disposable;
+    DataSingleVkRepository dataVkRepository = new DataSingleVkRepository();
 
     public GroupPresenter() {
         App.getComponent().inject(this);
@@ -47,9 +51,10 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
     public void loadGroupsVk() {
 
         if (isOnline(appContext)) {
-            getViewState().startLoading();
-            listVk.addAll(groupInteractor.vkList());
-           /* groupInteractor.getGroupsListFromDb().subscribe(new DisposableSingleObserver<List<GroupModel>>() {
+         //   getViewState().startLoading();
+          //  listVk.addAll(dataVkRepository.getListGroups());
+
+          /*  groupInteractor.getGroupsListFromDb().subscribe(new DisposableSingleObserver<List<GroupModel>>() {
                 @Override
                 public void onSuccess(List<GroupModel> groupModelList) {
                     queryDbList.clear();
@@ -72,13 +77,29 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
                 public void onError(Throwable e) {
                     e.printStackTrace();
                 }
-            });
+            });*/
             if (queryDbList != null) {
                 groupInteractor.deleteAll(queryDbList);
-            }*/
+            }}
+            dataVkRepository.getListGroupsSingle().subscribe(new DisposableSingleObserver<List<GroupModel>>() {
+                @Override
+                public void onSuccess(List<GroupModel> groupModels) {
+                    Log.e("vkList", dataVkRepository.getListGroups().toString());
+                    listVk.addAll(groupModels);
+
+                }
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+            });
+
+
             groupInteractor.insertVkInDb(listVk);
-          //  groupInteractor.updateFavoriteList(queryDbListFavorite);
-        }
+        loadGroupsFromDb();
+           // groupInteractor.updateFavoriteList(queryDbListFavorite);
+
     }
 
     public void loadGroupsFromDb() {

@@ -92,7 +92,7 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     @Override
     protected void onStart() {
         super.onStart();
-        groupPresenter.loadGroupsFromDb();
+      //  groupPresenter.loadGroupsFromDb();
     }
 
 

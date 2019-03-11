@@ -1,5 +1,7 @@
 package com.example.android.vkgroup.data.repository;
 
+import android.util.Log;
+
 import com.example.android.vkgroup.data.model.GroupModel;
 import com.example.android.vkgroup.presentation.app.App;
 import com.google.gson.JsonArray;
@@ -19,20 +21,21 @@ import javax.inject.Inject;
 import io.reactivex.Completable;
 import io.reactivex.schedulers.Schedulers;
 
-public class DataVkRepository implements VkRepository {
+public class DataVkRepository {
     @Inject
     VKRequest request;
-    private List<GroupModel> listGroups;
+    private List<GroupModel> listGroups = new ArrayList<>();
     private String vkName;
     private String vkSubscription;
     private String vkAvatar;
 
     public DataVkRepository() {
         App.getComponent().inject(this);
-        listGroups = new ArrayList<>();
+
     }
 
     public List<GroupModel> getListGroups() {
+        listGroups.clear();
         request.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
@@ -51,7 +54,7 @@ public class DataVkRepository implements VkRepository {
                         vkAvatar = je.getAsJsonObject().get("photo_100").getAsString();
                     }
                     listGroups.add(new GroupModel(vkName, vkSubscription, vkAvatar, false));
-
+                    Log.e("list", listGroups.toString());
                  /*   for (int i = 0; i < listGroups.size(); i++) {
                         for (int j = 0; j < queryDbListFavorite.size(); j++) {
                             if (queryDbListFavorite.get(j).equals(listGroups.get(i))) {

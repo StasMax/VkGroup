@@ -1,11 +1,14 @@
 package com.example.android.vkgroup.domain.interactor;
 
+import android.util.Log;
+
 import com.example.android.vkgroup.data.model.GroupModel;
-import com.example.android.vkgroup.data.model.ModelDao;
 import com.example.android.vkgroup.data.model.ModelRepository;
+import com.example.android.vkgroup.data.repository.DataVkRepository;
 import com.example.android.vkgroup.data.repository.VkRepository;
 import com.example.android.vkgroup.presentation.app.App;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -20,13 +23,12 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class GroupDomainInteractor implements GroupInteractor{
-    @Inject
+public class GroupDomainInteractor implements GroupInteractor {
+    //  @Inject
     VkRepository vkRepository;
-    @Inject
+    //   @Inject
     ModelRepository modelRepository;
-    @Inject
-    CompositeDisposable compositeDisposable;
+    DataVkRepository dataVkRepository = new DataVkRepository();
     private Disposable disposable1;
     private Disposable disposable2;
     private Disposable disposable3;
@@ -34,27 +36,18 @@ public class GroupDomainInteractor implements GroupInteractor{
     private Disposable disposable5;
 
 
-  /*  @Inject
+    @Inject
     public GroupDomainInteractor(VkRepository vkRepository, ModelRepository modelRepository) {
         this.vkRepository = vkRepository;
         this.modelRepository = modelRepository;
         App.getComponent().inject(this);
-        compositeDisposable.add(disposable1);
-        compositeDisposable.add(disposable2);
-        compositeDisposable.add(disposable3);
-        compositeDisposable.add(disposable4);
-        compositeDisposable.add(disposable5);
-            }*/
 
-  public GroupDomainInteractor(){App.getComponent().inject(this);
-      compositeDisposable.add(disposable1);
-      compositeDisposable.add(disposable2);
-      compositeDisposable.add(disposable3);
-      compositeDisposable.add(disposable4);
-      compositeDisposable.add(disposable5);}
+    }
 
-    public Single<List<GroupModel>> getGroupsListFromDb(){
-            return modelRepository.loadListDb()
+    //public GroupDomainInteractor(){App.getComponent().inject(this); }
+
+    public Single<List<GroupModel>> getGroupsListFromDb() {
+        return modelRepository.loadListDb()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -65,7 +58,7 @@ public class GroupDomainInteractor implements GroupInteractor{
             modelRepository.update(groupModel);
             return null;
         };
-       disposable2 = Completable.fromCallable(cdb)
+        disposable2 = Completable.fromCallable(cdb)
                 .subscribeOn(Schedulers.newThread())
                 .subscribe();
     }
@@ -84,7 +77,7 @@ public class GroupDomainInteractor implements GroupInteractor{
 
     @Override
     public void disposeAll() {
-compositeDisposable.dispose();
+//compositeDisposable.dispose();
     }
 
     @Override
@@ -99,7 +92,7 @@ compositeDisposable.dispose();
     }
 
     @Override
-    public void deleteAll(List<GroupModel>groupModels) {
+    public void deleteAll(List<GroupModel> groupModels) {
         Callable<Void> cdb = () -> {
             modelRepository.deleteAllDb(groupModels);
             return null;
@@ -125,23 +118,23 @@ compositeDisposable.dispose();
 
     @Override
     public List<GroupModel> vkList() {
-        return vkRepository.getListGroups();
+        List<GroupModel> groupModels = dataVkRepository.getListGroups();
+
+        Log.e("vkList1", groupModels.toString());
+        return groupModels;
     }
 
     @Override
     public Single<List<GroupModel>> getFavorite() {
-       return modelRepository.getByFavoriteSingle(true)
+        return modelRepository.getByFavoriteSingle(true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public void getAllListGroupsVk(){
-        Callable<Void> cdb = () -> {
-            vkRepository.getListGroups();
-            return null;
-        };
-       disposable4 = Completable.fromCallable(cdb)
-                .subscribeOn(Schedulers.newThread())
-                .subscribe();
+    @Override
+    public Single<List<GroupModel>> getAllListGroupsVk() {
+        return vkRepository.getListGroupsSingle()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }
