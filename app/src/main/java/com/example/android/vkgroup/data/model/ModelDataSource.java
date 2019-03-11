@@ -7,6 +7,8 @@ import java.util.concurrent.Callable;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
+import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
 public class ModelDataSource implements ModelRepository {
@@ -26,7 +28,7 @@ public class ModelDataSource implements ModelRepository {
     }
 
     public List<GroupModel> loadLstDb() {
-        groupModelList.addAll(modelDao.getAllList());
+       // groupModelList.addAll(modelDao.getAllList());
         return groupModelList;
     }
 
@@ -52,5 +54,45 @@ public class ModelDataSource implements ModelRepository {
         Completable.fromCallable(clb)
                 .subscribeOn(Schedulers.newThread())
                 .subscribe();
+    }
+
+
+
+
+    @Override
+    public void insertListInDb(List<GroupModel> groupModelList) {
+        for (GroupModel groupModel : groupModelList) {
+            modelDao.insertAll(groupModel);
+        }
+    }
+
+    @Override
+    public Single<List<GroupModel>> loadListDb() {
+        return modelDao.getAllList();
+    }
+
+    @Override
+    public void update(GroupModel groupModel) {
+        modelDao.update(groupModel);
+    }
+
+    @Override
+    public void updateList(List<GroupModel> groupModelList) {
+        modelDao.updateList(groupModelList);
+    }
+
+    @Override
+    public Flowable<List<GroupModel>> getAll() {
+        return modelDao.getAll();
+    }
+
+    @Override
+    public Single<List<GroupModel>> getByFavoriteSingle(Boolean isFavorite) {
+        return modelDao.getByFavoriteSingle(true);
+    }
+
+    @Override
+    public Flowable<List<GroupModel>> getByFavorite(Boolean isFavorite) {
+        return modelDao.getByFavorite(true);
     }
 }

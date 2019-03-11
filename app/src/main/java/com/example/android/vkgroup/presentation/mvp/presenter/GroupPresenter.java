@@ -6,6 +6,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.android.vkgroup.data.model.ModelRepository;
 import com.example.android.vkgroup.data.repository.DataSingleVkRepository;
+import com.example.android.vkgroup.domain.interactor.GroupInteractor;
 import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.presentation.app.App;
 import com.example.android.vkgroup.data.model.AppDatabase;
@@ -38,6 +39,8 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
     public AppDatabase providesRoomDatabase;
     @Inject
     ModelRepository mModelRepository;
+    @Inject
+    GroupInteractor groupInteractor;
     private Disposable disposable;
     DataSingleVkRepository mDataSingleVkRepository = new DataSingleVkRepository();
 
@@ -49,7 +52,7 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
        // loadGroupsVk();
-        mDataSingleVkRepository.getListGroupsSingle()
+        groupInteractor.getAllListGroupsVk()
                 .doOnSubscribe(disposable -> getViewState().startLoading())
                 .subscribe(new DisposableSingleObserver<List<GroupModel>>() {
             @Override
