@@ -1,11 +1,5 @@
 package com.example.android.vkgroup.di.module;
 
-import com.example.android.vkgroup.data.model.ModelDataSource;
-import com.example.android.vkgroup.data.model.ModelRepository;
-import com.example.android.vkgroup.data.repository.DataVkRepository;
-import com.example.android.vkgroup.data.repository.VkRepository;
-import com.example.android.vkgroup.domain.interactor.GroupDomainInteractor;
-import com.example.android.vkgroup.domain.interactor.GroupInteractor;
 import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.di.scope.ApplicationScope;
 import com.example.android.vkgroup.presentation.mvp.presenter.GroupPresenter;
@@ -17,7 +11,6 @@ import com.vk.sdk.api.VKRequest;
 
 import dagger.Module;
 import dagger.Provides;
-import io.reactivex.disposables.CompositeDisposable;
 
 @Module
 public class GroupModule {
@@ -41,22 +34,6 @@ public class GroupModule {
 
     @ApplicationScope
     @Provides
-    VKRequest request() {
-        return VKApi.groups().get(VKParameters.from(VKApiConst.FIELDS, "members_count", VKApiConst.EXTENDED, 1));
-    }
+    VKRequest request(){return VKApi.groups().get(VKParameters.from(VKApiConst.FIELDS, "members_count", VKApiConst.EXTENDED, 1));}
 
-    @ApplicationScope
-    @Provides
-    GroupInteractor groupIteractor() {
-        return new GroupDomainInteractor();
-    }
-
-    @ApplicationScope
-    @Provides
-    VkRepository vkRepository(){return new DataVkRepository();
-    }
-
-    /*@ApplicationScope
-    @Provides
-    CompositeDisposable mCompositeDisposable(){return new CompositeDisposable();}*/
 }
