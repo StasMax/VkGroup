@@ -45,7 +45,7 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
         setContentView(R.layout.activity_group);
         ButterKnife.bind(this);
         App.getComponent().inject(this);
-
+        groupPresenter.loadGroupsVk();
         rvGroups.setAdapter(groupAdapterRv);
         rvGroups.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
         rvGroups.setHasFixedSize(true);

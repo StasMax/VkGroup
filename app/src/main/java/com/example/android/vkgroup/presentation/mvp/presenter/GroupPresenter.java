@@ -30,55 +30,39 @@ import static com.example.android.vkgroup.presentation.helper.Helper.isOnline;
 @InjectViewState
 public class GroupPresenter extends MvpPresenter<GroupView> {
     @Inject
-    public GroupDbProvider groupDbProvider;
-    @Inject
     GroupAdapterRv groupAdapterRv;
     @Inject
-    public Context appContext;
-    @Inject
-    public AppDatabase providesRoomDatabase;
-    @Inject
-    ModelRepository mModelRepository;
+    Context appContext;
     @Inject
     GroupInteractor groupInteractor;
     private Disposable disposable;
-    DataSingleVkRepository mDataSingleVkRepository = new DataSingleVkRepository();
 
     public GroupPresenter() {
         App.getComponent().inject(this);
-    }
-
-    @Override
-    protected void onFirstViewAttach() {
-        super.onFirstViewAttach();
-       // loadGroupsVk();
-        groupInteractor.getAllListGroupsVk()
-                .doOnSubscribe(disposable -> getViewState().startLoading())
-                .subscribe(new DisposableSingleObserver<List<GroupModel>>() {
-            @Override
-            public void onSuccess(List<GroupModel> groupModels) {
-                mModelRepository.listDb(groupModels);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-        });
     }
 
     public void loadGroupsVk() {
         getViewState().startLoading();
 
         if (isOnline(appContext)) {
-            groupDbProvider.loadGroupToDb();
+            groupInteractor.getAllListGroupsVk()
+                    .doOnSubscribe(disposable -> getViewState().startLoading())
+                    .subscribe(new DisposableSingleObserver<List<GroupModel>>() {
+                        @Override
+                        public void onSuccess(List<GroupModel> groupModels) {
+                            groupInteractor.insertVkInDb(groupModels);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            e.printStackTrace();
+                        }
+                    });
         }
     }
 
     public void loadGroupsFromDb() {
-        disposable = providesRoomDatabase.getModelDao().getAll()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+        disposable = groupInteractor.getAllGroupsFromDb()
                 .subscribe(this::groupsLoaded);
     }
 

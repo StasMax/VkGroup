@@ -44,7 +44,6 @@ public class GroupDomainInteractor implements GroupInteractor {
 
     }
 
-    //public GroupDomainInteractor(){App.getComponent().inject(this); }
 
     public Single<List<GroupModel>> getGroupsListFromDb() {
         return modelRepository.loadListDb()

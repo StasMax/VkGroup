@@ -61,7 +61,7 @@ public class GroupDbProvider {
                 });
 
         Callable<Void> cdb = () -> {
-            queryDbList = modelRepository.loadLstDb();
+         //   queryDbList = modelRepository.loadLstDb();
             if (queryDbList != null) {
                 modelRepository.deleteAllDb(queryDbList);
             }
@@ -99,7 +99,7 @@ public class GroupDbProvider {
                     }
                 }
                 Callable<Void> clb = () -> {
-                    modelRepository.listDb(listGroups);
+                 //   modelRepository.listDb(listGroups);
                     return null;
                 };
                 Completable.fromCallable(clb)

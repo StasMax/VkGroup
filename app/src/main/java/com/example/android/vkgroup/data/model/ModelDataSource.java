@@ -21,7 +21,7 @@ public class ModelDataSource implements ModelRepository {
         this.modelDao = modelDao;
     }
 
-    public void listDb(List<GroupModel> groupModelList) {
+  /*  public void listDb(List<GroupModel> groupModelList) {
         for (GroupModel groupModel : groupModelList) {
             modelDao.insertAll(groupModel);
         }
@@ -54,7 +54,7 @@ public class ModelDataSource implements ModelRepository {
         Completable.fromCallable(clb)
                 .subscribeOn(Schedulers.newThread())
                 .subscribe();
-    }
+    }*/
 
 
 
@@ -64,6 +64,10 @@ public class ModelDataSource implements ModelRepository {
         for (GroupModel groupModel : groupModelList) {
             modelDao.insertAll(groupModel);
         }
+    }
+
+    public void deleteAllDb(List<GroupModel> groupModelList) {
+        modelDao.deleteAll(groupModelList);
     }
 
     @Override

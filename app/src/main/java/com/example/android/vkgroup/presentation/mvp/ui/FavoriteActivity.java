@@ -38,7 +38,7 @@ public class FavoriteActivity extends MvpAppCompatActivity implements FavoriteVi
         setContentView(R.layout.activity_favorite);
         ButterKnife.bind(this);
         App.getComponent().inject(this);
-
+        favoritePresenter.loadGroups();
         recyclerView.setAdapter(groupAdapterRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
     }

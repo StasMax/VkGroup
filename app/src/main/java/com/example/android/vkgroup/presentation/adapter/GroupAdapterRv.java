@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.android.vkgroup.R;
+import com.example.android.vkgroup.domain.interactor.GroupInteractor;
 import com.example.android.vkgroup.presentation.app.App;
 import com.example.android.vkgroup.data.model.GroupModel;
 import com.example.android.vkgroup.data.model.ModelRepository;
@@ -28,7 +29,7 @@ public class GroupAdapterRv extends RecyclerView.Adapter<GroupAdapterRv.ViewHold
     private List<GroupModel> mGroupModelList = new ArrayList<>();
     private List<GroupModel> mSourceList = new ArrayList<>();
     @Inject
-    ModelRepository modelRepository;
+    GroupInteractor groupInteractor;
     private Disposable dispCheckBox;
 
     public Disposable getDispCheckBox() {
@@ -110,10 +111,10 @@ public class GroupAdapterRv extends RecyclerView.Adapter<GroupAdapterRv.ViewHold
             dispCheckBox = RxView.clicks(mCheckBox).subscribe(o -> {
                 if (mCheckBox.isChecked()) {
                     groupModel.setFavorite(true);
-                    modelRepository.setFavorite(groupModel);
+                    groupInteractor.updateFavorite(groupModel);
                 } else {
                     groupModel.setFavorite(false);
-                    modelRepository.setOutFavorite(groupModel);
+                    groupInteractor.updateFavorite(groupModel);
                 }
             });
             if (groupModel.getAvatar() != null) {

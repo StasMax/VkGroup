@@ -7,7 +7,7 @@ import io.reactivex.Single;
 
 public interface ModelRepository {
 
-    void listDb(List<GroupModel> groupModelList);
+   /* void listDb(List<GroupModel> groupModelList);
 
     List<GroupModel> loadLstDb();
 
@@ -15,11 +15,13 @@ public interface ModelRepository {
 
     void setFavorite(GroupModel groupModel);
 
-    void setOutFavorite(GroupModel groupModel);
+    void setOutFavorite(GroupModel groupModel);*/
 
 
 
     void insertListInDb(List<GroupModel> groupModelList);
+
+    void deleteAllDb(List<GroupModel> groupModelList);
 
     Single<List<GroupModel>> loadListDb();
 
