@@ -100,7 +100,7 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
         getViewState().endLoading();
         if (groupModelList.size() == 0) {
             getViewState().setupEmptyList();
-            getViewState().showError(R.string.no_grous_item);
+            getViewState().showError(R.string.no_groups_item);
         } else
             getViewState().setupGroupsList();
         groupAdapterRv.setupGroups(groupModelList);

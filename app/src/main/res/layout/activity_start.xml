@@ -4,24 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".presentation.mvp.ui.StartActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_gravity="center"
-        android:layout_marginHorizontal="30dp">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/privetstvie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="@string/privetstvie"
-
-            />
+            android:text="@string/hello_vk" />
 
         <Button
             android:id="@+id/enter"
@@ -32,16 +29,15 @@
             android:background="@color/colorPrimaryDark"
             android:text="@string/button_enter"
             android:textColor="@color/white_color" />
+
         <com.github.rahatarmanahmed.cpv.CircularProgressView
             android:id="@+id/cpv_login"
             android:layout_width="@dimen/load_size"
             android:layout_height="@dimen/load_size"
             android:layout_marginTop="16dp"
             android:visibility="gone"
-            app:cpv_color="@color/colorPrimary"
             app:cpv_animAutostart="true"
-            app:cpv_indeterminate="true"
-            />
+            app:cpv_color="@color/colorPrimary"
+            app:cpv_indeterminate="true" />
     </LinearLayout>
-
 </FrameLayout>
