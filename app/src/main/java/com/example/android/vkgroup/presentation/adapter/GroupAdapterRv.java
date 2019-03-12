@@ -69,7 +69,7 @@ public class GroupAdapterRv extends RecyclerView.Adapter<GroupAdapterRv.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.bind(mGroupModelList.get(i));
+        viewHolder.bind(i);
     }
 
     @Override
@@ -101,23 +101,23 @@ public class GroupAdapterRv extends RecyclerView.Adapter<GroupAdapterRv.ViewHold
             mCheckBox = itemView.findViewById(R.id.isFavorite_checkBox);
         }
 
-        public void bind(final GroupModel groupModel) {
-            mTxtGroupName.setText(groupModel.getName());
-            mTxtSubscribers.setText(groupModel.getSubscribers());
-            if (groupModel.getFavorite()) mCheckBox.setChecked(true);
+        public void bind(final int position) {
+            mTxtGroupName.setText(mGroupModelList.get(position).getName());
+            mTxtSubscribers.setText(mGroupModelList.get(position).getSubscribers());
+            if (mGroupModelList.get(position).getFavorite()) mCheckBox.setChecked(true);
             else mCheckBox.setChecked(false);
 
             dispCheckBox = RxView.clicks(mCheckBox).subscribe(o -> {
                 if (mCheckBox.isChecked()) {
-                    groupModel.setFavorite(true);
-                    groupInteractor.updateFavorite(groupModel);
+                    mGroupModelList.get(position).setFavorite(true);
+                    groupInteractor.updateFavorite(mGroupModelList.get(position));
                 } else {
-                    groupModel.setFavorite(false);
-                    groupInteractor.updateFavorite(groupModel);
+                    mGroupModelList.get(position).setFavorite(false);
+                    groupInteractor.updateFavorite(mGroupModelList.get(position));
                 }
             });
-            if (groupModel.getAvatar() != null) {
-                Picasso.with(itemView.getContext()).load(groupModel.getAvatar()).into(mCivAvatar);
+            if (mGroupModelList.get(position).getAvatar() != null) {
+                Picasso.with(itemView.getContext()).load(mGroupModelList.get(position).getAvatar()).into(mCivAvatar);
             }
         }
     }
