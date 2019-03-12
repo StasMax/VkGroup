@@ -15,28 +15,6 @@ import io.reactivex.Single;
 
 @Dao
 public interface ModelDao {
-  /*  @Query("SELECT * FROM dbGroups")
-    Flowable<List<GroupModel>> getAll();
-
-    @Query("SELECT * FROM dbGroups")
-    List<GroupModel> getAllList();
-
-    @Query("SELECT * FROM dbGroups WHERE isFavorite LIKE:isFavorite")
-    Flowable<List<GroupModel>> getByFavorite(Boolean isFavorite);
-
-    @Query("SELECT * FROM dbGroups WHERE isFavorite LIKE :isFavorite")
-    Single<List<GroupModel>> getByFavoriteSingle(Boolean isFavorite);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(GroupModel... groupModels);
-
-    @Delete
-    void deleteAll(List<GroupModel> groupModelList);
-
-    @Update
-    void update(GroupModel groupModel);*/
-
-
 
     @Query("SELECT * FROM dbGroups")
     Flowable<List<GroupModel>> getAll();
@@ -51,14 +29,11 @@ public interface ModelDao {
     Single<List<GroupModel>> getByFavoriteSingle(Boolean isFavorite);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(GroupModel... groupModels);
+    void insertAll(GroupModel... groupModelsVk);
 
     @Delete
     void deleteAll(List<GroupModel> groupModelList);
 
     @Update
     void update(GroupModel groupModel);
-
-    @Update
-    void updateList(List<GroupModel> groupModelList);
 }

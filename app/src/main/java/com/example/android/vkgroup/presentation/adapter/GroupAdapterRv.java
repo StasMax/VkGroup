@@ -12,7 +12,6 @@ import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.domain.interactor.GroupInteractor;
 import com.example.android.vkgroup.presentation.app.App;
 import com.example.android.vkgroup.data.model.GroupModel;
-import com.example.android.vkgroup.data.model.ModelRepository;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
 

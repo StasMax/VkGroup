@@ -4,26 +4,20 @@ import android.content.Context;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.example.android.vkgroup.data.model.ModelRepository;
-import com.example.android.vkgroup.data.repository.DataSingleVkRepository;
 import com.example.android.vkgroup.domain.interactor.GroupInteractor;
 import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.presentation.app.App;
-import com.example.android.vkgroup.data.model.AppDatabase;
 import com.example.android.vkgroup.data.model.GroupModel;
 import com.example.android.vkgroup.R;
-import com.example.android.vkgroup.provider.GroupDbProvider;
 import com.example.android.vkgroup.presentation.mvp.view.GroupView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableSingleObserver;
-import io.reactivex.schedulers.Schedulers;
 
 import static com.example.android.vkgroup.presentation.helper.Helper.isOnline;
 
@@ -36,21 +30,57 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
     @Inject
     GroupInteractor groupInteractor;
     private Disposable disposable;
+    private List<GroupModel> favoriteQuery = new ArrayList<>();
+    private List<GroupModel> groupModelsQuery = new ArrayList<>();
+    private List<GroupModel> groupModelsQueryVk = new ArrayList<>();
 
     public GroupPresenter() {
         App.getComponent().inject(this);
     }
 
     public void loadGroupsVk() {
-        getViewState().startLoading();
 
         if (isOnline(appContext)) {
             groupInteractor.getAllListGroupsVk()
                     .doOnSubscribe(disposable -> getViewState().startLoading())
+                    .doOnSubscribe(disposable1 -> groupInteractor.getFavorite()
+                            .subscribe(new DisposableSingleObserver<List<GroupModel>>() {
+                                @Override
+                                public void onSuccess(List<GroupModel> groupModels) {
+                                    favoriteQuery.addAll(groupModels);
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+                            }))
+                    .doOnSubscribe(disposable2 -> groupInteractor.getGroupsListFromDb()
+                            .subscribe(new DisposableSingleObserver<List<GroupModel>>() {
+                                @Override
+                                public void onSuccess(List<GroupModel> groupModels) {
+                                    groupModelsQuery.addAll(groupModels);
+                                    groupInteractor.deleteAll(groupModelsQuery);
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+                            }))
                     .subscribe(new DisposableSingleObserver<List<GroupModel>>() {
                         @Override
                         public void onSuccess(List<GroupModel> groupModels) {
-                            groupInteractor.insertVkInDb(groupModels);
+                            groupModelsQueryVk.addAll(groupModels);
+
+                            for (int i = 0; i < groupModelsQueryVk.size(); i++) {
+                                for (int j = 0; j < favoriteQuery.size(); j++) {
+                                    if (favoriteQuery.get(j).equals(groupModelsQueryVk.get(i))) {
+                                        groupModelsQueryVk.get(i).setFavorite(favoriteQuery.get(j).getFavorite());
+                                    }
+                                }
+                            }
+                            groupInteractor.insertVkInDb(groupModelsQueryVk);
                         }
 
                         @Override
@@ -66,7 +96,7 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
                 .subscribe(this::groupsLoaded);
     }
 
-    public void groupsLoaded(List<GroupModel> groupModelList) {
+    private void groupsLoaded(List<GroupModel> groupModelList) {
         getViewState().endLoading();
         if (groupModelList.size() == 0) {
             getViewState().setupEmptyList();

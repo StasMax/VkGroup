@@ -21,7 +21,6 @@ import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
 public class FavoritePresenter extends MvpPresenter<FavoriteView> {
-
     @Inject
     GroupAdapterRv groupAdapterRv;
     @Inject
@@ -37,7 +36,7 @@ public class FavoritePresenter extends MvpPresenter<FavoriteView> {
                 .subscribe(this::groupsFavoriteLoaded);
     }
 
-    public void groupsFavoriteLoaded(List<GroupModel> groupModelFavoriteList) {
+    private void groupsFavoriteLoaded(List<GroupModel> groupModelFavoriteList) {
         if (groupModelFavoriteList.size() == 0) {
             getViewState().setupEmptyList();
         } else

@@ -94,6 +94,4 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
         super.onStart();
         groupPresenter.loadGroupsFromDb();
     }
-
-
 }

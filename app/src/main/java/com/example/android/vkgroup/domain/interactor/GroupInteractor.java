@@ -1,7 +1,5 @@
 package com.example.android.vkgroup.domain.interactor;
 
-import android.view.LayoutInflater;
-
 import com.example.android.vkgroup.data.model.GroupModel;
 
 import java.util.List;
@@ -18,11 +16,7 @@ public interface GroupInteractor {
 
     void updateFavorite(GroupModel groupModel);
 
-    void updateFavoriteList(List<GroupModel> groupModels);
-
-    void disposeAll();
-
-    void insertVkInDb(List<GroupModel> groupModels);
+    void insertVkInDb(List<GroupModel> groupModelsVk);
 
     void deleteAll(List<GroupModel> groupModels);
 

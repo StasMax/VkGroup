@@ -1,8 +1,7 @@
 package com.example.android.vkgroup.data.repository;
 
-import android.util.Log;
-
 import com.example.android.vkgroup.data.model.GroupModel;
+import com.example.android.vkgroup.presentation.app.App;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -26,8 +25,8 @@ public class DataSingleVkRepository implements VkRepository {
     private String vkSubscription;
     private String vkAvatar;
 
-    public List<GroupModel> getListGroups() {
-        return listGroups;
+    public DataSingleVkRepository() {
+        App.getComponent().inject(this);
     }
 
     public Single<List<GroupModel>> getListGroupsSingle() {
@@ -50,15 +49,13 @@ public class DataSingleVkRepository implements VkRepository {
                             vkAvatar = je.getAsJsonObject().get("photo_100").getAsString();
                         }
                         listGroups.add(new GroupModel(vkName, vkSubscription, vkAvatar, false));
-                        subscriber.onSuccess(listGroups);
-                        Log.e("vkList", listGroups.toString());
                     }
+                    subscriber.onSuccess(listGroups);
                 }
 
                 @Override
                 public void onError(VKError error) {
                     super.onError(error);
-
                 }
 
             });

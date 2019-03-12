@@ -20,7 +20,7 @@ import static com.example.android.vkgroup.presentation.helper.Helper.isOnline;
 public class LoginPresenter extends MvpPresenter<LoginView> {
 
     public void loginVk(int requestCode, int resultCode, Intent data) {
-        if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
+        VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
             @Override
             public void onResult(VKAccessToken res) {
                 getViewState().openGroups();
@@ -30,7 +30,7 @@ public class LoginPresenter extends MvpPresenter<LoginView> {
             public void onError(VKError error) {
                 getViewState().showError(R.string.error_login);
             }
-        })) ;
+        });
     }
 
     public void clickEnter(Context context) {

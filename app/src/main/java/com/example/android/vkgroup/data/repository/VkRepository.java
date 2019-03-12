@@ -7,6 +7,5 @@ import java.util.List;
 import io.reactivex.Single;
 
 public interface VkRepository {
-   // List<GroupModel> getListGroups();
     Single<List<GroupModel>> getListGroupsSingle();
 }

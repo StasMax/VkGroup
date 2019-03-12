@@ -7,18 +7,6 @@ import io.reactivex.Single;
 
 public interface ModelRepository {
 
-   /* void listDb(List<GroupModel> groupModelList);
-
-    List<GroupModel> loadLstDb();
-
-    void deleteAllDb(List<GroupModel> groupModelList);
-
-    void setFavorite(GroupModel groupModel);
-
-    void setOutFavorite(GroupModel groupModel);*/
-
-
-
     void insertListInDb(List<GroupModel> groupModelList);
 
     void deleteAllDb(List<GroupModel> groupModelList);
@@ -26,8 +14,6 @@ public interface ModelRepository {
     Single<List<GroupModel>> loadListDb();
 
     void update(GroupModel groupModel);
-
-    void updateList(List<GroupModel> groupModelList);
 
     Flowable<List<GroupModel>> getAll();
 

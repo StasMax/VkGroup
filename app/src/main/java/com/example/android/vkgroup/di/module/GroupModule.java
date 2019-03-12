@@ -8,7 +8,6 @@ import com.example.android.vkgroup.domain.interactor.GroupInteractor;
 import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.di.scope.ApplicationScope;
 import com.example.android.vkgroup.presentation.mvp.presenter.GroupPresenter;
-import com.example.android.vkgroup.provider.GroupDbProvider;
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKParameters;
@@ -27,12 +26,6 @@ public class GroupModule {
 
     @ApplicationScope
     @Provides
-    GroupDbProvider groupDbProvider() {
-        return new GroupDbProvider();
-    }
-
-    @ApplicationScope
-    @Provides
     GroupAdapterRv groupAdapterRv() {
         return new GroupAdapterRv();
     }
@@ -45,10 +38,6 @@ public class GroupModule {
     @Provides
     VkRepository vkRepository(){return new DataSingleVkRepository();
     }
-
-   /* @ApplicationScope
-    @Provides
-    GroupInteractor groupInteractor(){return new GroupDomainInteractor();}*/
 
     @ApplicationScope
     @Provides
