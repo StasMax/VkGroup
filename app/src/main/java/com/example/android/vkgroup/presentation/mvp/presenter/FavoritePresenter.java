@@ -52,6 +52,5 @@ public class FavoritePresenter extends MvpPresenter<FavoriteView> {
         super.onDestroy();
         disposable.dispose();
         groupInteractor.allDispose();
-        groupAdapterRv.getDispCheckBox().dispose();
     }
 }

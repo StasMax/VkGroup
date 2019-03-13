@@ -8,6 +8,7 @@ import com.example.android.vkgroup.di.module.ContextModule;
 import com.example.android.vkgroup.di.module.GroupModule;
 import com.example.android.vkgroup.di.module.RoomModule;
 import com.example.android.vkgroup.di.scope.ApplicationScope;
+import com.example.android.vkgroup.presentation.adapter.ViewHolder;
 import com.example.android.vkgroup.presentation.mvp.ui.FavoriteActivity;
 import com.example.android.vkgroup.presentation.mvp.ui.GroupActivity;
 
@@ -21,7 +22,7 @@ public interface AppComponent {
 
     void inject(FavoriteActivity favoriteActivity);
 
-    void inject(GroupAdapterRv groupAdapter);
+    void inject(ViewHolder viewHolder);
 
     void inject(GroupDomainInteractor groupDomainInteractor);
 

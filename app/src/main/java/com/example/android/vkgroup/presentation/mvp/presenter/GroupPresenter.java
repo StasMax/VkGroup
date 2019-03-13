@@ -125,6 +125,5 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
             disposables.dispose();
         }
         groupInteractor.allDispose();
-        groupAdapterRv.getDispCheckBox().dispose();
     }
 }
