@@ -11,10 +11,13 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.android.vkgroup.R;
+import com.example.android.vkgroup.data.model.GroupModel;
 import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.presentation.app.App;
 import com.example.android.vkgroup.presentation.mvp.presenter.FavoritePresenter;
 import com.example.android.vkgroup.presentation.mvp.view.FavoriteView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -26,7 +29,7 @@ public class FavoriteActivity extends MvpAppCompatActivity implements FavoriteVi
     TextView textViewNoFi;
     @BindView(R.id.favorite_recycler_view)
     RecyclerView recyclerView;
-    @Inject
+
     GroupAdapterRv groupAdapterRv;
 
     @Inject
@@ -45,6 +48,7 @@ public class FavoriteActivity extends MvpAppCompatActivity implements FavoriteVi
         setContentView(R.layout.activity_favorite);
         ButterKnife.bind(this);
         favoritePresenter.loadGroups();
+        groupAdapterRv = new GroupAdapterRv();
         recyclerView.setAdapter(groupAdapterRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
     }
@@ -55,7 +59,8 @@ public class FavoriteActivity extends MvpAppCompatActivity implements FavoriteVi
     }
 
     @Override
-    public void setupGroupsList() {
+    public void setupGroupsList(List<GroupModel> groupModelFavoriteList) {
         textViewNoFi.setVisibility(View.GONE);
+        groupAdapterRv.setupFavoriteGroups(groupModelFavoriteList);
     }
 }

@@ -3,7 +3,6 @@ package com.example.android.vkgroup.presentation.mvp.presenter;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.android.vkgroup.domain.interactor.GroupInteractor;
-import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.data.model.GroupModel;
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.presentation.mvp.view.GroupView;
@@ -21,7 +20,6 @@ import io.reactivex.observers.DisposableSingleObserver;
 
 @InjectViewState
 public class GroupPresenter extends MvpPresenter<GroupView> {
-    private GroupAdapterRv groupAdapterRv;
     private GroupInteractor groupInteractor;
     private CompositeDisposable disposables;
     private List<GroupModel> favoriteQuery = new ArrayList<>();
@@ -29,8 +27,7 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
     private List<GroupModel> groupModelsQueryVk = new ArrayList<>();
 
     @Inject
-    public GroupPresenter(GroupAdapterRv groupAdapterRv, GroupInteractor groupInteractor) {
-        this.groupAdapterRv = groupAdapterRv;
+    public GroupPresenter(GroupInteractor groupInteractor) {
         this.groupInteractor = groupInteractor;
         disposables = new CompositeDisposable();
     }

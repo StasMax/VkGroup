@@ -39,8 +39,8 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     CircularProgressView cpvWait;
     @BindView(R.id.recycler_groups)
     RecyclerView rvGroups;
-    @Inject
-    GroupAdapterRv groupAdapterRv;
+
+    private GroupAdapterRv groupAdapterRv;
 
     @Inject
     @InjectPresenter
@@ -61,6 +61,7 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
         if (isOnline(this)) {
             groupPresenter.loadGroupsVk();
         }
+        groupAdapterRv = new GroupAdapterRv();
         rvGroups.setAdapter(groupAdapterRv);
         rvGroups.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
         rvGroups.setHasFixedSize(true);
