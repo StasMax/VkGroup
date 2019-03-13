@@ -27,11 +27,13 @@ public class FavoritePresenter extends MvpPresenter<FavoriteView> {
     GroupInteractor groupInteractor;
     private Disposable disposable;
 
-    public FavoritePresenter() {
-        App.getComponent().inject(this);
+    @Inject
+    public FavoritePresenter(GroupAdapterRv groupAdapterRv, GroupInteractor groupInteractor) {
+        this.groupAdapterRv = groupAdapterRv;
+        this.groupInteractor = groupInteractor;
     }
 
-        public void loadGroups() {
+    public void loadGroups() {
         disposable = groupInteractor.getFavoriteGroups(true)
                 .subscribe(this::groupsFavoriteLoaded);
     }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.presentation.app.App;
@@ -28,16 +29,21 @@ public class FavoriteActivity extends MvpAppCompatActivity implements FavoriteVi
     @Inject
     GroupAdapterRv groupAdapterRv;
 
+    @Inject
     @InjectPresenter
     FavoritePresenter favoritePresenter;
+    @ProvidePresenter
+    FavoritePresenter providePresenter() {
+        return favoritePresenter;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
+        App.getComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
         ButterKnife.bind(this);
-        App.getComponent().inject(this);
         favoritePresenter.loadGroups();
         recyclerView.setAdapter(groupAdapterRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.android.vkgroup.presentation.app.App;
 import com.example.android.vkgroup.presentation.mvp.presenter.LoginPresenter;
 import com.example.android.vkgroup.R;
@@ -22,11 +23,11 @@ import butterknife.OnClick;
 
 public class StartActivity extends MvpAppCompatActivity implements LoginView {
     @BindView(R.id.privetstvie)
-    TextView mTextHello;
+    TextView textHello;
     @BindView(R.id.enter)
-    Button mButEnter;
+    Button buttonEnter;
     @BindView(R.id.cpv_login)
-    CircularProgressView mCpvWait;
+    CircularProgressView cpvWait;
     @InjectPresenter
     LoginPresenter loginPresenter;
 
@@ -51,14 +52,14 @@ public class StartActivity extends MvpAppCompatActivity implements LoginView {
 
     @Override
     public void startLoading() {
-        mButEnter.setVisibility(View.GONE);
-        mCpvWait.setVisibility(View.VISIBLE);
+        buttonEnter.setVisibility(View.GONE);
+        cpvWait.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void endLoading() {
-        mButEnter.setVisibility(View.VISIBLE);
-        mCpvWait.setVisibility(View.GONE);
+        buttonEnter.setVisibility(View.VISIBLE);
+        cpvWait.setVisibility(View.GONE);
     }
 
     @Override

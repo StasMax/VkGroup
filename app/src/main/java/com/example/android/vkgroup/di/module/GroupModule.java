@@ -1,5 +1,7 @@
 package com.example.android.vkgroup.di.module;
 
+import android.content.Context;
+
 import com.example.android.vkgroup.data.model.ModelRepository;
 import com.example.android.vkgroup.data.repository.DataSingleVkRepository;
 import com.example.android.vkgroup.data.repository.VkRepository;
@@ -20,8 +22,8 @@ import dagger.Provides;
 public class GroupModule {
     @ApplicationScope
     @Provides
-    GroupPresenter dbPresenter() {
-        return new GroupPresenter();
+    GroupPresenter dbPresenter(GroupAdapterRv groupAdapterRv, GroupInteractor groupInteractor) {
+        return new GroupPresenter(groupAdapterRv, groupInteractor);
     }
 
     @ApplicationScope

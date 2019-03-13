@@ -1,12 +1,9 @@
 package com.example.android.vkgroup.presentation.mvp.presenter;
 
-import android.content.Context;
-
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.android.vkgroup.domain.interactor.GroupInteractor;
 import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
-import com.example.android.vkgroup.presentation.app.App;
 import com.example.android.vkgroup.data.model.GroupModel;
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.presentation.mvp.view.GroupView;
@@ -19,28 +16,23 @@ import javax.inject.Inject;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
 
-import static com.example.android.vkgroup.presentation.helper.Helper.isOnline;
-
 @InjectViewState
 public class GroupPresenter extends MvpPresenter<GroupView> {
-    @Inject
-    GroupAdapterRv groupAdapterRv;
-    @Inject
-    Context appContext;
-    @Inject
-    GroupInteractor groupInteractor;
+    private GroupAdapterRv groupAdapterRv;
+    private GroupInteractor groupInteractor;
     private Disposable disposable;
     private List<GroupModel> favoriteQuery = new ArrayList<>();
     private List<GroupModel> groupModelsQuery = new ArrayList<>();
     private List<GroupModel> groupModelsQueryVk = new ArrayList<>();
 
-    public GroupPresenter() {
-        App.getComponent().inject(this);
+    @Inject
+    public GroupPresenter(GroupAdapterRv groupAdapterRv, GroupInteractor groupInteractor) {
+        this.groupAdapterRv = groupAdapterRv;
+        this.groupInteractor = groupInteractor;
     }
 
     public void loadGroupsVk() {
 
-        if (isOnline(appContext)) {
             groupInteractor.getAllListGroupsVk()
                     .doOnSubscribe(disposable -> getViewState().startLoading())
                     .doOnSubscribe(disposable1 -> groupInteractor.getFavorite()
@@ -89,7 +81,6 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
                         }
                     });
         }
-    }
 
     public void loadGroupsFromDb() {
         disposable = groupInteractor.getAllGroupsFromDb()

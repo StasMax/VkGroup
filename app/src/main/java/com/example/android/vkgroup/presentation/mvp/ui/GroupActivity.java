@@ -11,10 +11,12 @@ import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.presentation.app.App;
 import com.example.android.vkgroup.presentation.mvp.presenter.GroupPresenter;
 import com.example.android.vkgroup.R;
+import com.example.android.vkgroup.presentation.mvp.presenter.LoginPresenter;
 import com.example.android.vkgroup.presentation.mvp.view.GroupView;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
@@ -24,28 +26,38 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
 
+import static com.example.android.vkgroup.presentation.helper.Helper.isOnline;
+
 public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     @BindView(R.id.txt_search)
     EditText searchGroup;
     @BindView(R.id.txt_groups_no_item)
-    TextView mTxtNoItem;
+    TextView txtNoItem;
     @BindView(R.id.cpv_groups)
-    CircularProgressView mCpvWait;
+    CircularProgressView cpvWait;
     @BindView(R.id.recycler_groups)
     RecyclerView rvGroups;
     @Inject
     GroupAdapterRv groupAdapterRv;
+
+    @Inject
     @InjectPresenter
     GroupPresenter groupPresenter;
-
+    @ProvidePresenter
+    GroupPresenter providePresenter() {
+        return groupPresenter;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
+        App.getComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
         ButterKnife.bind(this);
-        App.getComponent().inject(this);
-        groupPresenter.loadGroupsVk();
+
+        if (isOnline(this)) {
+            groupPresenter.loadGroupsVk();
+        }
         rvGroups.setAdapter(groupAdapterRv);
         rvGroups.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
         rvGroups.setHasFixedSize(true);
@@ -58,31 +70,31 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
 
     @Override
     public void startLoading() {
-        mTxtNoItem.setVisibility(View.GONE);
+        txtNoItem.setVisibility(View.GONE);
         rvGroups.setVisibility(View.GONE);
-        mCpvWait.setVisibility(View.VISIBLE);
+        cpvWait.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void endLoading() {
-        mCpvWait.setVisibility(View.GONE);
+        cpvWait.setVisibility(View.GONE);
     }
 
     @Override
     public void showError(int textResource) {
-        mTxtNoItem.setText(getString(textResource));
+        txtNoItem.setText(getString(textResource));
     }
 
     @Override
     public void setupEmptyList() {
         rvGroups.setVisibility(View.GONE);
-        mTxtNoItem.setVisibility(View.VISIBLE);
+        txtNoItem.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void setupGroupsList() {
         rvGroups.setVisibility(View.VISIBLE);
-        mTxtNoItem.setVisibility(View.GONE);
+        txtNoItem.setVisibility(View.GONE);
     }
 
     public void onClickDone(View view) {

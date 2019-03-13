@@ -25,8 +25,8 @@ import io.reactivex.disposables.Disposable;
 
 public class GroupAdapterRv extends RecyclerView.Adapter<GroupAdapterRv.ViewHolder> {
 
-    private List<GroupModel> mGroupModelList = new ArrayList<>();
-    private List<GroupModel> mSourceList = new ArrayList<>();
+    private List<GroupModel> groupModelList = new ArrayList<>();
+    private List<GroupModel> sourceList = new ArrayList<>();
     @Inject
     GroupInteractor groupInteractor;
     private Disposable dispCheckBox;
@@ -40,22 +40,22 @@ public class GroupAdapterRv extends RecyclerView.Adapter<GroupAdapterRv.ViewHold
     }
 
     public void setupGroups(List<GroupModel> groupModelList) {
-        mSourceList.clear();
-        mSourceList.addAll(groupModelList);
+        sourceList.clear();
+        sourceList.addAll(groupModelList);
         filter("");
     }
 
     public void setupFavoriteGroups(List<GroupModel> groupModelListFavorite) {
-        mGroupModelList.clear();
-        mGroupModelList.addAll(groupModelListFavorite);
+        groupModelList.clear();
+        groupModelList.addAll(groupModelListFavorite);
         notifyDataSetChanged();
     }
 
     public void filter(String query) {
-        mGroupModelList.clear();
-        for (GroupModel gModel : mSourceList) {
+        groupModelList.clear();
+        for (GroupModel gModel : sourceList) {
             if (gModel.getName().contains(query) || gModel.getName().toLowerCase().contains(query.toLowerCase())) {
-                mGroupModelList.add(gModel);
+                groupModelList.add(gModel);
             }
         }
         notifyDataSetChanged();
@@ -74,7 +74,7 @@ public class GroupAdapterRv extends RecyclerView.Adapter<GroupAdapterRv.ViewHold
 
     @Override
     public int getItemCount() {
-        return mGroupModelList.size();
+        return groupModelList.size();
     }
 
     @Override
@@ -88,36 +88,36 @@ public class GroupAdapterRv extends RecyclerView.Adapter<GroupAdapterRv.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private CheckBox mCheckBox;
-        private CircleImageView mCivAvatar;
-        private TextView mTxtGroupName;
-        private TextView mTxtSubscribers;
+        private CheckBox checkBox;
+        private CircleImageView civAvatar;
+        private TextView txtGroupName;
+        private TextView txtSubscribers;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mCivAvatar = itemView.findViewById(R.id.groups_siv_avatar);
-            mTxtGroupName = itemView.findViewById(R.id.group_txt_name);
-            mTxtSubscribers = itemView.findViewById(R.id.group_txt_subscribers);
-            mCheckBox = itemView.findViewById(R.id.isFavorite_checkBox);
+            civAvatar = itemView.findViewById(R.id.groups_siv_avatar);
+            txtGroupName = itemView.findViewById(R.id.group_txt_name);
+            txtSubscribers = itemView.findViewById(R.id.group_txt_subscribers);
+            checkBox = itemView.findViewById(R.id.isFavorite_checkBox);
         }
 
         public void bind(final int position) {
-            mTxtGroupName.setText(mGroupModelList.get(position).getName());
-            mTxtSubscribers.setText(mGroupModelList.get(position).getSubscribers());
-            if (mGroupModelList.get(position).getFavorite()) mCheckBox.setChecked(true);
-            else mCheckBox.setChecked(false);
+            txtGroupName.setText(groupModelList.get(position).getName());
+            txtSubscribers.setText(groupModelList.get(position).getSubscribers());
+            if (groupModelList.get(position).getFavorite()) checkBox.setChecked(true);
+            else checkBox.setChecked(false);
 
-            dispCheckBox = RxView.clicks(mCheckBox).subscribe(o -> {
-                if (mCheckBox.isChecked()) {
-                    mGroupModelList.get(position).setFavorite(true);
-                    groupInteractor.updateFavorite(mGroupModelList.get(position));
+            dispCheckBox = RxView.clicks(checkBox).subscribe(o -> {
+                if (checkBox.isChecked()) {
+                    groupModelList.get(position).setFavorite(true);
+                    groupInteractor.updateFavorite(groupModelList.get(position));
                 } else {
-                    mGroupModelList.get(position).setFavorite(false);
-                    groupInteractor.updateFavorite(mGroupModelList.get(position));
+                    groupModelList.get(position).setFavorite(false);
+                    groupInteractor.updateFavorite(groupModelList.get(position));
                 }
             });
-            if (mGroupModelList.get(position).getAvatar() != null) {
-                Picasso.with(itemView.getContext()).load(mGroupModelList.get(position).getAvatar()).into(mCivAvatar);
+            if (groupModelList.get(position).getAvatar() != null) {
+                Picasso.with(itemView.getContext()).load(groupModelList.get(position).getAvatar()).into(civAvatar);
             }
         }
     }
