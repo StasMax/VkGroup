@@ -12,12 +12,15 @@ import android.widget.TextView;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.example.android.vkgroup.data.model.GroupModel;
 import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.presentation.app.App;
 import com.example.android.vkgroup.presentation.mvp.presenter.GroupPresenter;
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.presentation.mvp.view.GroupView;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -92,9 +95,10 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     }
 
     @Override
-    public void setupGroupsList() {
+    public void setupGroupsList(List<GroupModel> groupsList) {
         rvGroups.setVisibility(View.VISIBLE);
         txtNoItem.setVisibility(View.GONE);
+        groupAdapterRv.setupGroups(groupsList);
     }
 
     public void onClickDone(View view) {

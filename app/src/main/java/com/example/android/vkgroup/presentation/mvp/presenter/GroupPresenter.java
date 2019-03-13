@@ -103,8 +103,8 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
             getViewState().setupEmptyList();
             getViewState().showError(R.string.no_groups_item);
         } else
-            getViewState().setupGroupsList();
-        groupAdapterRv.setupGroups(groupModelList);
+            getViewState().setupGroupsList(groupModelList);
+
     }
 
     private void insertFavorite(List<GroupModel> groupModelsQueryVk, List<GroupModel> favoriteQuery) {
