@@ -24,5 +24,5 @@ public interface GroupInteractor {
 
     Flowable<List<GroupModel>> getFavoriteGroups(Boolean isFavorite);
 
-
+    void allDispose();
 }
