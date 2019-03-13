@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.data.model.GroupModel;
 
@@ -50,7 +51,7 @@ public class GroupAdapterRv extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.bind(i);
+        viewHolder.bind(groupModelList.get(i));
     }
 
     @Override

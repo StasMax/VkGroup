@@ -1,13 +1,10 @@
 package com.example.android.vkgroup.di.module;
 
-import android.content.Context;
-
 import com.example.android.vkgroup.data.model.ModelRepository;
 import com.example.android.vkgroup.data.repository.DataSingleVkRepository;
 import com.example.android.vkgroup.data.repository.VkRepository;
 import com.example.android.vkgroup.domain.interactor.GroupDomainInteractor;
 import com.example.android.vkgroup.domain.interactor.GroupInteractor;
-import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.di.scope.ApplicationScope;
 import com.example.android.vkgroup.presentation.mvp.presenter.GroupPresenter;
 import com.vk.sdk.api.VKApi;
@@ -22,14 +19,8 @@ import dagger.Provides;
 public class GroupModule {
     @ApplicationScope
     @Provides
-    GroupPresenter dbPresenter(GroupAdapterRv groupAdapterRv, GroupInteractor groupInteractor) {
-        return new GroupPresenter(groupAdapterRv, groupInteractor);
-    }
-
-    @ApplicationScope
-    @Provides
-    GroupAdapterRv groupAdapterRv() {
-        return new GroupAdapterRv();
+    GroupPresenter dbPresenter(GroupInteractor groupInteractor) {
+        return new GroupPresenter(groupInteractor);
     }
 
     @ApplicationScope

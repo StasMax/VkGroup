@@ -7,13 +7,14 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.android.vkgroup.R;
+import com.example.android.vkgroup.data.model.GroupModel;
 import com.example.android.vkgroup.domain.interactor.GroupInteractor;
 import com.example.android.vkgroup.presentation.app.App;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
-import de.hdodenhof.circleimageview.CircleImageView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ViewHolder extends RecyclerView.ViewHolder {
     private CheckBox checkBox;
@@ -22,8 +23,6 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     private TextView txtSubscribers;
     @Inject
     GroupInteractor groupInteractor;
-    @Inject
-    GroupAdapterRv groupAdapterRv;
 
     public ViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -34,24 +33,24 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         checkBox = itemView.findViewById(R.id.isFavorite_checkBox);
     }
 
-    public void bind(final int position) {
-        txtGroupName.setText(groupAdapterRv.getGroupModelList().get(position).getName());
-        txtSubscribers.setText(groupAdapterRv.getGroupModelList().get(position).getSubscribers());
-        if (groupAdapterRv.getGroupModelList().get(position).getFavorite())
+    public void bind(final GroupModel groupModel) {
+        txtGroupName.setText(groupModel.getName());
+        txtSubscribers.setText(groupModel.getSubscribers());
+        if (groupModel.getFavorite())
             checkBox.setChecked(true);
         else checkBox.setChecked(false);
 
         checkBox.setOnClickListener(v -> {
             if (checkBox.isChecked()) {
-                groupAdapterRv.getGroupModelList().get(position).setFavorite(true);
-                groupInteractor.updateFavorite(groupAdapterRv.getGroupModelList().get(position));
+                groupModel.setFavorite(true);
+                groupInteractor.updateFavorite(groupModel);
             } else {
-                groupAdapterRv.getGroupModelList().get(position).setFavorite(false);
-                groupInteractor.updateFavorite(groupAdapterRv.getGroupModelList().get(position));
+                groupModel.setFavorite(false);
+                groupInteractor.updateFavorite(groupModel);
             }
         });
-        if (groupAdapterRv.getGroupModelList().get(position).getAvatar() != null) {
-            Picasso.with(itemView.getContext()).load(groupAdapterRv.getGroupModelList().get(position).getAvatar()).into(civAvatar);
+        if (groupModel.getAvatar() != null) {
+            Picasso.with(itemView.getContext()).load(groupModel.getAvatar()).into(civAvatar);
         }
     }
 }

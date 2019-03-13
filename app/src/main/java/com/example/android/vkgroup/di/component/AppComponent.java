@@ -2,9 +2,7 @@ package com.example.android.vkgroup.di.component;
 
 import com.example.android.vkgroup.data.repository.DataSingleVkRepository;
 import com.example.android.vkgroup.domain.interactor.GroupDomainInteractor;
-import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.di.module.AppModule;
-import com.example.android.vkgroup.di.module.ContextModule;
 import com.example.android.vkgroup.di.module.GroupModule;
 import com.example.android.vkgroup.di.module.RoomModule;
 import com.example.android.vkgroup.di.scope.ApplicationScope;
@@ -15,7 +13,7 @@ import com.example.android.vkgroup.presentation.mvp.ui.GroupActivity;
 import dagger.Component;
 
 @ApplicationScope
-@Component(dependencies = {}, modules = {RoomModule.class, ContextModule.class, GroupModule.class, AppModule.class})
+@Component(dependencies = {}, modules = {RoomModule.class, GroupModule.class, AppModule.class})
 public interface AppComponent {
 
     void inject(GroupActivity groupActivity);

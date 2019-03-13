@@ -5,7 +5,6 @@ import android.app.Application;
 import com.example.android.vkgroup.di.component.AppComponent;
 import com.example.android.vkgroup.di.component.DaggerAppComponent;
 import com.example.android.vkgroup.di.module.AppModule;
-import com.example.android.vkgroup.di.module.ContextModule;
 import com.example.android.vkgroup.di.module.GroupModule;
 import com.example.android.vkgroup.di.module.RoomModule;
 import com.vk.sdk.VKSdk;
@@ -20,7 +19,6 @@ public class App extends Application {
         component = DaggerAppComponent.builder()
                 .roomModule(new RoomModule(this))
                 .appModule(new AppModule(this))
-                .contextModule(new ContextModule(getApplicationContext()))
                 .groupModule(new GroupModule())
                 .build();
 
