@@ -13,8 +13,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
 public class GroupPresenter extends MvpPresenter<GroupView> {
@@ -36,6 +38,7 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
             groupInteractor.getAllListGroupsVk()
                     .doOnSubscribe(disposable -> getViewState().startLoading())
                     .doOnSubscribe(disposable1 -> groupInteractor.getFavorite()
+                            .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new DisposableSingleObserver<List<GroupModel>>() {
                                 @Override
                                 public void onSuccess(List<GroupModel> groupModels) {
@@ -48,6 +51,7 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
                                 }
                             }))
                     .doOnSubscribe(disposable2 -> groupInteractor.getGroupsListFromDb()
+                            .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new DisposableSingleObserver<List<GroupModel>>() {
                                 @Override
                                 public void onSuccess(List<GroupModel> groupModels) {
@@ -60,6 +64,7 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
 
                                 }
                             }))
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new DisposableSingleObserver<List<GroupModel>>() {
                         @Override
                         public void onSuccess(List<GroupModel> groupModels) {
@@ -84,6 +89,7 @@ public class GroupPresenter extends MvpPresenter<GroupView> {
 
     public void loadGroupsFromDb() {
         disposable = groupInteractor.getAllGroupsFromDb()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::groupsLoaded);
     }
 

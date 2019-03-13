@@ -35,6 +35,7 @@ public class FavoritePresenter extends MvpPresenter<FavoriteView> {
 
     public void loadGroups() {
         disposable = groupInteractor.getFavoriteGroups(true)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::groupsFavoriteLoaded);
     }
 
