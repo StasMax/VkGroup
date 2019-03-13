@@ -16,7 +16,6 @@ import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 import com.example.android.vkgroup.presentation.app.App;
 import com.example.android.vkgroup.presentation.mvp.presenter.GroupPresenter;
 import com.example.android.vkgroup.R;
-import com.example.android.vkgroup.presentation.mvp.presenter.LoginPresenter;
 import com.example.android.vkgroup.presentation.mvp.view.GroupView;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
@@ -26,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
 
-import static com.example.android.vkgroup.presentation.helper.Helper.isOnline;
+import static com.example.android.vkgroup.presentation.helper.AskOnline.isOnline;
 
 public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     @BindView(R.id.txt_search)
@@ -43,13 +42,14 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     @Inject
     @InjectPresenter
     GroupPresenter groupPresenter;
+
     @ProvidePresenter
     GroupPresenter providePresenter() {
         return groupPresenter;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
         App.getComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);

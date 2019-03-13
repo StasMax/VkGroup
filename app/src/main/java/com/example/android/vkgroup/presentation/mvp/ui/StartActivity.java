@@ -33,11 +33,9 @@ public class StartActivity extends MvpAppCompatActivity implements LoginView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         ButterKnife.bind(this);
-        App.getComponent().inject(this);
     }
 
     @OnClick(R.id.enter)
@@ -69,6 +67,6 @@ public class StartActivity extends MvpAppCompatActivity implements LoginView {
 
     @Override
     public void openGroups() {
-        startActivity(new Intent(getApplicationContext(), GroupActivity.class));
+        startActivity(new Intent(this, GroupActivity.class));
     }
 }

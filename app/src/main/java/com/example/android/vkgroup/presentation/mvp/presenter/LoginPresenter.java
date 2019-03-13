@@ -14,7 +14,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import static com.example.android.vkgroup.presentation.helper.Helper.isOnline;
+import static com.example.android.vkgroup.presentation.helper.AskOnline.isOnline;
 
 @InjectViewState
 public class LoginPresenter extends MvpPresenter<LoginView> {

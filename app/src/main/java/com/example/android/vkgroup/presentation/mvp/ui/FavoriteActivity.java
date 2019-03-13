@@ -32,6 +32,7 @@ public class FavoriteActivity extends MvpAppCompatActivity implements FavoriteVi
     @Inject
     @InjectPresenter
     FavoritePresenter favoritePresenter;
+
     @ProvidePresenter
     FavoritePresenter providePresenter() {
         return favoritePresenter;
@@ -39,7 +40,6 @@ public class FavoriteActivity extends MvpAppCompatActivity implements FavoriteVi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
         App.getComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);

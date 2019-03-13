@@ -17,9 +17,11 @@
         android:theme="@style/SplashTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:theme="@style/AppTheme"
             android:name=".presentation.mvp.ui.FavoriteActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:theme="@style/AppTheme"
             android:name=".presentation.mvp.ui.GroupActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -28,6 +30,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/VK.Transparent" />
         <activity
+            android:theme="@style/AppTheme"
             android:name=".presentation.mvp.ui.StartActivity"
             android:screenOrientation="portrait">
             <intent-filter>
