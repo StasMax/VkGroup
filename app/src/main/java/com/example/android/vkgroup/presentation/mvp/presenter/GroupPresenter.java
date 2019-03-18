@@ -17,6 +17,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
 public class GroupPresenter extends BasePresenter<GroupView> {
@@ -56,14 +57,17 @@ public class GroupPresenter extends BasePresenter<GroupView> {
                     @Override
                     public void onSuccess(List<GroupModel> groupModels) {
                         groupModelsQuery.addAll(groupModels);
-                        groupInteractor.deleteAll(groupModelsQuery);
-                    }
+                                            }
 
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
                     }
                 });
+
+        groupInteractor.deleteAll(groupModelsQuery)
+                .subscribeOn(Schedulers.newThread())
+                .subscribe();
 
         groupInteractor.getAllListGroupsVk()
                 .doOnSubscribe(disposable -> {

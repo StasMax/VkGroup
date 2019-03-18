@@ -4,6 +4,7 @@ import com.example.android.vkgroup.data.model.GroupModel;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 
@@ -18,7 +19,7 @@ public interface GroupInteractor {
 
     void insertVkInDb(List<GroupModel> groupModelsVk);
 
-    void deleteAll(List<GroupModel> groupModels);
+    Completable deleteAll(List<GroupModel> groupModels);
 
     Flowable<List<GroupModel>> getAllGroupsFromDb();
 

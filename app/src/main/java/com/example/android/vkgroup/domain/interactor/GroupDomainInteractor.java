@@ -52,11 +52,8 @@ public class GroupDomainInteractor implements GroupInteractor {
     }
 
     @Override
-    public void deleteAll(List<GroupModel> groupModels) {
-        Completable.fromAction(() -> modelRepository.deleteAllDb(groupModels))
-                .subscribeOn(Schedulers.newThread())
-                .doOnSubscribe(disposables::add)
-                .subscribe();
+    public Completable deleteAll(List<GroupModel> groupModels) {
+       return Completable.fromAction(() -> modelRepository.deleteAllDb(groupModels));
     }
 
     @Override
