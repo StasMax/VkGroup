@@ -13,13 +13,9 @@ public interface GroupInteractor {
 
     Single<List<GroupModel>> getAllListGroupsVk();
 
-    Single<List<GroupModel>> getGroupsListFromDb();
-
     Completable updateFavorite(GroupModel groupModel);
 
     Completable insertVkInDb(List<GroupModel> groupModelsVk);
-
-    Completable deleteAll(List<GroupModel> groupModels);
 
     Completable clearAll();
 
@@ -27,5 +23,4 @@ public interface GroupInteractor {
 
     Flowable<List<GroupModel>> getFavoriteGroups(Boolean isFavorite);
 
-    void allDispose();
 }

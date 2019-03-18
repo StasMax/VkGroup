@@ -20,10 +20,9 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
-public class FavoritePresenter extends MvpPresenter<FavoriteView> {
+public class FavoritePresenter extends BasePresenter<FavoriteView> {
     @Inject
     GroupInteractor groupInteractor;
-    private Disposable disposable;
 
     @Inject
     public FavoritePresenter(GroupInteractor groupInteractor) {
@@ -31,9 +30,9 @@ public class FavoritePresenter extends MvpPresenter<FavoriteView> {
     }
 
     public void loadGroups() {
-        disposable = groupInteractor.getFavoriteGroups(true)
+        addSubscription(groupInteractor.getFavoriteGroups(true)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::groupsFavoriteLoaded);
+                .subscribe(this::groupsFavoriteLoaded));
     }
 
     private void groupsFavoriteLoaded(List<GroupModel> groupModelFavoriteList) {
@@ -43,10 +42,4 @@ public class FavoritePresenter extends MvpPresenter<FavoriteView> {
             getViewState().setupGroupsList(groupModelFavoriteList);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        disposable.dispose();
-        groupInteractor.allDispose();
-    }
 }

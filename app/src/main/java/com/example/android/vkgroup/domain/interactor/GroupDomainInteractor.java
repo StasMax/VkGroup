@@ -30,24 +30,14 @@ public class GroupDomainInteractor implements GroupInteractor {
         disposables = new CompositeDisposable();
     }
 
-    public Single<List<GroupModel>> getGroupsListFromDb() {
-        return modelRepository.loadListDb()
-                .subscribeOn(Schedulers.io());
-    }
-
     @Override
     public Completable updateFavorite(GroupModel groupModel) {
-      return Completable.fromAction(() -> modelRepository.update(groupModel));
+        return Completable.fromAction(() -> modelRepository.update(groupModel));
     }
 
     @Override
     public Completable insertVkInDb(List<GroupModel> groupModelsVk) {
-       return Completable.fromAction(() -> modelRepository.insertListInDb(groupModelsVk));
-    }
-
-    @Override
-    public Completable deleteAll(List<GroupModel> groupModels) {
-       return Completable.fromAction(() -> modelRepository.deleteAllDb(groupModels));
+        return Completable.fromAction(() -> modelRepository.insertListInDb(groupModelsVk));
     }
 
     @Override
@@ -58,32 +48,22 @@ public class GroupDomainInteractor implements GroupInteractor {
     @Override
     public Flowable<List<GroupModel>> getAllGroupsFromDb() {
         return modelRepository.getAll()
-                .subscribeOn(Schedulers.io())
                 .distinct();
     }
 
     @Override
     public Flowable<List<GroupModel>> getFavoriteGroups(Boolean isFavorite) {
-        return modelRepository.getByFavorite(true)
-                .subscribeOn(Schedulers.io());
+        return modelRepository.getByFavorite(true);
     }
 
     @Override
     public Single<List<GroupModel>> getFavorite() {
-        return modelRepository.getByFavoriteSingle(true)
-                .subscribeOn(Schedulers.io());
+        return modelRepository.getByFavoriteSingle(true);
     }
 
     @Override
     public Single<List<GroupModel>> getAllListGroupsVk() {
-        return vkRepository.getListGroupsSingle()
-                .subscribeOn(Schedulers.io());
+        return vkRepository.getListGroupsSingle();
     }
 
-    public void allDispose() {
-        if (disposables.isDisposed()) {
-            disposables.clear();
-            disposables.dispose();
-        }
-    }
 }

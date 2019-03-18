@@ -19,9 +19,6 @@ public interface ModelDao {
     @Query("SELECT * FROM dbGroups")
     Flowable<List<GroupModel>> getAll();
 
-    @Query("SELECT * FROM dbGroups")
-    Single<List<GroupModel>> getAllList();
-
     @Query("SELECT * FROM dbGroups WHERE isFavorite LIKE:isFavorite")
     Flowable<List<GroupModel>> getByFavorite(Boolean isFavorite);
 
@@ -33,9 +30,6 @@ public interface ModelDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(GroupModel... groupModelsVk);
-
-    @Delete
-    void deleteAll(List<GroupModel> groupModelList);
 
     @Update
     void update(GroupModel groupModel);

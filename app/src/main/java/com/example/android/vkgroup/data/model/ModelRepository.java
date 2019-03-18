@@ -9,11 +9,7 @@ public interface ModelRepository {
 
     void insertListInDb(List<GroupModel> groupModelList);
 
-    void deleteAllDb(List<GroupModel> groupModelList);
-
     void clearAllDb();
-
-    Single<List<GroupModel>> loadListDb();
 
     void update(GroupModel groupModel);
 

@@ -1,7 +1,6 @@
 package com.example.android.vkgroup.presentation.mvp.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
 import com.example.android.vkgroup.domain.interactor.GroupInteractor;
 import com.example.android.vkgroup.data.model.GroupModel;
 import com.example.android.vkgroup.R;
@@ -13,84 +12,47 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-
-import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
 public class GroupPresenter extends BasePresenter<GroupView> {
     private GroupInteractor groupInteractor;
-    private CompositeDisposable disposables;
     private List<GroupModel> favoriteQuery = new ArrayList<>();
-    private List<GroupModel> groupModelsQuery = new ArrayList<>();
     private List<GroupModel> groupModelsQueryVk = new ArrayList<>();
 
     @Inject
     public GroupPresenter(GroupInteractor groupInteractor) {
         this.groupInteractor = groupInteractor;
-        disposables = new CompositeDisposable();
     }
 
     public void loadGroupsVk() {
-
         addSubscription(groupInteractor.getFavorite()
+                .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(favoriteQuery::addAll, Throwable::printStackTrace));
 
-groupInteractor.clearAll()
-        .subscribeOn(Schedulers.newThread())
-        .subscribe();
-    /*    groupInteractor.getGroupsListFromDb()
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposables::add)
-                .subscribe(new DisposableSingleObserver<List<GroupModel>>() {
-                    @Override
-                    public void onSuccess(List<GroupModel> groupModels) {
-                        groupModelsQuery.addAll(groupModels);
-                                            }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-                });
-
-        groupInteractor.deleteAll(groupModelsQuery)
+        addSubscription(groupInteractor.clearAll()
                 .subscribeOn(Schedulers.newThread())
-                .subscribe();*/
+                .subscribe());
 
-        groupInteractor.getAllListGroupsVk()
-                .doOnSubscribe(disposable -> {
-                    disposables.add(disposable);
-                    getViewState().startLoading();
-                })
+        addSubscription(groupInteractor.getAllListGroupsVk()
+                .doOnSubscribe(disposable -> getViewState().startLoading())
+                .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableSingleObserver<List<GroupModel>>() {
-                    @Override
-                    public void onSuccess(List<GroupModel> groupModels) {
-                        groupModelsQueryVk.addAll(groupModels);
-                        insertFavorite(groupModelsQueryVk, favoriteQuery);
-                        groupInteractor.insertVkInDb(groupModelsQueryVk)
-                                .subscribeOn(Schedulers.newThread())
-                                .subscribe();
-                                            }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-                });
-
+                .subscribe(groupModels -> {
+                    groupModelsQueryVk.addAll(groupModels);
+                    insertFavorite(groupModelsQueryVk, favoriteQuery);
+                    groupInteractor.insertVkInDb(groupModelsQueryVk)
+                            .subscribeOn(Schedulers.newThread())
+                            .subscribe();
+                }));
     }
 
     public void loadGroupsFromDb() {
-
-        Disposable disposableFlowable = groupInteractor.getAllGroupsFromDb()
+        addSubscription(groupInteractor.getAllGroupsFromDb()
+                .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::groupsLoaded);
-        disposables.add(disposableFlowable);
+                .subscribe(this::groupsLoaded));
     }
 
     private void groupsLoaded(List<GroupModel> groupModelList) {
@@ -111,15 +73,6 @@ groupInteractor.clearAll()
                 }
             }
         }
-   }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (disposables.isDisposed()) {
-            disposables.clear();
-            disposables.dispose();
-        }
-        groupInteractor.allDispose();
     }
+
 }
