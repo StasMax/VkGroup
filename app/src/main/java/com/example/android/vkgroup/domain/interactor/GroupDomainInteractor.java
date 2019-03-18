@@ -51,6 +51,11 @@ public class GroupDomainInteractor implements GroupInteractor {
     }
 
     @Override
+    public Completable clearAll() {
+        return Completable.fromAction(() -> modelRepository.clearAllDb());
+    }
+
+    @Override
     public Flowable<List<GroupModel>> getAllGroupsFromDb() {
         return modelRepository.getAll()
                 .subscribeOn(Schedulers.io())

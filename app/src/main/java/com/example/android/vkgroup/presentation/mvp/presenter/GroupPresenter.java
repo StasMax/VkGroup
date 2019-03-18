@@ -35,22 +35,14 @@ public class GroupPresenter extends BasePresenter<GroupView> {
 
     public void loadGroupsVk() {
 
-        groupInteractor.getFavorite()
+        addSubscription(groupInteractor.getFavorite()
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposables::add)
-                .subscribe(new DisposableSingleObserver<List<GroupModel>>() {
-                    @Override
-                    public void onSuccess(List<GroupModel> groupModels) {
-                        favoriteQuery.addAll(groupModels);
-                    }
+                .subscribe(favoriteQuery::addAll, Throwable::printStackTrace));
 
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-                });
-
-        groupInteractor.getGroupsListFromDb()
+groupInteractor.clearAll()
+        .subscribeOn(Schedulers.newThread())
+        .subscribe();
+    /*    groupInteractor.getGroupsListFromDb()
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposables::add)
                 .subscribe(new DisposableSingleObserver<List<GroupModel>>() {
@@ -67,7 +59,7 @@ public class GroupPresenter extends BasePresenter<GroupView> {
 
         groupInteractor.deleteAll(groupModelsQuery)
                 .subscribeOn(Schedulers.newThread())
-                .subscribe();
+                .subscribe();*/
 
         groupInteractor.getAllListGroupsVk()
                 .doOnSubscribe(disposable -> {
@@ -119,7 +111,7 @@ public class GroupPresenter extends BasePresenter<GroupView> {
                 }
             }
         }
-    }
+   }
 
     @Override
     public void onDestroy() {

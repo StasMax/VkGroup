@@ -21,6 +21,8 @@ public interface GroupInteractor {
 
     Completable deleteAll(List<GroupModel> groupModels);
 
+    Completable clearAll();
+
     Flowable<List<GroupModel>> getAllGroupsFromDb();
 
     Flowable<List<GroupModel>> getFavoriteGroups(Boolean isFavorite);

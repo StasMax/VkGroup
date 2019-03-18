@@ -27,6 +27,11 @@ public class ModelDataSource implements ModelRepository {
     }
 
     @Override
+    public void clearAllDb() {
+        modelDao.clearTable();
+    }
+
+    @Override
     public Single<List<GroupModel>> loadListDb() {
         return modelDao.getAllList();
     }

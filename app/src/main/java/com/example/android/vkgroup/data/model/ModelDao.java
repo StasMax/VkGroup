@@ -28,6 +28,9 @@ public interface ModelDao {
     @Query("SELECT * FROM dbGroups WHERE isFavorite LIKE :isFavorite")
     Single<List<GroupModel>> getByFavoriteSingle(Boolean isFavorite);
 
+    @Query("DELETE FROM dbGroups")
+    void clearTable();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(GroupModel... groupModelsVk);
 

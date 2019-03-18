@@ -11,6 +11,8 @@ public interface ModelRepository {
 
     void deleteAllDb(List<GroupModel> groupModelList);
 
+    void clearAllDb();
+
     Single<List<GroupModel>> loadListDb();
 
     void update(GroupModel groupModel);
