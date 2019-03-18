@@ -15,9 +15,9 @@ public interface GroupInteractor {
 
     Single<List<GroupModel>> getGroupsListFromDb();
 
-    void updateFavorite(GroupModel groupModel);
+    Completable updateFavorite(GroupModel groupModel);
 
-    void insertVkInDb(List<GroupModel> groupModelsVk);
+    Completable insertVkInDb(List<GroupModel> groupModelsVk);
 
     Completable deleteAll(List<GroupModel> groupModels);
 

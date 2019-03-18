@@ -36,19 +36,13 @@ public class GroupDomainInteractor implements GroupInteractor {
     }
 
     @Override
-    public void updateFavorite(GroupModel groupModel) {
-        Completable.fromAction(() -> modelRepository.update(groupModel))
-                .subscribeOn(Schedulers.newThread())
-                .doOnSubscribe(disposables::add)
-                .subscribe();
+    public Completable updateFavorite(GroupModel groupModel) {
+      return Completable.fromAction(() -> modelRepository.update(groupModel));
     }
 
     @Override
-    public void insertVkInDb(List<GroupModel> groupModelsVk) {
-        Completable.fromAction(() -> modelRepository.insertListInDb(groupModelsVk))
-                .subscribeOn(Schedulers.newThread())
-                .doOnSubscribe(disposables::add)
-                .subscribe();
+    public Completable insertVkInDb(List<GroupModel> groupModelsVk) {
+       return Completable.fromAction(() -> modelRepository.insertListInDb(groupModelsVk));
     }
 
     @Override

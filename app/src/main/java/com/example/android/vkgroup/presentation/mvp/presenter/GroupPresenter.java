@@ -80,14 +80,17 @@ public class GroupPresenter extends BasePresenter<GroupView> {
                     public void onSuccess(List<GroupModel> groupModels) {
                         groupModelsQueryVk.addAll(groupModels);
                         insertFavorite(groupModelsQueryVk, favoriteQuery);
-                        groupInteractor.insertVkInDb(groupModelsQueryVk);
-                    }
+                        groupInteractor.insertVkInDb(groupModelsQueryVk)
+                                .subscribeOn(Schedulers.newThread())
+                                .subscribe();
+                                            }
 
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
                     }
                 });
+
     }
 
     public void loadGroupsFromDb() {

@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import javax.inject.Inject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.schedulers.Schedulers;
 
 public class ViewHolder extends RecyclerView.ViewHolder {
     private CheckBox checkBox;
@@ -43,10 +44,14 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         checkBox.setOnClickListener(v -> {
             if (checkBox.isChecked()) {
                 groupModel.setFavorite(true);
-                groupInteractor.updateFavorite(groupModel);
+                groupInteractor.updateFavorite(groupModel)
+                .subscribeOn(Schedulers.newThread())
+                .subscribe();
             } else {
                 groupModel.setFavorite(false);
-                groupInteractor.updateFavorite(groupModel);
+                groupInteractor.updateFavorite(groupModel)
+                        .subscribeOn(Schedulers.newThread())
+                        .subscribe();
             }
         });
         if (groupModel.getAvatar() != null) {
