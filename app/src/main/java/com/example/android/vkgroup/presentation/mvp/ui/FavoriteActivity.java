@@ -47,7 +47,7 @@ public class FavoriteActivity extends MvpAppCompatActivity implements FavoriteVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
         ButterKnife.bind(this);
-        favoritePresenter.loadGroups();
+        favoritePresenter.onInitFavoriteGroups();
         groupAdapterRv = new GroupAdapterRv();
         favoritePresenter.favoriteListener(groupAdapterRv);
         recyclerView.setAdapter(groupAdapterRv);

@@ -17,8 +17,6 @@ public interface GroupInteractor {
 
     Completable insertVkInDb(List<GroupModel> groupModelsVk);
 
-    Completable clearAll();
-
     Flowable<List<GroupModel>> getAllGroupsFromDb();
 
     Flowable<List<GroupModel>> getFavoriteGroups(Boolean isFavorite);

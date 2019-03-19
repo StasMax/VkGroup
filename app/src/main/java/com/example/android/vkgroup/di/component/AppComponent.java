@@ -1,7 +1,5 @@
 package com.example.android.vkgroup.di.component;
 
-import com.example.android.vkgroup.data.repository.DataSingleVkRepository;
-import com.example.android.vkgroup.domain.interactor.GroupDomainInteractor;
 import com.example.android.vkgroup.di.module.AppModule;
 import com.example.android.vkgroup.di.module.GroupModule;
 import com.example.android.vkgroup.di.module.RoomModule;

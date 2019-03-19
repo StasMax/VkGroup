@@ -28,6 +28,9 @@ public interface ModelDao {
     @Query("DELETE FROM dbGroups")
     void clearTable();
 
+    @Query("SELECT * FROM dbGroups")
+    List<GroupModel> getAllList();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(GroupModel... groupModelsVk);
 

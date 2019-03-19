@@ -53,20 +53,16 @@ public class GroupPresenter extends BasePresenter<GroupView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(favoriteQuery::addAll, Throwable::printStackTrace));
 
-        addSubscription(groupInteractor.clearAll()
-                .subscribeOn(Schedulers.newThread())
-                .subscribe());
-
         addSubscription(groupInteractor.getAllListGroupsVk()
                 .doOnSubscribe(disposable -> getViewState().startLoading())
-                .doFinally(() -> addSubscription(groupInteractor.insertVkInDb(groupModelsQueryVk)
-                        .subscribeOn(Schedulers.newThread())
-                        .subscribe()))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(groupModels -> {
                     groupModelsQueryVk.addAll(groupModels);
                     insertFavorite(groupModelsQueryVk, favoriteQuery);
 
+                    addSubscription(groupInteractor.insertVkInDb(groupModelsQueryVk)
+                            .subscribeOn(Schedulers.newThread())
+                            .subscribe());
                 }));
     }
 

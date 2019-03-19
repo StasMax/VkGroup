@@ -44,9 +44,7 @@ public class BasePresenter<View extends MvpView> extends MvpPresenter<View> {
                 addSubscription(groupInteractor.updateFavorite(groupModel)
                         .subscribeOn(Schedulers.newThread())
                         .subscribe());
-        }
-
-
-    });
+            }
+        });
     }
 }

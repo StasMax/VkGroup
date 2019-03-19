@@ -9,8 +9,6 @@ public interface ModelRepository {
 
     void insertListInDb(List<GroupModel> groupModelList);
 
-    void clearAllDb();
-
     void update(GroupModel groupModel);
 
     Flowable<List<GroupModel>> getAll();

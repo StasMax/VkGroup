@@ -3,20 +3,16 @@ package com.example.android.vkgroup.presentation.adapter;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.data.model.GroupModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class GroupAdapterRv extends RecyclerView.Adapter<ViewHolder> {
-    private List<GroupModel> groupModelList = new ArrayList<>();
+    private List<GroupModel> groupsModelList = new ArrayList<>();
     private List<GroupModel> sourceList = new ArrayList<>();
 
     private Listener listener;
@@ -30,22 +26,23 @@ public class GroupAdapterRv extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public void setupGroups(List<GroupModel> groupModelList) {
+        groupsModelList.clear();
         sourceList.clear();
         sourceList.addAll(groupModelList);
         filter("");
     }
 
     public void setupFavoriteGroups(List<GroupModel> groupModelListFavorite) {
-        groupModelList.clear();
-        groupModelList.addAll(groupModelListFavorite);
+        groupsModelList.clear();
+        groupsModelList.addAll(groupModelListFavorite);
         notifyDataSetChanged();
     }
 
     public void filter(String query) {
-        groupModelList.clear();
+        groupsModelList.clear();
         for (GroupModel gModel : sourceList) {
             if (gModel.getName().contains(query) || gModel.getName().toLowerCase().contains(query.toLowerCase())) {
-                groupModelList.add(gModel);
+                groupsModelList.add(gModel);
             }
         }
         notifyDataSetChanged();
@@ -59,18 +56,18 @@ public class GroupAdapterRv extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.bind(groupModelList.get(i));
+        viewHolder.bind(groupsModelList.get(i));
         CheckBox checkBox = viewHolder.itemView.findViewById(R.id.isFavorite_checkBox);
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (listener != null) {
-                listener.onClick(groupModelList.get(i), isChecked);
+                listener.onClick(groupsModelList.get(i), isChecked);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return groupModelList.size();
+        return groupsModelList.size();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.android.vkgroup.data.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,6 +9,8 @@ import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 public class ModelDataRepository implements ModelRepository {
+    private List<GroupModel> listVk = new ArrayList<>();
+    private List<GroupModel> listDb = new ArrayList<>();
     private ModelDao modelDao;
 
     @Inject
@@ -17,14 +20,24 @@ public class ModelDataRepository implements ModelRepository {
 
     @Override
     public void insertListInDb(List<GroupModel> groupModelList) {
-        for (GroupModel groupModel : groupModelList) {
+        listVk.clear();
+        listDb.clear();
+        listVk.addAll(groupModelList);
+        listDb.addAll(modelDao.getAllList());
+        if (listVk.size() < listDb.size()) {
+            modelDao.clearTable();
+        } else {
+            for (int i = 0; i < listDb.size(); i++) {
+                for (int j = 0; j < listVk.size(); j++) {
+                    if (listVk.get(j).getName().equals(listDb.get(i).getName())) {
+                        listVk.remove(j);
+                    }
+                }
+            }
+        }
+        for (GroupModel groupModel : listVk) {
             modelDao.insertAll(groupModel);
         }
-    }
-
-    @Override
-    public void clearAllDb() {
-        modelDao.clearTable();
     }
 
     @Override
