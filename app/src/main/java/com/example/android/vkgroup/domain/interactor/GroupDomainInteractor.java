@@ -20,14 +20,11 @@ public class GroupDomainInteractor implements GroupInteractor {
 
     private VkRepository vkRepository;
     private ModelRepository modelRepository;
-    private final CompositeDisposable disposables;
 
     @Inject
     public GroupDomainInteractor(VkRepository vkRepository, ModelRepository modelRepository) {
         this.vkRepository = vkRepository;
         this.modelRepository = modelRepository;
-        App.getComponent().inject(this);
-        disposables = new CompositeDisposable();
     }
 
     @Override

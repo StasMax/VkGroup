@@ -6,7 +6,7 @@ import android.arch.persistence.room.Room;
 import com.example.android.vkgroup.di.scope.ApplicationScope;
 import com.example.android.vkgroup.data.model.AppDatabase;
 import com.example.android.vkgroup.data.model.ModelDao;
-import com.example.android.vkgroup.data.model.ModelDataSource;
+import com.example.android.vkgroup.data.model.ModelDataRepository;
 import com.example.android.vkgroup.data.model.ModelRepository;
 
 
@@ -36,6 +36,6 @@ public class RoomModule {
     @ApplicationScope
     @Provides
     ModelRepository modelRepository(ModelDao modelDao) {
-        return new ModelDataSource(modelDao);
+        return new ModelDataRepository(modelDao);
     }
   }

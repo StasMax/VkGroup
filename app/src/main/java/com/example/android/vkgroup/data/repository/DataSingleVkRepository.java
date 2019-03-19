@@ -6,7 +6,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;
+import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 
@@ -18,16 +21,12 @@ import javax.inject.Inject;
 import io.reactivex.Single;
 
 public class DataSingleVkRepository implements VkRepository {
-    @Inject
-    VKRequest request;
+
+    VKRequest request = VKApi.groups().get(VKParameters.from(VKApiConst.FIELDS, "members_count", VKApiConst.EXTENDED, 1));
     private List<GroupModel> listGroups = new ArrayList<>();
     private String vkName;
     private String vkSubscription;
     private String vkAvatar;
-
-    public DataSingleVkRepository() {
-        App.getComponent().inject(this);
-    }
 
     public Single<List<GroupModel>> getListGroupsSingle() {
         return Single.create(subscriber -> {

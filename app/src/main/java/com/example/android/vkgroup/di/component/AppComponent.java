@@ -22,7 +22,4 @@ public interface AppComponent {
 
     void inject(ViewHolder viewHolder);
 
-    void inject(GroupDomainInteractor groupDomainInteractor);
-
-    void inject(DataSingleVkRepository dataSingleVkRepository);
 }

@@ -1,10 +1,16 @@
 package com.example.android.vkgroup.presentation.mvp.presenter;
 
+import android.content.Intent;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.example.android.vkgroup.domain.interactor.GroupInteractor;
 import com.example.android.vkgroup.data.model.GroupModel;
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.presentation.mvp.view.GroupView;
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.VKCallback;
+import com.vk.sdk.VKSdk;
+import com.vk.sdk.api.VKError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +31,23 @@ public class GroupPresenter extends BasePresenter<GroupView> {
         this.groupInteractor = groupInteractor;
     }
 
-    public void loadGroupsVk() {
+    public void loginVk(int requestCode, int resultCode, Intent data) {
+        VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
+            @Override
+            public void onResult(VKAccessToken res) {
+                onInitGroupsVk();
+            }
+
+            @Override
+            public void onError(VKError error) {
+                getViewState().showError(R.string.error_login);
+            }
+        });
+    }
+
+    public void onInitGroupsVk() {
+        favoriteQuery.clear();
+        groupModelsQueryVk.clear();
         addSubscription(groupInteractor.getFavorite()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -37,25 +59,25 @@ public class GroupPresenter extends BasePresenter<GroupView> {
 
         addSubscription(groupInteractor.getAllListGroupsVk()
                 .doOnSubscribe(disposable -> getViewState().startLoading())
-                .subscribeOn(Schedulers.newThread())
+                .doFinally(() -> addSubscription(groupInteractor.insertVkInDb(groupModelsQueryVk)
+                        .subscribeOn(Schedulers.newThread())
+                        .subscribe()))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(groupModels -> {
                     groupModelsQueryVk.addAll(groupModels);
                     insertFavorite(groupModelsQueryVk, favoriteQuery);
-                    groupInteractor.insertVkInDb(groupModelsQueryVk)
-                            .subscribeOn(Schedulers.newThread())
-                            .subscribe();
+
                 }));
     }
 
-    public void loadGroupsFromDb() {
+    public void onInitGroupsDb() {
         addSubscription(groupInteractor.getAllGroupsFromDb()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::groupsLoaded));
+                .subscribe(this::onInitGroupsRecycle));
     }
 
-    private void groupsLoaded(List<GroupModel> groupModelList) {
+    private void onInitGroupsRecycle(List<GroupModel> groupModelList) {
         getViewState().endLoading();
         if (groupModelList.size() == 0) {
             getViewState().setupEmptyList();

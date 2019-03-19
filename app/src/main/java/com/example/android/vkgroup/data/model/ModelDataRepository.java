@@ -7,11 +7,11 @@ import javax.inject.Inject;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 
-public class ModelDataSource implements ModelRepository {
+public class ModelDataRepository implements ModelRepository {
     private ModelDao modelDao;
 
     @Inject
-    public ModelDataSource(ModelDao modelDao) {
+    public ModelDataRepository(ModelDao modelDao) {
         this.modelDao = modelDao;
     }
 

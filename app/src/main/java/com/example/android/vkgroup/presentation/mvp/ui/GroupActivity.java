@@ -2,6 +2,7 @@ package com.example.android.vkgroup.presentation.mvp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,8 @@ import com.example.android.vkgroup.presentation.mvp.presenter.GroupPresenter;
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.presentation.mvp.view.GroupView;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
+import com.vk.sdk.VKScope;
+import com.vk.sdk.VKSdk;
 
 import java.util.List;
 
@@ -59,12 +62,19 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
         ButterKnife.bind(this);
 
         if (isOnline(this)) {
-            groupPresenter.loadGroupsVk();
+            VKSdk.login(this, VKScope.GROUPS);
+          //  groupPresenter.onInitGroupsVk();
         }
+
         groupAdapterRv = new GroupAdapterRv();
         rvGroups.setAdapter(groupAdapterRv);
         rvGroups.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
         rvGroups.setHasFixedSize(true);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        groupPresenter.loginVk(requestCode, resultCode, data);
     }
 
     @OnTextChanged(R.id.txt_search)
@@ -107,8 +117,14 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        groupPresenter.onInitGroupsDb();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
-        groupPresenter.loadGroupsFromDb();
+
     }
 }

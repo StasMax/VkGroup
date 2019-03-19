@@ -17,26 +17,22 @@
         android:theme="@style/SplashTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:theme="@style/AppTheme"
             android:name=".presentation.mvp.ui.FavoriteActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:theme="@style/AppTheme"
-            android:name=".presentation.mvp.ui.GroupActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.vk.sdk.VKServiceActivity"
-            android:label="ServiceActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/VK.Transparent" />
+            android:theme="@style/AppTheme" />
         <activity
-            android:theme="@style/AppTheme"
-            android:name=".presentation.mvp.ui.StartActivity"
-            android:screenOrientation="portrait">
+            android:name=".presentation.mvp.ui.GroupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.vk.sdk.VKServiceActivity"
+            android:label="ServiceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/VK.Transparent" />
     </application>
 </manifest>

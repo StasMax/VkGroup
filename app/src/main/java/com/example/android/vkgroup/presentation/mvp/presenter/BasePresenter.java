@@ -6,15 +6,15 @@ import com.arellomobile.mvp.MvpView;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public class BasePresenter<View extends MvpView>extends MvpPresenter<View> {
+public class BasePresenter<View extends MvpView> extends MvpPresenter<View> {
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    public void addSubscription(Disposable disposable){
+    public void addSubscription(Disposable disposable) {
         compositeDisposable.add(disposable);
     }
 
-    public void unsubscribe(){
+    public void unsubscribe() {
         compositeDisposable.clear();
         compositeDisposable = new CompositeDisposable();
     }
@@ -24,4 +24,5 @@ public class BasePresenter<View extends MvpView>extends MvpPresenter<View> {
         super.onDestroy();
         unsubscribe();
     }
+
 }

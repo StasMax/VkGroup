@@ -7,6 +7,7 @@ import com.example.android.vkgroup.di.component.DaggerAppComponent;
 import com.example.android.vkgroup.di.module.AppModule;
 import com.example.android.vkgroup.di.module.GroupModule;
 import com.example.android.vkgroup.di.module.RoomModule;
+import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 
 public class App extends Application {
@@ -23,6 +24,7 @@ public class App extends Application {
                 .build();
 
         VKSdk.initialize(getApplicationContext());
+
     }
 
     public static AppComponent getComponent() {
