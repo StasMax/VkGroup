@@ -63,13 +63,13 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
 
         if (isOnline(this)) {
             VKSdk.login(this, VKScope.GROUPS);
-          //  groupPresenter.onInitGroupsVk();
         }
 
         groupAdapterRv = new GroupAdapterRv();
         rvGroups.setAdapter(groupAdapterRv);
         rvGroups.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
         rvGroups.setHasFixedSize(true);
+        groupPresenter.favoriteListener(groupAdapterRv);
     }
 
     @Override
@@ -122,9 +122,4 @@ public class GroupActivity extends MvpAppCompatActivity implements GroupView {
         groupPresenter.onInitGroupsDb();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
 }

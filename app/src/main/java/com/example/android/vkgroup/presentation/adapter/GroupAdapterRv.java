@@ -3,7 +3,10 @@ package com.example.android.vkgroup.presentation.adapter;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.data.model.GroupModel;
@@ -13,12 +16,17 @@ import java.util.List;
 
 
 public class GroupAdapterRv extends RecyclerView.Adapter<ViewHolder> {
-
     private List<GroupModel> groupModelList = new ArrayList<>();
     private List<GroupModel> sourceList = new ArrayList<>();
 
-    public List<GroupModel> getGroupModelList() {
-        return groupModelList;
+    private Listener listener;
+
+    public interface Listener {
+        void onClick(GroupModel groupModel, boolean isChecked);
+    }
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
     }
 
     public void setupGroups(List<GroupModel> groupModelList) {
@@ -52,6 +60,12 @@ public class GroupAdapterRv extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.bind(groupModelList.get(i));
+        CheckBox checkBox = viewHolder.itemView.findViewById(R.id.isFavorite_checkBox);
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (listener != null) {
+                listener.onClick(groupModelList.get(i), isChecked);
+            }
+        });
     }
 
     @Override

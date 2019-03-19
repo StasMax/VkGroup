@@ -41,7 +41,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
             checkBox.setChecked(true);
         else checkBox.setChecked(false);
 
-        checkBox.setOnClickListener(v -> {
+     /*   checkBox.setOnClickListener(v -> {
             if (checkBox.isChecked()) {
                 groupModel.setFavorite(true);
                 groupInteractor.updateFavorite(groupModel)
@@ -53,7 +53,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
                         .subscribeOn(Schedulers.newThread())
                         .subscribe();
             }
-        });
+        });*/
         if (groupModel.getAvatar() != null) {
             Picasso.with(itemView.getContext()).load(groupModel.getAvatar()).into(civAvatar);
         }
