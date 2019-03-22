@@ -11,6 +11,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
 public class FavoritePresenter extends BasePresenter<FavoriteView> {
@@ -23,6 +24,7 @@ public class FavoritePresenter extends BasePresenter<FavoriteView> {
 
     public void onInitFavoriteGroups() {
         addSubscription(groupInteractor.getFavoriteGroups(true)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onInitGroupsFavoriteRecycle));
     }

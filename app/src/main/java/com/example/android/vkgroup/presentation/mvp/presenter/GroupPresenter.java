@@ -49,7 +49,7 @@ public class GroupPresenter extends BasePresenter<GroupView> {
         favoriteQuery.clear();
         groupModelsQueryVk.clear();
         addSubscription(groupInteractor.getFavorite()
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(favoriteQuery::addAll, Throwable::printStackTrace));
 
@@ -61,14 +61,14 @@ public class GroupPresenter extends BasePresenter<GroupView> {
                     insertFavorite(groupModelsQueryVk, favoriteQuery);
 
                     addSubscription(groupInteractor.insertVkInDb(groupModelsQueryVk)
-                            .subscribeOn(Schedulers.newThread())
+                            .subscribeOn(Schedulers.io())
                             .subscribe());
                 }));
     }
 
     public void onInitGroupsDb() {
         addSubscription(groupInteractor.getAllGroupsFromDb()
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onInitGroupsRecycle));
     }

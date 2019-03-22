@@ -18,6 +18,4 @@ public interface AppComponent {
 
     void inject(FavoriteActivity favoriteActivity);
 
-    void inject(ViewHolder viewHolder);
-
 }
