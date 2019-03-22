@@ -12,12 +12,15 @@ import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
 
+import org.reactivestreams.Subscription;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
@@ -70,17 +73,18 @@ public class GroupPresenter extends BasePresenter<GroupView> {
         addSubscription(groupInteractor.getAllGroupsFromDb()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onInitGroupsRecycle));
+                .subscribe(groupModels -> {
+                    onInitGroupsRecycle(groupModels);
+                    getViewState().endLoading();
+                }));
     }
 
     private void onInitGroupsRecycle(List<GroupModel> groupModelList) {
-        getViewState().endLoading();
         if (groupModelList.size() == 0) {
             getViewState().setupEmptyList();
             getViewState().showError(R.string.no_groups_item);
         } else
             getViewState().setupGroupsList(groupModelList);
-
     }
 
     private void insertFavorite(List<GroupModel> groupModelsQueryVk, List<GroupModel> favoriteQuery) {

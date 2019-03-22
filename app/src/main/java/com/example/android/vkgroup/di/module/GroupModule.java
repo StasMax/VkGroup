@@ -1,6 +1,6 @@
 package com.example.android.vkgroup.di.module;
 
-import com.example.android.vkgroup.data.model.ModelRepository;
+import com.example.android.vkgroup.data.model.IModelRepository;
 import com.example.android.vkgroup.data.repository.DataSingleVkRepository;
 import com.example.android.vkgroup.data.repository.VkRepository;
 import com.example.android.vkgroup.domain.interactor.GroupInteractorImpl;
@@ -20,6 +20,6 @@ public class GroupModule {
 
     @ApplicationScope
     @Provides
-    IGroupInteractor groupInteractor(VkRepository vkRepository, ModelRepository modelRepository){return new GroupInteractorImpl(vkRepository, modelRepository);
+    IGroupInteractor groupInteractor(VkRepository vkRepository, IModelRepository modelRepository){return new GroupInteractorImpl(vkRepository, modelRepository);
     }
 }

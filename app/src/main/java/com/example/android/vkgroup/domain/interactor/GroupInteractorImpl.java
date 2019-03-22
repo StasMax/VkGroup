@@ -1,7 +1,7 @@
 package com.example.android.vkgroup.domain.interactor;
 
 import com.example.android.vkgroup.data.model.GroupModel;
-import com.example.android.vkgroup.data.model.ModelRepository;
+import com.example.android.vkgroup.data.model.IModelRepository;
 
 import com.example.android.vkgroup.data.repository.VkRepository;
 
@@ -16,10 +16,10 @@ import io.reactivex.Single;
 public class GroupInteractorImpl implements IGroupInteractor {
 
     private VkRepository vkRepository;
-    private ModelRepository modelRepository;
+    private IModelRepository modelRepository;
 
     @Inject
-    public GroupInteractorImpl(VkRepository vkRepository, ModelRepository modelRepository) {
+    public GroupInteractorImpl(VkRepository vkRepository, IModelRepository modelRepository) {
         this.vkRepository = vkRepository;
         this.modelRepository = modelRepository;
     }

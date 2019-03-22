@@ -8,13 +8,13 @@ import javax.inject.Inject;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 
-public class ModelDataRepository implements ModelRepository {
+public class ModelRepositoryImpl implements IModelRepository {
     private List<GroupModel> listVk = new ArrayList<>();
     private List<GroupModel> listDb = new ArrayList<>();
     private ModelDao modelDao;
 
     @Inject
-    public ModelDataRepository(ModelDao modelDao) {
+    public ModelRepositoryImpl(ModelDao modelDao) {
         this.modelDao = modelDao;
     }
 

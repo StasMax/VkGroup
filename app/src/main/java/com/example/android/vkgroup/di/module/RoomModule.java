@@ -3,11 +3,11 @@ package com.example.android.vkgroup.di.module;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
+import com.example.android.vkgroup.data.model.IModelRepository;
 import com.example.android.vkgroup.di.scope.ApplicationScope;
 import com.example.android.vkgroup.data.model.AppDatabase;
 import com.example.android.vkgroup.data.model.ModelDao;
-import com.example.android.vkgroup.data.model.ModelDataRepository;
-import com.example.android.vkgroup.data.model.ModelRepository;
+import com.example.android.vkgroup.data.model.ModelRepositoryImpl;
 
 
 import dagger.Module;
@@ -35,7 +35,7 @@ public class RoomModule {
 
     @ApplicationScope
     @Provides
-    ModelRepository modelRepository(ModelDao modelDao) {
-        return new ModelDataRepository(modelDao);
+    IModelRepository modelRepository(ModelDao modelDao) {
+        return new ModelRepositoryImpl(modelDao);
     }
   }
