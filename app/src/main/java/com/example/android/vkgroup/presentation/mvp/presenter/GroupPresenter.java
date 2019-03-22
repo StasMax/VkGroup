@@ -12,23 +12,16 @@ import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
 
-import org.reactivestreams.Subscription;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
 public class GroupPresenter extends BasePresenter<GroupView> {
     private IGroupInteractor groupInteractor;
-    private List<GroupModel> favoriteQuery = new ArrayList<>();
-    private List<GroupModel> groupModelsQueryVk = new ArrayList<>();
 
     @Inject
     public GroupPresenter(IGroupInteractor groupInteractor) {
@@ -50,25 +43,9 @@ public class GroupPresenter extends BasePresenter<GroupView> {
     }
 
     public void onInitGroupsVk() {
-        favoriteQuery.clear();
-        groupModelsQueryVk.clear();
-
-        addSubscription(groupInteractor.getFavorite()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(favoriteQuery::addAll, Throwable::printStackTrace));
 
         addSubscription(groupInteractor.getAllListGroupsVk()
                 .doOnSubscribe(disposable -> getViewState().startLoading())
-                .toFlowable()
-                .flatMapIterable(list -> list)
-                .map(groupModel -> {
-                    if (favoriteQuery.contains(groupModel)) {
-                        groupModel.setFavorite(favoriteQuery.get(favoriteQuery.indexOf(groupModel)).getFavorite());
-                    }
-                    return groupModel;
-                })
-                .toList()
                 .observeOn(Schedulers.io())
                 .flatMapCompletable(groupModels -> groupInteractor.insertVkInDb(groupModels))
                 .subscribe());
@@ -92,4 +69,4 @@ public class GroupPresenter extends BasePresenter<GroupView> {
             getViewState().setupGroupsList(groupModelList);
     }
 
-    }
+}

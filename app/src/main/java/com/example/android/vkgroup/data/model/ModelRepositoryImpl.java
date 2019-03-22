@@ -24,19 +24,17 @@ public class ModelRepositoryImpl implements IModelRepository {
         listDb.clear();
         listVk.addAll(groupModelList);
         listDb.addAll(modelDao.getAllList());
-        if (listVk.size() < listDb.size()) {
-            modelDao.clearTable();
-        } else {
-            for (int i = 0; i < listDb.size(); i++) {
-                for (int j = 0; j < listVk.size(); j++) {
-                    if (listVk.get(j).getName().equals(listDb.get(i).getName())) {
-                        listVk.remove(j);
-                    }
-                }
+
+        for (GroupModel groupModel : listVk) {
+            if (!(listDb.contains(groupModel))) {
+                modelDao.insert(groupModel);
             }
         }
-        for (GroupModel groupModel : listVk) {
-            modelDao.insertAll(groupModel);
+        for (GroupModel groupModel : listDb
+        ) {
+            if (!(listVk.contains(groupModel))) {
+                modelDao.delete(groupModel);
+            }
         }
     }
 

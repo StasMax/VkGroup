@@ -34,6 +34,12 @@ public interface ModelDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(GroupModel... groupModelsVk);
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insert(GroupModel groupModelVk);
+
+    @Delete
+    void delete(GroupModel groupModel);
+
     @Update
     void update(GroupModel groupModel);
 }
