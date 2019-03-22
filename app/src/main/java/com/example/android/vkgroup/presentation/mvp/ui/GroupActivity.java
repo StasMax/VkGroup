@@ -66,7 +66,7 @@ public class GroupActivity extends BaseActivity implements GroupView {
         rvGroups.setAdapter(groupAdapterRv);
         rvGroups.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
         rvGroups.setHasFixedSize(true);
-        groupPresenter.favoriteListener(groupAdapterRv);
+        favoriteListener(groupAdapterRv);
     }
 
     @Override
@@ -77,6 +77,10 @@ public class GroupActivity extends BaseActivity implements GroupView {
     @OnTextChanged(R.id.txt_search)
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         groupAdapterRv.filter(s.toString());
+    }
+
+    public void favoriteListener(GroupAdapterRv groupAdapterRv) {
+        groupAdapterRv.setListener((groupModel, isChecked) -> groupPresenter.onSetFavorite(groupModel, isChecked));
     }
 
     @Override

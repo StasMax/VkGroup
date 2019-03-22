@@ -69,4 +69,17 @@ public class GroupPresenter extends BasePresenter<GroupView> {
             getViewState().setupGroupsList(groupModelList);
     }
 
+    public void onSetFavorite(GroupModel groupModel, boolean isChecked) {
+        if (isChecked) {
+            groupModel.setFavorite(true);
+            addSubscription(groupInteractor.updateFavorite(groupModel)
+                    .subscribeOn(Schedulers.newThread())
+                    .subscribe());
+        } else {
+            groupModel.setFavorite(false);
+            addSubscription(groupInteractor.updateFavorite(groupModel)
+                    .subscribeOn(Schedulers.newThread())
+                    .subscribe());
+        }
+    }
 }
