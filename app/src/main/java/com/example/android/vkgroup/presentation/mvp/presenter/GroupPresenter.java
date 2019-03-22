@@ -54,21 +54,24 @@ public class GroupPresenter extends BasePresenter<GroupView> {
         groupModelsQueryVk.clear();
 
         addSubscription(groupInteractor.getFavorite()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(favoriteQuery::addAll, Throwable::printStackTrace));
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(favoriteQuery::addAll, Throwable::printStackTrace));
 
         addSubscription(groupInteractor.getAllListGroupsVk()
                 .doOnSubscribe(disposable -> getViewState().startLoading())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(groupModels -> {
-                    groupModelsQueryVk.addAll(groupModels);
-                    insertFavorite(groupModelsQueryVk, favoriteQuery);
-
-                    addSubscription(groupInteractor.insertVkInDb(groupModelsQueryVk)
-                            .subscribeOn(Schedulers.io())
-                            .subscribe());
-                }));
+                .toFlowable()
+                .flatMapIterable(list -> list)
+                .map(groupModel -> {
+                    if (favoriteQuery.contains(groupModel)) {
+                        groupModel.setFavorite(favoriteQuery.get(favoriteQuery.indexOf(groupModel)).getFavorite());
+                    }
+                    return groupModel;
+                })
+                .toList()
+                .observeOn(Schedulers.io())
+                .flatMapCompletable(groupModels -> groupInteractor.insertVkInDb(groupModels))
+                .subscribe());
     }
 
     public void onInitGroupsDb() {
@@ -89,14 +92,4 @@ public class GroupPresenter extends BasePresenter<GroupView> {
             getViewState().setupGroupsList(groupModelList);
     }
 
-    private void insertFavorite(List<GroupModel> groupModelsQueryVk, List<GroupModel> favoriteQuery) {
-        for (int i = 0; i < groupModelsQueryVk.size(); i++) {
-            for (int j = 0; j < favoriteQuery.size(); j++) {
-                if (favoriteQuery.get(j).equals(groupModelsQueryVk.get(i))) {
-                    groupModelsQueryVk.get(i).setFavorite(favoriteQuery.get(j).getFavorite());
-                }
-            }
-        }
     }
-
-}
