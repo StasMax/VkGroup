@@ -3,8 +3,8 @@ package com.example.android.vkgroup.di.module;
 import com.example.android.vkgroup.data.model.ModelRepository;
 import com.example.android.vkgroup.data.repository.DataSingleVkRepository;
 import com.example.android.vkgroup.data.repository.VkRepository;
-import com.example.android.vkgroup.domain.interactor.GroupDomainInteractor;
-import com.example.android.vkgroup.domain.interactor.GroupInteractor;
+import com.example.android.vkgroup.domain.interactor.GroupInteractorImpl;
+import com.example.android.vkgroup.domain.interactor.IGroupInteractor;
 import com.example.android.vkgroup.di.scope.ApplicationScope;
 
 import dagger.Module;
@@ -20,6 +20,6 @@ public class GroupModule {
 
     @ApplicationScope
     @Provides
-    GroupInteractor groupInteractor(VkRepository vkRepository, ModelRepository modelRepository){return new GroupDomainInteractor(vkRepository, modelRepository);
+    IGroupInteractor groupInteractor(VkRepository vkRepository, ModelRepository modelRepository){return new GroupInteractorImpl(vkRepository, modelRepository);
     }
 }

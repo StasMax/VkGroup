@@ -3,7 +3,7 @@ package com.example.android.vkgroup.presentation.mvp.presenter;
 import android.content.Intent;
 
 import com.arellomobile.mvp.InjectViewState;
-import com.example.android.vkgroup.domain.interactor.GroupInteractor;
+import com.example.android.vkgroup.domain.interactor.IGroupInteractor;
 import com.example.android.vkgroup.data.model.GroupModel;
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.presentation.mvp.view.GroupView;
@@ -22,12 +22,12 @@ import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
 public class GroupPresenter extends BasePresenter<GroupView> {
-    private GroupInteractor groupInteractor;
+    private IGroupInteractor groupInteractor;
     private List<GroupModel> favoriteQuery = new ArrayList<>();
     private List<GroupModel> groupModelsQueryVk = new ArrayList<>();
 
     @Inject
-    public GroupPresenter(GroupInteractor groupInteractor) {
+    public GroupPresenter(IGroupInteractor groupInteractor) {
         this.groupInteractor = groupInteractor;
     }
 

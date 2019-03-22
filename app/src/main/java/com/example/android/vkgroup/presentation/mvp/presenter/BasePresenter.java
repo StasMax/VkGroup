@@ -2,8 +2,7 @@ package com.example.android.vkgroup.presentation.mvp.presenter;
 
 import com.arellomobile.mvp.MvpPresenter;
 import com.arellomobile.mvp.MvpView;
-import com.example.android.vkgroup.data.model.GroupModel;
-import com.example.android.vkgroup.domain.interactor.GroupInteractor;
+import com.example.android.vkgroup.domain.interactor.IGroupInteractor;
 import com.example.android.vkgroup.presentation.adapter.GroupAdapterRv;
 
 import javax.inject.Inject;
@@ -14,7 +13,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class BasePresenter<View extends MvpView> extends MvpPresenter<View> {
     @Inject
-    GroupInteractor groupInteractor;
+    IGroupInteractor groupInteractor;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public void addSubscription(Disposable disposable) {

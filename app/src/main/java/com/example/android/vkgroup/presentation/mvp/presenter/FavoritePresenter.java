@@ -1,7 +1,7 @@
 package com.example.android.vkgroup.presentation.mvp.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
-import com.example.android.vkgroup.domain.interactor.GroupInteractor;
+import com.example.android.vkgroup.domain.interactor.IGroupInteractor;
 
 import com.example.android.vkgroup.data.model.GroupModel;
 import com.example.android.vkgroup.presentation.mvp.view.FavoriteView;
@@ -15,10 +15,10 @@ import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
 public class FavoritePresenter extends BasePresenter<FavoriteView> {
-    private GroupInteractor groupInteractor;
+    private IGroupInteractor groupInteractor;
 
     @Inject
-    public FavoritePresenter(GroupInteractor groupInteractor) {
+    public FavoritePresenter(IGroupInteractor groupInteractor) {
         this.groupInteractor = groupInteractor;
     }
 

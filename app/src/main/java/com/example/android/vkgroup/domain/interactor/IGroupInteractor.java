@@ -8,7 +8,7 @@ import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 
-public interface GroupInteractor {
+public interface IGroupInteractor {
     Single<List<GroupModel>> getFavorite();
 
     Single<List<GroupModel>> getAllListGroupsVk();

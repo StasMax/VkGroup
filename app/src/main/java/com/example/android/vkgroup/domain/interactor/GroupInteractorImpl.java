@@ -4,7 +4,6 @@ import com.example.android.vkgroup.data.model.GroupModel;
 import com.example.android.vkgroup.data.model.ModelRepository;
 
 import com.example.android.vkgroup.data.repository.VkRepository;
-import com.example.android.vkgroup.presentation.app.App;
 
 import java.util.List;
 
@@ -13,16 +12,14 @@ import javax.inject.Inject;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
-public class GroupDomainInteractor implements GroupInteractor {
+public class GroupInteractorImpl implements IGroupInteractor {
 
     private VkRepository vkRepository;
     private ModelRepository modelRepository;
 
     @Inject
-    public GroupDomainInteractor(VkRepository vkRepository, ModelRepository modelRepository) {
+    public GroupInteractorImpl(VkRepository vkRepository, ModelRepository modelRepository) {
         this.vkRepository = vkRepository;
         this.modelRepository = modelRepository;
     }
