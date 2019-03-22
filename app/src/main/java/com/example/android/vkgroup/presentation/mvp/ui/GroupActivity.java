@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.android.vkgroup.data.model.GroupModel;
@@ -31,9 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
 
-import static com.example.android.vkgroup.presentation.helper.AskOnline.isOnline;
-
-public class GroupActivity extends MvpAppCompatActivity implements GroupView {
+public class GroupActivity extends BaseActivity implements GroupView {
     @BindView(R.id.txt_search)
     EditText searchGroup;
     @BindView(R.id.txt_groups_no_item)

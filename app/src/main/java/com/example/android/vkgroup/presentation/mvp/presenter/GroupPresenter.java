@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -51,6 +52,7 @@ public class GroupPresenter extends BasePresenter<GroupView> {
     public void onInitGroupsVk() {
         favoriteQuery.clear();
         groupModelsQueryVk.clear();
+
         addSubscription(groupInteractor.getFavorite()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
