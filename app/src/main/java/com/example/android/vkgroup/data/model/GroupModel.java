@@ -5,12 +5,15 @@ import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Objects;
 
+import lombok.Getter;
+
 @Entity(tableName = "dbGroups")
 public class GroupModel {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
-     private String name;
+    @Getter
+    private String name;
     private String subscribers;
     private String avatar;
     private Boolean isFavorite;
@@ -30,9 +33,9 @@ public class GroupModel {
         this.id = id;
     }
 
-    public String getName() {
+   /* public String getName() {
         return name;
-    }
+    }*/
 
     public void setName(String name) {
         this.name = name;
