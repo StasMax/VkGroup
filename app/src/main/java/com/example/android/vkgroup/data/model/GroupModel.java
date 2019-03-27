@@ -10,7 +10,7 @@ public class GroupModel {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
-    private String name;
+     private String name;
     private String subscribers;
     private String avatar;
     private Boolean isFavorite;
@@ -65,23 +65,13 @@ public class GroupModel {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-
-     /*   if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         GroupModel that = (GroupModel) o;
-        return Objects.equals(name, that.name);*/
-        if (!(o instanceof GroupModel)) {
-            return false;
-        }
-
-        return name.equalsIgnoreCase(((GroupModel) o).getName());
+        return Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-
-      //  return Objects.hash(name);
-        int hash = 3;
-        hash = 53 * hash + (this.name != null ? this.name.hashCode() : 0);
-        return hash;
+        return Objects.hash(name);
     }
 }
