@@ -9,7 +9,6 @@ import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 public interface IGroupInteractor {
-    Single<List<GroupModel>> getFavorite();
 
     Single<List<GroupModel>> getAllListGroupsVk();
 

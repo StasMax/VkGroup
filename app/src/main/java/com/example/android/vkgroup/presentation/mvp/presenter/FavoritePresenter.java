@@ -38,9 +38,9 @@ public class FavoritePresenter extends BasePresenter<FavoriteView> {
 
     public void onSetFavorite(GroupModel groupModel, boolean isChecked) {
         if (isChecked) {
-            groupModel.setFavorite(true);
+            groupModel.setIsFavorite(true);
         } else {
-            groupModel.setFavorite(false);
+            groupModel.setIsFavorite(false);
         }
         addSubscription(groupInteractor.updateFavorite(groupModel)
                 .subscribeOn(Schedulers.newThread())

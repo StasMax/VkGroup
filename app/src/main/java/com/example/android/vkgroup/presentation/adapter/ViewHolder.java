@@ -30,7 +30,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     public void bind(final GroupModel groupModel) {
         txtGroupName.setText(groupModel.getName());
         txtSubscribers.setText(groupModel.getSubscribers());
-        if (groupModel.getFavorite()) {
+        if (groupModel.getIsFavorite()) {
             checkBox.setChecked(true);
         } else {
             checkBox.setChecked(false);

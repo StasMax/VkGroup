@@ -46,11 +46,6 @@ public class GroupInteractorImpl implements IGroupInteractor {
     }
 
     @Override
-    public Single<List<GroupModel>> getFavorite() {
-        return modelRepository.getByFavoriteSingle(true);
-    }
-
-    @Override
     public Single<List<GroupModel>> getAllListGroupsVk() {
         return vkRepository.getListGroupsSingle();
     }
