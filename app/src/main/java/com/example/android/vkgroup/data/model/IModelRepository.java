@@ -13,7 +13,5 @@ public interface IModelRepository {
 
     Flowable<List<GroupModel>> getAll();
 
-    Single<List<GroupModel>> getByFavoriteSingle(Boolean isFavorite);
-
     Flowable<List<GroupModel>> getByFavorite(Boolean isFavorite);
 }

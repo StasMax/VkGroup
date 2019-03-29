@@ -12,7 +12,6 @@ import java.util.List;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 
-
 @Dao
 public interface ModelDao {
 
@@ -21,9 +20,6 @@ public interface ModelDao {
 
     @Query("SELECT * FROM dbGroups WHERE isFavorite LIKE:isFavorite")
     Flowable<List<GroupModel>> getByFavorite(Boolean isFavorite);
-
-    @Query("SELECT * FROM dbGroups WHERE isFavorite LIKE :isFavorite")
-    Single<List<GroupModel>> getByFavoriteSingle(Boolean isFavorite);
 
     @Query("DELETE FROM dbGroups")
     void clearTable();

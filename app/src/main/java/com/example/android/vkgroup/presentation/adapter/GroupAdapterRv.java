@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+
 import com.example.android.vkgroup.R;
 import com.example.android.vkgroup.data.model.GroupModel;
 

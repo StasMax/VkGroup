@@ -46,9 +46,8 @@
 
         <CheckBox
             android:id="@+id/isFavorite_checkBox"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-
+            android:layout_width="@dimen/isFavorite_button_size"
+            android:layout_height="@dimen/isFavorite_button_size"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="10dp"
             android:button="@drawable/check_box" />

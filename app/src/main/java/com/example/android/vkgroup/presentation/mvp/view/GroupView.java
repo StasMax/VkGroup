@@ -13,9 +13,12 @@ import java.util.List;
 
 public interface GroupView extends MvpView {
     void startLoading();
-    void endLoading();
-    void showError(int textResource);
-    void setupEmptyList();
-    void setupGroupsList(List<GroupModel> groupsList);
 
+    void endLoading();
+
+    void showError(int textResource);
+
+    void setupEmptyList();
+
+    void setupGroupsList(List<GroupModel> groupsList);
 }

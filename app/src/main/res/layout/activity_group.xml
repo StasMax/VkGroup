@@ -34,8 +34,8 @@
 
         <com.github.rahatarmanahmed.cpv.CircularProgressView
             android:id="@+id/cpv_groups"
-            android:layout_width="@dimen/load_size"
-            android:layout_height="@dimen/load_size"
+            android:layout_width="@dimen/circular_progress_view_size"
+            android:layout_height="@dimen/circular_progress_view_size"
             android:layout_gravity="center"
             android:visibility="gone"
             app:cpv_animAutostart="true"
@@ -43,13 +43,13 @@
             app:cpv_indeterminate="true" />
 
         <android.support.design.widget.FloatingActionButton
+            android:id="@+id/float_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
             android:background="@color/colorPrimary"
             android:backgroundTint="@color/colorPrimary"
-            android:onClick="onClickDone"
             android:src="@drawable/fb_star"
             tools:ignore="UnusedAttribute" />
 

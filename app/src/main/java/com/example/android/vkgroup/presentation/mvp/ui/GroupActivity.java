@@ -3,6 +3,7 @@ package com.example.android.vkgroup.presentation.mvp.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +29,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
 public class GroupActivity extends BaseActivity implements GroupView {
@@ -39,7 +41,6 @@ public class GroupActivity extends BaseActivity implements GroupView {
     CircularProgressView cpvWait;
     @BindView(R.id.recycler_groups)
     RecyclerView rvGroups;
-
     private GroupAdapterRv groupAdapterRv;
 
     @Inject
@@ -57,11 +58,9 @@ public class GroupActivity extends BaseActivity implements GroupView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
         ButterKnife.bind(this);
-
         if (isOnline(this)) {
             VKSdk.login(this, VKScope.GROUPS);
         }
-
         groupAdapterRv = new GroupAdapterRv();
         rvGroups.setAdapter(groupAdapterRv);
         rvGroups.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
@@ -113,7 +112,8 @@ public class GroupActivity extends BaseActivity implements GroupView {
         groupAdapterRv.setupGroups(groupsList);
     }
 
-    public void onClickDone(View view) {
+    @OnClick(R.id.float_button)
+    void onSaveClick() {
         startActivity(new Intent(GroupActivity.this, FavoriteActivity.class));
     }
 
@@ -122,5 +122,4 @@ public class GroupActivity extends BaseActivity implements GroupView {
         super.onResume();
         groupPresenter.onInitGroupsDb();
     }
-
 }

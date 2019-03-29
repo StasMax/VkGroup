@@ -29,8 +29,7 @@ public class FavoriteActivity extends MvpAppCompatActivity implements FavoriteVi
     TextView textViewNoFi;
     @BindView(R.id.favorite_recycler_view)
     RecyclerView recyclerView;
-
-    GroupAdapterRv groupAdapterRv;
+    private GroupAdapterRv groupAdapterRv;
 
     @Inject
     @InjectPresenter
@@ -47,9 +46,7 @@ public class FavoriteActivity extends MvpAppCompatActivity implements FavoriteVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
         ButterKnife.bind(this);
-
         favoritePresenter.onInitFavoriteGroups();
-
         groupAdapterRv = new GroupAdapterRv();
         recyclerView.setAdapter(groupAdapterRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), OrientationHelper.VERTICAL, false));
@@ -57,9 +54,7 @@ public class FavoriteActivity extends MvpAppCompatActivity implements FavoriteVi
     }
 
     public void favoriteListener(GroupAdapterRv groupAdapterRv) {
-        groupAdapterRv.setListener((groupModel, isChecked) -> {
-            favoritePresenter.onSetFavorite(groupModel, isChecked);
-        });
+        groupAdapterRv.setListener((groupModel, isChecked) -> favoritePresenter.onSetFavorite(groupModel, isChecked));
     }
 
     @Override

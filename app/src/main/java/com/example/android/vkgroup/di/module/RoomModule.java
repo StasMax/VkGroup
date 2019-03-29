@@ -15,16 +15,17 @@ import dagger.Provides;
 
 @Module
 public class RoomModule {
-   private AppDatabase database;
+    private AppDatabase database;
 
     @ApplicationScope
-   public RoomModule(Application application) {
+    public RoomModule(Application application) {
         database = Room.databaseBuilder(application.getApplicationContext(), AppDatabase.class, "app_database").build();
     }
+
     @ApplicationScope
     @Provides
-    AppDatabase providesRoomDatabase(){
-       return database;
+    AppDatabase providesRoomDatabase() {
+        return database;
     }
 
     @ApplicationScope
@@ -38,4 +39,4 @@ public class RoomModule {
     IModelRepository modelRepository(ModelDao modelDao) {
         return new ModelRepositoryImpl(modelDao);
     }
-  }
+}

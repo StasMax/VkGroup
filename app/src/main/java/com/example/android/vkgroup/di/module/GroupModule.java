@@ -15,11 +15,13 @@ public class GroupModule {
 
     @ApplicationScope
     @Provides
-    VkRepository vkRepository(){return new DataSingleVkRepository();
+    VkRepository vkRepository() {
+        return new DataSingleVkRepository();
     }
 
     @ApplicationScope
     @Provides
-    IGroupInteractor groupInteractor(VkRepository vkRepository, IModelRepository modelRepository){return new GroupInteractorImpl(vkRepository, modelRepository);
+    IGroupInteractor groupInteractor(VkRepository vkRepository, IModelRepository modelRepository) {
+        return new GroupInteractorImpl(vkRepository, modelRepository);
     }
 }

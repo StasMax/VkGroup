@@ -49,11 +49,6 @@ public class ModelRepositoryImpl implements IModelRepository {
     }
 
     @Override
-    public Single<List<GroupModel>> getByFavoriteSingle(Boolean isFavorite) {
-        return modelDao.getByFavoriteSingle(true);
-    }
-
-    @Override
     public Flowable<List<GroupModel>> getByFavorite(Boolean isFavorite) {
         return modelDao.getByFavorite(true);
     }
